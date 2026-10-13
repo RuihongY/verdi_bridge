@@ -20,11 +20,11 @@
 
 ## 视频教程
 
-约 1 分 46 秒，无声、英文字幕：安装与连接说明，加上真实 Verdi 操作录屏。展示添加信号、跳到报错前 20 个周期、查询波形和定位源码；使用已知 UART 案例演示。
+输入“现在有个 bug，帮我抓相关信号、分析问题”，看 agent 自己选信号、查波形并定位源码。约 1 分 23 秒，中文无声演示：左侧为真实 Codex 会话事件的同步排版，右侧为同次运行的 Verdi 录屏，未预编排工具调用。
 
-https://github.com/user-attachments/assets/19017ecd-0095-46d3-86dd-f408385808f3
+https://github.com/user-attachments/assets/6775f3ea-e09d-49c8-8896-746474410999
 
-[操作步骤与视频时间点](docs/video-walkthrough.md)
+[录制说明与真实调用记录](docs/agent-demo.md) · [安装教程](docs/video-walkthrough.md)
 
 ## 开始使用
 

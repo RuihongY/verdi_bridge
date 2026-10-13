@@ -27,11 +27,11 @@ return waveform values and source evidence while operating the GUI you can inspe
 
 ## Video walkthrough
 
-Install, connect, then watch real MCP calls add signals, move the cursor and navigate RTL. A 1m46s silent tutorial with captions; the live GUI segment replays a known UART bug.
+Ask an agent to investigate a bug, then watch it choose signals, inspect live waveforms and navigate RTL. A 1m23s silent Chinese demo: actual Codex conversation events beside synchronized Verdi capture. Tool calls are selected by the agent, not a replay script.
 
-https://github.com/user-attachments/assets/19017ecd-0095-46d3-86dd-f408385808f3
+https://github.com/user-attachments/assets/6775f3ea-e09d-49c8-8896-746474410999
 
-[Step-by-step notes and timestamps](docs/video-walkthrough.md)
+[How this was recorded](docs/agent-demo.md) · [Installation tutorial](docs/video-walkthrough.md)
 
 ## Quick start
 
