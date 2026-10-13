@@ -20,9 +20,11 @@
 
 ## 视频教程
 
-输入“现在有个 bug，帮我抓相关信号、分析问题”，看 agent 自己选信号、查波形并定位源码。约 1 分 23 秒，中文无声演示：左侧为真实 Codex 会话事件的同步排版，右侧为同次运行的 Verdi 录屏，未预编排工具调用。
+输入“现在有个 bug，帮我抓相关信号、分析问题”，看 agent 自己选信号、查波形并定位源码。约 1 分 56 秒，中文原文无声演示：左侧为真实 Codex 会话事件的同步排版，右侧为同次运行的 Verdi 录屏，未预编排工具调用。
 
-https://github.com/user-attachments/assets/6775f3ea-e09d-49c8-8896-746474410999
+https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7
+
+[English video](https://github.com/user-attachments/assets/bef00220-182e-430e-bce1-a1f487d904b2) · [中文视频](https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7)
 
 [录制说明与真实调用记录](docs/agent-demo.md) · [安装教程](docs/video-walkthrough.md)
 

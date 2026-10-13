@@ -1,60 +1,71 @@
-# Agent in action
+# Agent in action / Agent 调试演示
 
-[Home](../README.md) · [Setup guide](guide.md) · [Earlier installation video](video-walkthrough.md)
+[Home](../README.md) · [Setup](guide.md) · [Installation video](video-walkthrough.md)
 
-https://github.com/user-attachments/assets/6775f3ea-e09d-49c8-8896-746474410999
+## English
 
-A natural-language request starts a real Codex CLI session connected to the Verdi
-MCP server. The agent reads the supplied simulation log, RTL and testbench, chooses
-signals, samples the actual waveform, and navigates to a suspected faulty statement.
-No signal list, fault location or tool-call sequence is supplied to the agent.
+https://github.com/user-attachments/assets/bef00220-182e-430e-bce1-a1f487d904b2
 
-The Chinese prompt begins: “现在有个 bug，帮我抓 bug 相关信号，分析问题。”
-See the [complete prompt](evidence/agent-demo/prompt.txt),
-[case instructions](evidence/agent-demo/case-instructions.md),
-[invocation](evidence/agent-demo/invocation.json),
-[actual conversation and MCP events](evidence/agent-demo/events.json), and
-[original final answer](evidence/agent-demo/answer.md).
+## 中文
 
-## What you are watching
+https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7
 
-- Left: the actual user-facing Codex messages and tool events, typeset and synchronized
-  to the recording. This is not a screenshot of the native Codex chat interface.
-- Right: a continuous, roughly 2 fps capture of the same live Verdi GUI. Source and
-  waveform path bars are redacted. The running elapsed-time label refers to the raw capture.
-- Idle gaps are compressed; opening/closing reading holds are added. The roughly
-  63-second raw capture becomes an approximately 83-second silent video.
-- The last ten seconds are an explicitly labeled paused replay of the 00:46 source
-  evidence, next to an excerpt of the actual final answer. This is not a new GUI action.
+Both 1m56s silent editions show the **same fresh agent session and Verdi capture**.
+The Chinese edition uses the original messages; English is a labeled translation,
+not a second English-language run. Tool names, arguments and results are unchanged.
 
-This run uses the known injected AXI-Lite case from the [blind experiment](blind-validation.md).
-It is a product demonstration, not another blind evaluation or an accuracy claim.
-An earlier take failed because the non-interactive CLI lacked the intended MCP
-approval setting. That failed setup take is excluded; the successful run is preserved.
-The invocation approves only this configured bridge's tools for the already-authorized
-session and leaves the shell read-only; it does not change the user's global configuration.
-See [official MCP configuration](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)
-for per-server approval settings.
+两版使用同一次真实运行：中文为原文，英文为明确标注的翻译。工具调用、波形和时间线一致。
 
-## Actual behavior, including mistakes
+## Why this replaces the earlier recording
 
-The agent attempted 16 MCP calls: 14 completed and two failed argument validation.
-It initially omitted absolute signal paths and used the wrong radix spelling, then
-corrected both after reading the errors. These events and its explanation remain in
-both the transcript and video. It also initially browsed `tb.dut`, which returned no
-signals, before finding the testbench-level signals.
+The former agent mistakenly selected an unrelated local Virtuoso skill before
+correcting itself. Verdi Bridge has no Virtuoso dependency. For this new recording,
+the skill was disabled only in the CLI invocation, and case instructions explicitly
+limited debugging to Verdi MCP. No global skill configuration was changed. The new
+agent neither mentions nor loads that skill. We reran the conversation rather than
+silently rewriting the previous agent's statements. [Previous recording notes](agent-demo-v1.md).
 
-It observed input strobe `1` versus backend strobe `f`, with matching address/data,
-and selected RTL line 122, which forces all byte enables high. It proposed capturing
-`s_axil_wstrb` instead. No source edits or new simulation were performed.
+旧版开头的 Virtuoso 来自 agent 误选本机技能，不是本项目的依赖。新版在启动时禁用了
+该技能，并重新录制了真实会话；没有直接修改旧对话来掩盖错误。
 
-A presentation limitation is retained rather than concealed: after selecting line
-122, the agent issued another driver trace, which left the GUI on the testbench's
-strobe declaration. Its final answer says it had navigated to line 122; that action
-did occur, but line 122 was no longer the final visible selection. The explicitly
-labeled evidence replay shows the actual earlier line-122 frame.
+## What is shown
 
-The public event file contains user-facing messages and MCP events; shell-output
-bulk, internal reasoning, local paths and machine identity are not published. A
-full local raw recording and event stream were retained for audit. Setup and
-installation steps remain in the [separate tutorial](video-walkthrough.md).
+- Left: actual user-facing Codex events, typeset and synchronized. This is not a
+  screenshot of a native chat UI. English text is translated from the Chinese original.
+- Right: continuous low-frame-rate capture of the same live Verdi GUI. Source/database
+  path bars are redacted. There is no scripted tool-call sequence.
+- Approximately 99.6 seconds of raw capture. Some idle intervals are compressed and
+  reading holds added; each edition is approximately 116.3 seconds. At the end, an
+  additional excerpt of the real final answer is displayed with the final GUI frame.
+- The agent receives the log, RTL, testbench and generic case instructions, but no
+  signal list, fault location or diagnosis. This uses a known injected AXI-Lite case;
+  it is a product demonstration, not a fresh blind evaluation.
+
+## Observed outcome and limits
+
+The agent attempted **20 MCP calls: 18 completed and two failed validation** (absolute
+waveform paths and radix spelling). It corrected the arguments and continued.
+It compared input strobe `1` with register-side strobe `f`, identified the constant
+assignment at RTL line 122, and left the GUI at that statement with the cursor at
+75 ns. No RTL was edited and no simulation rerun.
+
+The transcript preserves an imprecise timing phrase: its final answer calls 70 ns
+the handshake time. In this testbench the W inputs are asserted at the 70 ns falling
+edge; transfer occurs at the **75 ns rising edge**. The video and English translation
+retain the actual answer, while this note clarifies the distinction. The strobe
+mismatch and source diagnosis remain supported by the samples.
+
+## Evidence
+
+[Prompt](evidence/agent-demo-v2/prompt.txt) ·
+[Case instructions](evidence/agent-demo-v2/case-instructions.md) ·
+[Invocation](evidence/agent-demo-v2/invocation.json) ·
+[Original events](evidence/agent-demo-v2/events.json) ·
+[Original final answer](evidence/agent-demo-v2/answer.md) ·
+[English translations](evidence/agent-demo-v2/translations-en.json)
+
+Published event records include user-facing messages and MCP events. Machine paths
+are redacted; shell-output bulk and internal reasoning are excluded. Original local
+recordings and event streams are retained. The existing [blind experiment](blind-validation.md)
+is separate. See [official skill configuration](https://learn.chatgpt.com/docs/build-skills)
+for disabling an unrelated skill without deleting it.

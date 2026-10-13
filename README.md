@@ -27,9 +27,11 @@ return waveform values and source evidence while operating the GUI you can inspe
 
 ## Video walkthrough
 
-Ask an agent to investigate a bug, then watch it choose signals, inspect live waveforms and navigate RTL. A 1m23s silent Chinese demo: actual Codex conversation events beside synchronized Verdi capture. Tool calls are selected by the agent, not a replay script.
+Ask an agent to investigate a bug, then watch it choose signals, inspect live waveforms and navigate RTL. A 1m56s silent demo: an English translation of the actual Chinese Codex conversation beside synchronized Verdi capture. Tool calls are selected by the agent, not a replay script.
 
-https://github.com/user-attachments/assets/6775f3ea-e09d-49c8-8896-746474410999
+https://github.com/user-attachments/assets/bef00220-182e-430e-bce1-a1f487d904b2
+
+[English video](https://github.com/user-attachments/assets/bef00220-182e-430e-bce1-a1f487d904b2) · [中文视频](https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7)
 
 [How this was recorded](docs/agent-demo.md) · [Installation tutorial](docs/video-walkthrough.md)
 
