@@ -1,0 +1,245 @@
+[
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "uart",
+    "variant": "baseline"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "uart",
+    "variant": "baseline"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "uart",
+    "variant": "baseline"
+  },
+  {
+    "seed": 1,
+    "errors": 38,
+    "sent": 12,
+    "received": 8,
+    "first_error_ns": 1415,
+    "design": "uart",
+    "variant": "mutant"
+  },
+  {
+    "seed": 7,
+    "errors": 39,
+    "sent": 12,
+    "received": 9,
+    "first_error_ns": 1415,
+    "design": "uart",
+    "variant": "mutant"
+  },
+  {
+    "seed": 42,
+    "errors": 36,
+    "sent": 12,
+    "received": 9,
+    "first_error_ns": 1415,
+    "design": "uart",
+    "variant": "mutant"
+  },
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "uart",
+    "variant": "repaired"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "uart",
+    "variant": "repaired"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "uart",
+    "variant": "repaired"
+  },
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "axil",
+    "variant": "baseline"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "axil",
+    "variant": "baseline"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "axil",
+    "variant": "baseline"
+  },
+  {
+    "seed": 1,
+    "errors": 25,
+    "sent": 12,
+    "received": 0,
+    "first_error_ns": 105,
+    "design": "axil",
+    "variant": "mutant"
+  },
+  {
+    "seed": 7,
+    "errors": 25,
+    "sent": 12,
+    "received": 0,
+    "first_error_ns": 115,
+    "design": "axil",
+    "variant": "mutant"
+  },
+  {
+    "seed": 42,
+    "errors": 25,
+    "sent": 12,
+    "received": 0,
+    "first_error_ns": 115,
+    "design": "axil",
+    "variant": "mutant"
+  },
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "axil",
+    "variant": "repaired"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "axil",
+    "variant": "repaired"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 12,
+    "received": 12,
+    "first_error_ns": -1,
+    "design": "axil",
+    "variant": "repaired"
+  },
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": -1,
+    "design": "arbiter",
+    "variant": "baseline"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": -1,
+    "design": "arbiter",
+    "variant": "baseline"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": -1,
+    "design": "arbiter",
+    "variant": "baseline"
+  },
+  {
+    "seed": 1,
+    "errors": 86,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": 56,
+    "design": "arbiter",
+    "variant": "mutant"
+  },
+  {
+    "seed": 7,
+    "errors": 84,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": 56,
+    "design": "arbiter",
+    "variant": "mutant"
+  },
+  {
+    "seed": 42,
+    "errors": 84,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": 56,
+    "design": "arbiter",
+    "variant": "mutant"
+  },
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": -1,
+    "design": "arbiter",
+    "variant": "repaired"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": -1,
+    "design": "arbiter",
+    "variant": "repaired"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 100,
+    "received": 100,
+    "first_error_ns": -1,
+    "design": "arbiter",
+    "variant": "repaired"
+  }
+]

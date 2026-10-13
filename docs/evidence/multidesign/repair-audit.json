@@ -1,0 +1,24 @@
+{
+  "uart": {
+    "uart_tx.v": {
+      "sha256": "e9559ddebf124f8fbface06bf7091296baa78c7acab95a36b40a919663349d34",
+      "matches_baseline": true
+    }
+  },
+  "axil": {
+    "axil_reg_if_wr.v": {
+      "sha256": "ec2f3d3d97b694dd4ff046d791fc7a0f95856c41049a107eac1aa3b3daab7412",
+      "matches_baseline": true
+    }
+  },
+  "arbiter": {
+    "priority_encoder.v": {
+      "sha256": "df28220d95b47df349a72803a9751aad331eb8e1435416e8686d00572a974dd5",
+      "matches_baseline": true
+    },
+    "arbiter.v": {
+      "sha256": "d54d337db4812f927b2e9b5788dfa39f9bd578ad01b7846c5fa7f2610b0923fa",
+      "matches_baseline": true
+    }
+  }
+}

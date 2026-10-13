@@ -23,3 +23,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Additional MIT benchmark excerpts (the permission terms above also apply):
+- verilog-uart/rtl/uart_tx.v at 1b867e53af738e4a8bc7c839ca2f1c07f40382dc
+  Copyright (c) 2014-2017 Alex Forencich
+- verilog-axi/rtl/axil_reg_if_wr.v at 516bd5dadc3365b7f9e225d2af8fe0b8d804fe53
+  Copyright (c) 2021 Alex Forencich
+- verilog-axis/rtl/arbiter.v at 48ff7a7e2ef782cf778d47910cf85835c64b1bce
+  Copyright (c) 2014-2021 Alex Forencich
+Their repositories are hosted under https://github.com/alexforencich/.

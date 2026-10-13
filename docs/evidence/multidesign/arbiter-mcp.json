@@ -1,0 +1,1186 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "session_status",
+      "is_error": false,
+      "result": {
+        "window": "1bf8d1e0",
+        "time_unit": "1ps",
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "viewport": [
+          "1",
+          "0",
+          "105040"
+        ],
+        "signals": []
+      }
+    },
+    {
+      "tool": "browse_scope",
+      "arguments": {
+        "scope": "/tb/dut"
+      },
+      "is_error": false,
+      "result": {
+        "scope": "/tb/dut",
+        "scopes": [
+          "priority_encoder_inst",
+          "priority_encoder_masked"
+        ],
+        "signals": [
+          "acknowledge[3:0]",
+          "clk",
+          "grant[3:0]",
+          "grant_encoded[1:0]",
+          "grant_encoded_next[1:0]",
+          "grant_encoded_reg[1:0]",
+          "grant_next[3:0]",
+          "grant_reg[3:0]",
+          "grant_valid",
+          "grant_valid_next",
+          "grant_valid_reg",
+          "mask_next[3:0]",
+          "mask_reg[3:0]",
+          "masked_request_index[1:0]",
+          "masked_request_mask[3:0]",
+          "masked_request_valid",
+          "request[3:0]",
+          "request_index[1:0]",
+          "request_mask[3:0]",
+          "request_valid",
+          "rst"
+        ],
+        "names_relative": true
+      }
+    },
+    {
+      "tool": "add_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/request[3:0]",
+          "/tb/dut/grant[3:0]",
+          "/tb/dut/grant_encoded[1:0]",
+          "/tb/dut/grant_valid",
+          "/tb/dut/mask_reg[3:0]",
+          "/tb/dut/mask_next[3:0]",
+          "/tb/dut/masked_request_valid"
+        ]
+      },
+      "is_error": false,
+      "result": {
+        "signals": [
+          "/tb/dut/request[3:0]",
+          "/tb/dut/grant[3:0]",
+          "/tb/dut/grant_encoded[1:0]",
+          "/tb/dut/grant_valid",
+          "/tb/dut/mask_reg[3:0]",
+          "/tb/dut/mask_next[3:0]",
+          "/tb/dut/masked_request_valid"
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "56",
+        "period": "10",
+        "cycles": 20
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": true,
+        "cycles": 20,
+        "note": "Preserves timestamp phase; does not snap to clock edges"
+      }
+    },
+    {
+      "tool": "set_time_window",
+      "arguments": {
+        "start": "0",
+        "end": "200"
+      },
+      "is_error": false,
+      "result": {
+        "viewport": [
+          "1",
+          "0",
+          "200000"
+        ],
+        "time_unit": "1ps"
+      }
+    },
+    {
+      "tool": "sample_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/request[3:0]",
+          "/tb/dut/grant[3:0]",
+          "/tb/dut/grant_encoded[1:0]",
+          "/tb/dut/grant_valid",
+          "/tb/dut/mask_reg[3:0]",
+          "/tb/dut/mask_next[3:0]",
+          "/tb/dut/masked_request_valid"
+        ],
+        "times": [
+          "36",
+          "46",
+          "56",
+          "66",
+          "76",
+          "86",
+          "96",
+          "106"
+        ],
+        "radix": "UDec"
+      },
+      "is_error": false,
+      "result": {
+        "radix": "UDec",
+        "samples": [
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "36",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "66",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "106",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "106",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_valid",
+            "time": "106",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_next[3:0]",
+            "time": "106",
+            "unit": "ns",
+            "value": "14"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.grant_reg"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.grant_reg",
+        "driver": [
+          "tb.dut",
+          "./arbiter.v",
+          "58"
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.mask_reg"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.mask_reg",
+        "driver": [
+          "tb.dut",
+          "./arbiter.v",
+          "81"
+        ]
+      }
+    },
+    {
+      "tool": "read_source",
+      "arguments": {
+        "signal": "tb.dut.grant_reg",
+        "start": 1,
+        "count": 200
+      },
+      "is_error": false,
+      "result": {
+        "file": "/tmp/verdi-bridge-project/build/multidesign/arbiter/mutant/arbiter.v",
+        "definition_line": "58",
+        "lines": [
+          {
+            "line": 1,
+            "text": "/*"
+          },
+          {
+            "line": 2,
+            "text": ""
+          },
+          {
+            "line": 3,
+            "text": "Copyright (c) 2014-2021 Alex Forencich"
+          },
+          {
+            "line": 4,
+            "text": ""
+          },
+          {
+            "line": 5,
+            "text": "Permission is hereby granted, free of charge, to any person obtaining a copy"
+          },
+          {
+            "line": 6,
+            "text": "of this software and associated documentation files (the \"Software\"), to deal"
+          },
+          {
+            "line": 7,
+            "text": "in the Software without restriction, including without limitation the rights"
+          },
+          {
+            "line": 8,
+            "text": "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell"
+          },
+          {
+            "line": 9,
+            "text": "copies of the Software, and to permit persons to whom the Software is"
+          },
+          {
+            "line": 10,
+            "text": "furnished to do so, subject to the following conditions:"
+          },
+          {
+            "line": 11,
+            "text": ""
+          },
+          {
+            "line": 12,
+            "text": "The above copyright notice and this permission notice shall be included in"
+          },
+          {
+            "line": 13,
+            "text": "all copies or substantial portions of the Software."
+          },
+          {
+            "line": 14,
+            "text": ""
+          },
+          {
+            "line": 15,
+            "text": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR"
+          },
+          {
+            "line": 16,
+            "text": "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY"
+          },
+          {
+            "line": 17,
+            "text": "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE"
+          },
+          {
+            "line": 18,
+            "text": "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          },
+          {
+            "line": 19,
+            "text": "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
+          },
+          {
+            "line": 20,
+            "text": "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN"
+          },
+          {
+            "line": 21,
+            "text": "THE SOFTWARE."
+          },
+          {
+            "line": 22,
+            "text": ""
+          },
+          {
+            "line": 23,
+            "text": "*/"
+          },
+          {
+            "line": 24,
+            "text": ""
+          },
+          {
+            "line": 25,
+            "text": "// Language: Verilog 2001"
+          },
+          {
+            "line": 26,
+            "text": ""
+          },
+          {
+            "line": 27,
+            "text": "`resetall"
+          },
+          {
+            "line": 28,
+            "text": "`timescale 1ns / 1ps"
+          },
+          {
+            "line": 29,
+            "text": "`default_nettype none"
+          },
+          {
+            "line": 30,
+            "text": ""
+          },
+          {
+            "line": 31,
+            "text": "/*"
+          },
+          {
+            "line": 32,
+            "text": " * Arbiter module"
+          },
+          {
+            "line": 33,
+            "text": " */"
+          },
+          {
+            "line": 34,
+            "text": "module arbiter #"
+          },
+          {
+            "line": 35,
+            "text": "("
+          },
+          {
+            "line": 36,
+            "text": "    parameter PORTS = 4,"
+          },
+          {
+            "line": 37,
+            "text": "    // select round robin arbitration"
+          },
+          {
+            "line": 38,
+            "text": "    parameter ARB_TYPE_ROUND_ROBIN = 0,"
+          },
+          {
+            "line": 39,
+            "text": "    // blocking arbiter enable"
+          },
+          {
+            "line": 40,
+            "text": "    parameter ARB_BLOCK = 0,"
+          },
+          {
+            "line": 41,
+            "text": "    // block on acknowledge assert when nonzero, request deassert when 0"
+          },
+          {
+            "line": 42,
+            "text": "    parameter ARB_BLOCK_ACK = 1,"
+          },
+          {
+            "line": 43,
+            "text": "    // LSB priority selection"
+          },
+          {
+            "line": 44,
+            "text": "    parameter ARB_LSB_HIGH_PRIORITY = 0"
+          },
+          {
+            "line": 45,
+            "text": ")"
+          },
+          {
+            "line": 46,
+            "text": "("
+          },
+          {
+            "line": 47,
+            "text": "    input  wire                     clk,"
+          },
+          {
+            "line": 48,
+            "text": "    input  wire                     rst,"
+          },
+          {
+            "line": 49,
+            "text": ""
+          },
+          {
+            "line": 50,
+            "text": "    input  wire [PORTS-1:0]         request,"
+          },
+          {
+            "line": 51,
+            "text": "    input  wire [PORTS-1:0]         acknowledge,"
+          },
+          {
+            "line": 52,
+            "text": ""
+          },
+          {
+            "line": 53,
+            "text": "    output wire [PORTS-1:0]         grant,"
+          },
+          {
+            "line": 54,
+            "text": "    output wire                     grant_valid,"
+          },
+          {
+            "line": 55,
+            "text": "    output wire [$clog2(PORTS)-1:0] grant_encoded"
+          },
+          {
+            "line": 56,
+            "text": ");"
+          },
+          {
+            "line": 57,
+            "text": ""
+          },
+          {
+            "line": 58,
+            "text": "reg [PORTS-1:0] grant_reg = 0, grant_next;"
+          },
+          {
+            "line": 59,
+            "text": "reg grant_valid_reg = 0, grant_valid_next;"
+          },
+          {
+            "line": 60,
+            "text": "reg [$clog2(PORTS)-1:0] grant_encoded_reg = 0, grant_encoded_next;"
+          },
+          {
+            "line": 61,
+            "text": ""
+          },
+          {
+            "line": 62,
+            "text": "assign grant_valid = grant_valid_reg;"
+          },
+          {
+            "line": 63,
+            "text": "assign grant = grant_reg;"
+          },
+          {
+            "line": 64,
+            "text": "assign grant_encoded = grant_encoded_reg;"
+          },
+          {
+            "line": 65,
+            "text": ""
+          },
+          {
+            "line": 66,
+            "text": "wire request_valid;"
+          },
+          {
+            "line": 67,
+            "text": "wire [$clog2(PORTS)-1:0] request_index;"
+          },
+          {
+            "line": 68,
+            "text": "wire [PORTS-1:0] request_mask;"
+          },
+          {
+            "line": 69,
+            "text": ""
+          },
+          {
+            "line": 70,
+            "text": "priority_encoder #("
+          },
+          {
+            "line": 71,
+            "text": "    .WIDTH(PORTS),"
+          },
+          {
+            "line": 72,
+            "text": "    .LSB_HIGH_PRIORITY(ARB_LSB_HIGH_PRIORITY)"
+          },
+          {
+            "line": 73,
+            "text": ")"
+          },
+          {
+            "line": 74,
+            "text": "priority_encoder_inst ("
+          },
+          {
+            "line": 75,
+            "text": "    .input_unencoded(request),"
+          },
+          {
+            "line": 76,
+            "text": "    .output_valid(request_valid),"
+          },
+          {
+            "line": 77,
+            "text": "    .output_encoded(request_index),"
+          },
+          {
+            "line": 78,
+            "text": "    .output_unencoded(request_mask)"
+          },
+          {
+            "line": 79,
+            "text": ");"
+          },
+          {
+            "line": 80,
+            "text": ""
+          },
+          {
+            "line": 81,
+            "text": "reg [PORTS-1:0] mask_reg = 0, mask_next;"
+          },
+          {
+            "line": 82,
+            "text": ""
+          },
+          {
+            "line": 83,
+            "text": "wire masked_request_valid;"
+          },
+          {
+            "line": 84,
+            "text": "wire [$clog2(PORTS)-1:0] masked_request_index;"
+          },
+          {
+            "line": 85,
+            "text": "wire [PORTS-1:0] masked_request_mask;"
+          },
+          {
+            "line": 86,
+            "text": ""
+          },
+          {
+            "line": 87,
+            "text": "priority_encoder #("
+          },
+          {
+            "line": 88,
+            "text": "    .WIDTH(PORTS),"
+          },
+          {
+            "line": 89,
+            "text": "    .LSB_HIGH_PRIORITY(ARB_LSB_HIGH_PRIORITY)"
+          },
+          {
+            "line": 90,
+            "text": ")"
+          },
+          {
+            "line": 91,
+            "text": "priority_encoder_masked ("
+          },
+          {
+            "line": 92,
+            "text": "    .input_unencoded(request & mask_reg),"
+          },
+          {
+            "line": 93,
+            "text": "    .output_valid(masked_request_valid),"
+          },
+          {
+            "line": 94,
+            "text": "    .output_encoded(masked_request_index),"
+          },
+          {
+            "line": 95,
+            "text": "    .output_unencoded(masked_request_mask)"
+          },
+          {
+            "line": 96,
+            "text": ");"
+          },
+          {
+            "line": 97,
+            "text": ""
+          },
+          {
+            "line": 98,
+            "text": "always @* begin"
+          },
+          {
+            "line": 99,
+            "text": "    grant_next = 0;"
+          },
+          {
+            "line": 100,
+            "text": "    grant_valid_next = 0;"
+          },
+          {
+            "line": 101,
+            "text": "    grant_encoded_next = 0;"
+          },
+          {
+            "line": 102,
+            "text": "    mask_next = mask_reg;"
+          },
+          {
+            "line": 103,
+            "text": ""
+          },
+          {
+            "line": 104,
+            "text": "    if (ARB_BLOCK && !ARB_BLOCK_ACK && grant_reg & request) begin"
+          },
+          {
+            "line": 105,
+            "text": "        // granted request still asserted; hold it"
+          },
+          {
+            "line": 106,
+            "text": "        grant_valid_next = grant_valid_reg;"
+          },
+          {
+            "line": 107,
+            "text": "        grant_next = grant_reg;"
+          },
+          {
+            "line": 108,
+            "text": "        grant_encoded_next = grant_encoded_reg;"
+          },
+          {
+            "line": 109,
+            "text": "    end else if (ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge)) begin"
+          },
+          {
+            "line": 110,
+            "text": "        // granted request not yet acknowledged; hold it"
+          },
+          {
+            "line": 111,
+            "text": "        grant_valid_next = grant_valid_reg;"
+          },
+          {
+            "line": 112,
+            "text": "        grant_next = grant_reg;"
+          },
+          {
+            "line": 113,
+            "text": "        grant_encoded_next = grant_encoded_reg;"
+          },
+          {
+            "line": 114,
+            "text": "    end else if (request_valid) begin"
+          },
+          {
+            "line": 115,
+            "text": "        if (ARB_TYPE_ROUND_ROBIN) begin"
+          },
+          {
+            "line": 116,
+            "text": "            if (masked_request_valid) begin"
+          },
+          {
+            "line": 117,
+            "text": "                grant_valid_next = 1;"
+          },
+          {
+            "line": 118,
+            "text": "                grant_next = masked_request_mask;"
+          },
+          {
+            "line": 119,
+            "text": "                grant_encoded_next = masked_request_index;"
+          },
+          {
+            "line": 120,
+            "text": "                if (ARB_LSB_HIGH_PRIORITY) begin"
+          },
+          {
+            "line": 121,
+            "text": "                    mask_next = {PORTS{1'b1}} << (masked_request_index + 1);"
+          },
+          {
+            "line": 122,
+            "text": "                end else begin"
+          },
+          {
+            "line": 123,
+            "text": "                    mask_next = {PORTS{1'b1}} >> (PORTS - masked_request_index);"
+          },
+          {
+            "line": 124,
+            "text": "                end"
+          },
+          {
+            "line": 125,
+            "text": "            end else begin"
+          },
+          {
+            "line": 126,
+            "text": "                grant_valid_next = 1;"
+          },
+          {
+            "line": 127,
+            "text": "                grant_next = request_mask;"
+          },
+          {
+            "line": 128,
+            "text": "                grant_encoded_next = request_index;"
+          },
+          {
+            "line": 129,
+            "text": "                if (ARB_LSB_HIGH_PRIORITY) begin"
+          },
+          {
+            "line": 130,
+            "text": "                    mask_next = {PORTS{1'b1}} << (request_index + 1);"
+          },
+          {
+            "line": 131,
+            "text": "                end else begin"
+          },
+          {
+            "line": 132,
+            "text": "                    mask_next = {PORTS{1'b1}} >> (PORTS - request_index);"
+          },
+          {
+            "line": 133,
+            "text": "                end"
+          },
+          {
+            "line": 134,
+            "text": "            end"
+          },
+          {
+            "line": 135,
+            "text": "        end else begin"
+          },
+          {
+            "line": 136,
+            "text": "            grant_valid_next = 1;"
+          },
+          {
+            "line": 137,
+            "text": "            grant_next = request_mask;"
+          },
+          {
+            "line": 138,
+            "text": "            grant_encoded_next = request_index;"
+          },
+          {
+            "line": 139,
+            "text": "        end"
+          },
+          {
+            "line": 140,
+            "text": "    end"
+          },
+          {
+            "line": 141,
+            "text": "end"
+          },
+          {
+            "line": 142,
+            "text": ""
+          },
+          {
+            "line": 143,
+            "text": "always @(posedge clk) begin"
+          },
+          {
+            "line": 144,
+            "text": "    grant_reg <= grant_next;"
+          },
+          {
+            "line": 145,
+            "text": "    grant_valid_reg <= grant_valid_next;"
+          },
+          {
+            "line": 146,
+            "text": "    grant_encoded_reg <= grant_encoded_next;"
+          },
+          {
+            "line": 147,
+            "text": "    mask_reg <= 0;"
+          },
+          {
+            "line": 148,
+            "text": ""
+          },
+          {
+            "line": 149,
+            "text": "    if (rst) begin"
+          },
+          {
+            "line": 150,
+            "text": "        grant_reg <= 0;"
+          },
+          {
+            "line": 151,
+            "text": "        grant_valid_reg <= 0;"
+          },
+          {
+            "line": 152,
+            "text": "        grant_encoded_reg <= 0;"
+          },
+          {
+            "line": 153,
+            "text": "        mask_reg <= 0;"
+          },
+          {
+            "line": 154,
+            "text": "    end"
+          },
+          {
+            "line": 155,
+            "text": "end"
+          },
+          {
+            "line": 156,
+            "text": ""
+          },
+          {
+            "line": 157,
+            "text": "endmodule"
+          },
+          {
+            "line": 158,
+            "text": ""
+          },
+          {
+            "line": 159,
+            "text": "`resetall"
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

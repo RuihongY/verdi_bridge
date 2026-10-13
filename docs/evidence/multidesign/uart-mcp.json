@@ -1,0 +1,1000 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "session_status",
+      "is_error": false,
+      "result": {
+        "window": "1b122510",
+        "time_unit": "1ps",
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "viewport": [
+          "1",
+          "0",
+          "1835170"
+        ],
+        "signals": []
+      }
+    },
+    {
+      "tool": "browse_scope",
+      "arguments": {
+        "scope": "/tb/dut"
+      },
+      "is_error": false,
+      "result": {
+        "scope": "/tb/dut",
+        "scopes": [],
+        "signals": [
+          "bit_cnt[3:0]",
+          "busy",
+          "busy_reg",
+          "clk",
+          "data_reg[8:0]",
+          "prescale[15:0]",
+          "prescale_reg[18:0]",
+          "rst",
+          "s_axis_tdata[7:0]",
+          "s_axis_tready",
+          "s_axis_tready_reg",
+          "s_axis_tvalid",
+          "txd",
+          "txd_reg"
+        ],
+        "names_relative": true
+      }
+    },
+    {
+      "tool": "add_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axis_tvalid",
+          "/tb/dut/s_axis_tready",
+          "/tb/dut/s_axis_tdata[7:0]",
+          "/tb/dut/txd",
+          "/tb/dut/bit_cnt[3:0]",
+          "/tb/dut/prescale_reg[18:0]",
+          "/tb/dut/data_reg[8:0]"
+        ]
+      },
+      "is_error": false,
+      "result": {
+        "signals": [
+          "/tb/dut/s_axis_tvalid",
+          "/tb/dut/s_axis_tready",
+          "/tb/dut/s_axis_tdata[7:0]",
+          "/tb/dut/txd",
+          "/tb/dut/bit_cnt[3:0]",
+          "/tb/dut/prescale_reg[18:0]",
+          "/tb/dut/data_reg[8:0]"
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "1415",
+        "period": "10",
+        "cycles": 20
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "1215000",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": false,
+        "cycles": 20,
+        "note": "Preserves timestamp phase; does not snap to clock edges"
+      }
+    },
+    {
+      "tool": "set_time_window",
+      "arguments": {
+        "start": "0",
+        "end": "1700"
+      },
+      "is_error": false,
+      "result": {
+        "viewport": [
+          "1",
+          "0",
+          "1700000"
+        ],
+        "time_unit": "1ps"
+      }
+    },
+    {
+      "tool": "sample_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axis_tvalid",
+          "/tb/dut/s_axis_tready",
+          "/tb/dut/s_axis_tdata[7:0]",
+          "/tb/dut/txd",
+          "/tb/dut/bit_cnt[3:0]",
+          "/tb/dut/prescale_reg[18:0]",
+          "/tb/dut/data_reg[8:0]"
+        ],
+        "times": [
+          "46",
+          "56",
+          "216",
+          "376",
+          "1176",
+          "1336",
+          "1415",
+          "1496"
+        ],
+        "radix": "UDec"
+      },
+      "is_error": false,
+      "result": {
+        "radix": "UDec",
+        "samples": [
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "309"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "216",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "216",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "216",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "154"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "376",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "376",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "376",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "6"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "77"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1176",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1176",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1176",
+            "unit": "ns",
+            "value": "15"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1176",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1336",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1336",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1336",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1336",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1336",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1336",
+            "unit": "ns",
+            "value": "16"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1336",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1415",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1496",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1496",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1496",
+            "unit": "ns",
+            "value": "53"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1496",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1496",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1496",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1496",
+            "unit": "ns",
+            "value": "2"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.txd_reg"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.txd_reg",
+        "driver": [
+          "tb.dut",
+          "./uart_tx.v",
+          "65"
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.bit_cnt"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.bit_cnt",
+        "driver": [
+          "tb.dut",
+          "./uart_tx.v",
+          "71"
+        ]
+      }
+    },
+    {
+      "tool": "read_source",
+      "arguments": {
+        "signal": "tb.dut.txd_reg",
+        "start": 1,
+        "count": 200
+      },
+      "is_error": false,
+      "result": {
+        "file": "/tmp/verdi-bridge-project/build/multidesign/uart/mutant/uart_tx.v",
+        "definition_line": "65",
+        "lines": [
+          {
+            "line": 1,
+            "text": "/*"
+          },
+          {
+            "line": 2,
+            "text": ""
+          },
+          {
+            "line": 3,
+            "text": "Copyright (c) 2014-2017 Alex Forencich"
+          },
+          {
+            "line": 4,
+            "text": ""
+          },
+          {
+            "line": 5,
+            "text": "Permission is hereby granted, free of charge, to any person obtaining a copy"
+          },
+          {
+            "line": 6,
+            "text": "of this software and associated documentation files (the \"Software\"), to deal"
+          },
+          {
+            "line": 7,
+            "text": "in the Software without restriction, including without limitation the rights"
+          },
+          {
+            "line": 8,
+            "text": "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell"
+          },
+          {
+            "line": 9,
+            "text": "copies of the Software, and to permit persons to whom the Software is"
+          },
+          {
+            "line": 10,
+            "text": "furnished to do so, subject to the following conditions:"
+          },
+          {
+            "line": 11,
+            "text": ""
+          },
+          {
+            "line": 12,
+            "text": "The above copyright notice and this permission notice shall be included in"
+          },
+          {
+            "line": 13,
+            "text": "all copies or substantial portions of the Software."
+          },
+          {
+            "line": 14,
+            "text": ""
+          },
+          {
+            "line": 15,
+            "text": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR"
+          },
+          {
+            "line": 16,
+            "text": "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY"
+          },
+          {
+            "line": 17,
+            "text": "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE"
+          },
+          {
+            "line": 18,
+            "text": "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          },
+          {
+            "line": 19,
+            "text": "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
+          },
+          {
+            "line": 20,
+            "text": "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN"
+          },
+          {
+            "line": 21,
+            "text": "THE SOFTWARE."
+          },
+          {
+            "line": 22,
+            "text": ""
+          },
+          {
+            "line": 23,
+            "text": "*/"
+          },
+          {
+            "line": 24,
+            "text": ""
+          },
+          {
+            "line": 25,
+            "text": "// Language: Verilog 2001"
+          },
+          {
+            "line": 26,
+            "text": ""
+          },
+          {
+            "line": 27,
+            "text": "`timescale 1ns / 1ps"
+          },
+          {
+            "line": 28,
+            "text": ""
+          },
+          {
+            "line": 29,
+            "text": "/*"
+          },
+          {
+            "line": 30,
+            "text": " * AXI4-Stream UART"
+          },
+          {
+            "line": 31,
+            "text": " */"
+          },
+          {
+            "line": 32,
+            "text": "module uart_tx #"
+          },
+          {
+            "line": 33,
+            "text": "("
+          },
+          {
+            "line": 34,
+            "text": "    parameter DATA_WIDTH = 8"
+          },
+          {
+            "line": 35,
+            "text": ")"
+          },
+          {
+            "line": 36,
+            "text": "("
+          },
+          {
+            "line": 37,
+            "text": "    input  wire                   clk,"
+          },
+          {
+            "line": 38,
+            "text": "    input  wire                   rst,"
+          },
+          {
+            "line": 39,
+            "text": ""
+          },
+          {
+            "line": 40,
+            "text": "    /*"
+          },
+          {
+            "line": 41,
+            "text": "     * AXI input"
+          },
+          {
+            "line": 42,
+            "text": "     */"
+          },
+          {
+            "line": 43,
+            "text": "    input  wire [DATA_WIDTH-1:0]  s_axis_tdata,"
+          },
+          {
+            "line": 44,
+            "text": "    input  wire                   s_axis_tvalid,"
+          },
+          {
+            "line": 45,
+            "text": "    output wire                   s_axis_tready,"
+          },
+          {
+            "line": 46,
+            "text": ""
+          },
+          {
+            "line": 47,
+            "text": "    /*"
+          },
+          {
+            "line": 48,
+            "text": "     * UART interface"
+          },
+          {
+            "line": 49,
+            "text": "     */"
+          },
+          {
+            "line": 50,
+            "text": "    output wire                   txd,"
+          },
+          {
+            "line": 51,
+            "text": ""
+          },
+          {
+            "line": 52,
+            "text": "    /*"
+          },
+          {
+            "line": 53,
+            "text": "     * Status"
+          },
+          {
+            "line": 54,
+            "text": "     */"
+          },
+          {
+            "line": 55,
+            "text": "    output wire                   busy,"
+          },
+          {
+            "line": 56,
+            "text": ""
+          },
+          {
+            "line": 57,
+            "text": "    /*"
+          },
+          {
+            "line": 58,
+            "text": "     * Configuration"
+          },
+          {
+            "line": 59,
+            "text": "     */"
+          },
+          {
+            "line": 60,
+            "text": "    input  wire [15:0]            prescale"
+          },
+          {
+            "line": 61,
+            "text": ");"
+          },
+          {
+            "line": 62,
+            "text": ""
+          },
+          {
+            "line": 63,
+            "text": "reg s_axis_tready_reg = 0;"
+          },
+          {
+            "line": 64,
+            "text": ""
+          },
+          {
+            "line": 65,
+            "text": "reg txd_reg = 1;"
+          },
+          {
+            "line": 66,
+            "text": ""
+          },
+          {
+            "line": 67,
+            "text": "reg busy_reg = 0;"
+          },
+          {
+            "line": 68,
+            "text": ""
+          },
+          {
+            "line": 69,
+            "text": "reg [DATA_WIDTH:0] data_reg = 0;"
+          },
+          {
+            "line": 70,
+            "text": "reg [18:0] prescale_reg = 0;"
+          },
+          {
+            "line": 71,
+            "text": "reg [3:0] bit_cnt = 0;"
+          },
+          {
+            "line": 72,
+            "text": ""
+          },
+          {
+            "line": 73,
+            "text": "assign s_axis_tready = s_axis_tready_reg;"
+          },
+          {
+            "line": 74,
+            "text": "assign txd = txd_reg;"
+          },
+          {
+            "line": 75,
+            "text": ""
+          },
+          {
+            "line": 76,
+            "text": "assign busy = busy_reg;"
+          },
+          {
+            "line": 77,
+            "text": ""
+          },
+          {
+            "line": 78,
+            "text": "always @(posedge clk) begin"
+          },
+          {
+            "line": 79,
+            "text": "    if (rst) begin"
+          },
+          {
+            "line": 80,
+            "text": "        s_axis_tready_reg <= 0;"
+          },
+          {
+            "line": 81,
+            "text": "        txd_reg <= 1;"
+          },
+          {
+            "line": 82,
+            "text": "        prescale_reg <= 0;"
+          },
+          {
+            "line": 83,
+            "text": "        bit_cnt <= 0;"
+          },
+          {
+            "line": 84,
+            "text": "        busy_reg <= 0;"
+          },
+          {
+            "line": 85,
+            "text": "    end else begin"
+          },
+          {
+            "line": 86,
+            "text": "        if (prescale_reg > 0) begin"
+          },
+          {
+            "line": 87,
+            "text": "            s_axis_tready_reg <= 0;"
+          },
+          {
+            "line": 88,
+            "text": "            prescale_reg <= prescale_reg - 1;"
+          },
+          {
+            "line": 89,
+            "text": "        end else if (bit_cnt == 0) begin"
+          },
+          {
+            "line": 90,
+            "text": "            s_axis_tready_reg <= 1;"
+          },
+          {
+            "line": 91,
+            "text": "            busy_reg <= 0;"
+          },
+          {
+            "line": 92,
+            "text": ""
+          },
+          {
+            "line": 93,
+            "text": "            if (s_axis_tvalid) begin"
+          },
+          {
+            "line": 94,
+            "text": "                s_axis_tready_reg <= !s_axis_tready_reg;"
+          },
+          {
+            "line": 95,
+            "text": "                prescale_reg <= (prescale << 3)-1;"
+          },
+          {
+            "line": 96,
+            "text": "                bit_cnt <= DATA_WIDTH;"
+          },
+          {
+            "line": 97,
+            "text": "                data_reg <= {1'b1, s_axis_tdata};"
+          },
+          {
+            "line": 98,
+            "text": "                txd_reg <= 0;"
+          },
+          {
+            "line": 99,
+            "text": "                busy_reg <= 1;"
+          },
+          {
+            "line": 100,
+            "text": "            end"
+          },
+          {
+            "line": 101,
+            "text": "        end else begin"
+          },
+          {
+            "line": 102,
+            "text": "            if (bit_cnt > 1) begin"
+          },
+          {
+            "line": 103,
+            "text": "                bit_cnt <= bit_cnt - 1;"
+          },
+          {
+            "line": 104,
+            "text": "                prescale_reg <= (prescale << 3)-1;"
+          },
+          {
+            "line": 105,
+            "text": "                {data_reg, txd_reg} <= {1'b0, data_reg};"
+          },
+          {
+            "line": 106,
+            "text": "            end else if (bit_cnt == 1) begin"
+          },
+          {
+            "line": 107,
+            "text": "                bit_cnt <= bit_cnt - 1;"
+          },
+          {
+            "line": 108,
+            "text": "                prescale_reg <= (prescale << 3);"
+          },
+          {
+            "line": 109,
+            "text": "                txd_reg <= 1;"
+          },
+          {
+            "line": 110,
+            "text": "            end"
+          },
+          {
+            "line": 111,
+            "text": "        end"
+          },
+          {
+            "line": 112,
+            "text": "    end"
+          },
+          {
+            "line": 113,
+            "text": "end"
+          },
+          {
+            "line": 114,
+            "text": ""
+          },
+          {
+            "line": 115,
+            "text": "endmodule"
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

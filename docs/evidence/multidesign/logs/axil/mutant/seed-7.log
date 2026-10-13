@@ -1,0 +1,13 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2_Full64; Runtime version U-2023.03-SP2_Full64;  Oct 12 23:58 2026
+FIRST_ERROR time_ns=115 kind=response_not_held
+RESULT seed=7 errors=25 sent=12 received=0 first_error_ns=115
+$finish called from file "/tmp/verdi-bridge-project/examples/multidesign/axil_tb.sv", line 78.
+$finish at simulation time              6570000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 6570000 ps
+CPU Time:      0.220 seconds;       Data structure size:   0.0Mb
+Mon Oct 12 23:58:50 2026

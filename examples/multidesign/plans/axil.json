@@ -1,0 +1,89 @@
+[
+  {
+    "tool": "session_status"
+  },
+  {
+    "tool": "browse_scope",
+    "arguments": {
+      "scope": "/tb/dut"
+    }
+  },
+  {
+    "tool": "add_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axil_awvalid",
+        "/tb/dut/s_axil_awready",
+        "/tb/dut/s_axil_wvalid",
+        "/tb/dut/s_axil_wready",
+        "/tb/dut/reg_wr_en",
+        "/tb/dut/reg_wr_ack",
+        "/tb/dut/s_axil_bvalid",
+        "/tb/dut/s_axil_bvalid_next",
+        "/tb/dut/s_axil_bready"
+      ]
+    }
+  },
+  {
+    "tool": "jump_before_error",
+    "arguments": {
+      "error_time": "105",
+      "period": "10",
+      "cycles": 20
+    }
+  },
+  {
+    "tool": "set_time_window",
+    "arguments": {
+      "start": "0",
+      "end": "250"
+    }
+  },
+  {
+    "tool": "sample_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axil_awvalid",
+        "/tb/dut/s_axil_awready",
+        "/tb/dut/s_axil_wvalid",
+        "/tb/dut/s_axil_wready",
+        "/tb/dut/reg_wr_en",
+        "/tb/dut/reg_wr_ack",
+        "/tb/dut/s_axil_bvalid",
+        "/tb/dut/s_axil_bvalid_next",
+        "/tb/dut/s_axil_bready"
+      ],
+      "times": [
+        "66",
+        "76",
+        "86",
+        "96",
+        "105",
+        "106",
+        "176",
+        "186"
+      ],
+      "radix": "UDec"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.s_axil_bvalid_reg"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.s_axil_bvalid_next"
+    }
+  },
+  {
+    "tool": "read_source",
+    "arguments": {
+      "signal": "tb.dut.s_axil_bvalid_reg",
+      "start": 1,
+      "count": 200
+    }
+  }
+]

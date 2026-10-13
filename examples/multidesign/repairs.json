@@ -1,0 +1,20 @@
+{
+  "uart": {
+    "file": "uart_tx.v",
+    "old": "bit_cnt <= DATA_WIDTH;",
+    "new": "bit_cnt <= DATA_WIDTH+1;",
+    "reason": "bit_cnt==1 enters the stop-bit branch, so eight data bits require initial count nine; the sampled seventh-bit end already has count one."
+  },
+  "axil": {
+    "file": "axil_reg_if_wr.v",
+    "old": "s_axil_bvalid_next = 1'b0;",
+    "new": "s_axil_bvalid_next = s_axil_bvalid_reg && !s_axil_bready;",
+    "reason": "Hold BVALID until the BREADY handshake; the waveform loses BVALID from 86 to 96 ns while BREADY stays zero."
+  },
+  "arbiter": {
+    "file": "arbiter.v",
+    "old": "grant_encoded_reg <= grant_encoded_next;\n    mask_reg <= 0;",
+    "new": "grant_encoded_reg <= grant_encoded_next;\n    mask_reg <= mask_next;",
+    "reason": "Capture the computed rotation mask; mask_next is 14 while mask_reg stays zero over multiple rising edges. Preserve the separate reset assignment."
+  }
+}

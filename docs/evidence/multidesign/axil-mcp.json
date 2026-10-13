@@ -1,0 +1,1283 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "session_status",
+      "is_error": false,
+      "result": {
+        "window": "1ad280e0",
+        "time_unit": "1ps",
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "viewport": [
+          "1",
+          "0",
+          "664580"
+        ],
+        "signals": []
+      }
+    },
+    {
+      "tool": "browse_scope",
+      "arguments": {
+        "scope": "/tb/dut"
+      },
+      "is_error": false,
+      "result": {
+        "scope": "/tb/dut",
+        "scopes": [],
+        "signals": [
+          "clk",
+          "reg_wr_ack",
+          "reg_wr_addr[15:0]",
+          "reg_wr_data[31:0]",
+          "reg_wr_en",
+          "reg_wr_en_next",
+          "reg_wr_en_reg",
+          "reg_wr_strb[3:0]",
+          "reg_wr_wait",
+          "rst",
+          "s_axil_awaddr[15:0]",
+          "s_axil_awaddr_next[15:0]",
+          "s_axil_awaddr_reg[15:0]",
+          "s_axil_awprot[2:0]",
+          "s_axil_awready",
+          "s_axil_awvalid",
+          "s_axil_awvalid_next",
+          "s_axil_awvalid_reg",
+          "s_axil_bready",
+          "s_axil_bresp[1:0]",
+          "s_axil_bvalid",
+          "s_axil_bvalid_next",
+          "s_axil_bvalid_reg",
+          "s_axil_wdata[31:0]",
+          "s_axil_wdata_next[31:0]",
+          "s_axil_wdata_reg[31:0]",
+          "s_axil_wready",
+          "s_axil_wstrb[3:0]",
+          "s_axil_wstrb_next[3:0]",
+          "s_axil_wstrb_reg[3:0]",
+          "s_axil_wvalid",
+          "s_axil_wvalid_next",
+          "s_axil_wvalid_reg",
+          "timeout_count_next[1:0]",
+          "timeout_count_reg[1:0]"
+        ],
+        "names_relative": true
+      }
+    },
+    {
+      "tool": "add_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axil_awvalid",
+          "/tb/dut/s_axil_awready",
+          "/tb/dut/s_axil_wvalid",
+          "/tb/dut/s_axil_wready",
+          "/tb/dut/reg_wr_en",
+          "/tb/dut/reg_wr_ack",
+          "/tb/dut/s_axil_bvalid",
+          "/tb/dut/s_axil_bvalid_next",
+          "/tb/dut/s_axil_bready"
+        ]
+      },
+      "is_error": false,
+      "result": {
+        "signals": [
+          "/tb/dut/s_axil_awvalid",
+          "/tb/dut/s_axil_awready",
+          "/tb/dut/s_axil_wvalid",
+          "/tb/dut/s_axil_wready",
+          "/tb/dut/reg_wr_en",
+          "/tb/dut/reg_wr_ack",
+          "/tb/dut/s_axil_bvalid",
+          "/tb/dut/s_axil_bvalid_next",
+          "/tb/dut/s_axil_bready"
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "105",
+        "period": "10",
+        "cycles": 20
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": true,
+        "cycles": 20,
+        "note": "Preserves timestamp phase; does not snap to clock edges"
+      }
+    },
+    {
+      "tool": "set_time_window",
+      "arguments": {
+        "start": "0",
+        "end": "250"
+      },
+      "is_error": false,
+      "result": {
+        "viewport": [
+          "1",
+          "0",
+          "250000"
+        ],
+        "time_unit": "1ps"
+      }
+    },
+    {
+      "tool": "sample_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axil_awvalid",
+          "/tb/dut/s_axil_awready",
+          "/tb/dut/s_axil_wvalid",
+          "/tb/dut/s_axil_wready",
+          "/tb/dut/reg_wr_en",
+          "/tb/dut/reg_wr_ack",
+          "/tb/dut/s_axil_bvalid",
+          "/tb/dut/s_axil_bvalid_next",
+          "/tb/dut/s_axil_bready"
+        ],
+        "times": [
+          "66",
+          "76",
+          "86",
+          "96",
+          "105",
+          "106",
+          "176",
+          "186"
+        ],
+        "radix": "UDec"
+      },
+      "is_error": false,
+      "result": {
+        "radix": "UDec",
+        "samples": [
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "66",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "105",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "105",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "105",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "106",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "106",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "106",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "176",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "176",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "176",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "176",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "186",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "186",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "186",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "186",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "186",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_ack",
+            "time": "186",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid",
+            "time": "186",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bvalid_next",
+            "time": "186",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_bready",
+            "time": "186",
+            "unit": "ns",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.s_axil_bvalid_reg"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.s_axil_bvalid_reg",
+        "driver": [
+          "tb.dut",
+          "./axil_reg_if_wr.v",
+          "84"
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.s_axil_bvalid_next"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.s_axil_bvalid_next",
+        "driver": [
+          "tb.dut",
+          "./axil_reg_if_wr.v",
+          "106"
+        ]
+      }
+    },
+    {
+      "tool": "read_source",
+      "arguments": {
+        "signal": "tb.dut.s_axil_bvalid_reg",
+        "start": 1,
+        "count": 200
+      },
+      "is_error": false,
+      "result": {
+        "file": "/tmp/verdi-bridge-project/build/multidesign/axil/mutant/axil_reg_if_wr.v",
+        "definition_line": "84",
+        "lines": [
+          {
+            "line": 1,
+            "text": "/*"
+          },
+          {
+            "line": 2,
+            "text": ""
+          },
+          {
+            "line": 3,
+            "text": "Copyright (c) 2021 Alex Forencich"
+          },
+          {
+            "line": 4,
+            "text": ""
+          },
+          {
+            "line": 5,
+            "text": "Permission is hereby granted, free of charge, to any person obtaining a copy"
+          },
+          {
+            "line": 6,
+            "text": "of this software and associated documentation files (the \"Software\"), to deal"
+          },
+          {
+            "line": 7,
+            "text": "in the Software without restriction, including without limitation the rights"
+          },
+          {
+            "line": 8,
+            "text": "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell"
+          },
+          {
+            "line": 9,
+            "text": "copies of the Software, and to permit persons to whom the Software is"
+          },
+          {
+            "line": 10,
+            "text": "furnished to do so, subject to the following conditions:"
+          },
+          {
+            "line": 11,
+            "text": ""
+          },
+          {
+            "line": 12,
+            "text": "The above copyright notice and this permission notice shall be included in"
+          },
+          {
+            "line": 13,
+            "text": "all copies or substantial portions of the Software."
+          },
+          {
+            "line": 14,
+            "text": ""
+          },
+          {
+            "line": 15,
+            "text": "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR"
+          },
+          {
+            "line": 16,
+            "text": "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY"
+          },
+          {
+            "line": 17,
+            "text": "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE"
+          },
+          {
+            "line": 18,
+            "text": "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER"
+          },
+          {
+            "line": 19,
+            "text": "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,"
+          },
+          {
+            "line": 20,
+            "text": "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN"
+          },
+          {
+            "line": 21,
+            "text": "THE SOFTWARE."
+          },
+          {
+            "line": 22,
+            "text": ""
+          },
+          {
+            "line": 23,
+            "text": "*/"
+          },
+          {
+            "line": 24,
+            "text": ""
+          },
+          {
+            "line": 25,
+            "text": "// Language: Verilog 2001"
+          },
+          {
+            "line": 26,
+            "text": ""
+          },
+          {
+            "line": 27,
+            "text": "`resetall"
+          },
+          {
+            "line": 28,
+            "text": "`timescale 1ns / 1ps"
+          },
+          {
+            "line": 29,
+            "text": "`default_nettype none"
+          },
+          {
+            "line": 30,
+            "text": ""
+          },
+          {
+            "line": 31,
+            "text": "/*"
+          },
+          {
+            "line": 32,
+            "text": " * AXI lite register interface module (write)"
+          },
+          {
+            "line": 33,
+            "text": " */"
+          },
+          {
+            "line": 34,
+            "text": "module axil_reg_if_wr #"
+          },
+          {
+            "line": 35,
+            "text": "("
+          },
+          {
+            "line": 36,
+            "text": "    // Width of data bus in bits"
+          },
+          {
+            "line": 37,
+            "text": "    parameter DATA_WIDTH = 32,"
+          },
+          {
+            "line": 38,
+            "text": "    // Width of address bus in bits"
+          },
+          {
+            "line": 39,
+            "text": "    parameter ADDR_WIDTH = 32,"
+          },
+          {
+            "line": 40,
+            "text": "    // Width of wstrb (width of data bus in words)"
+          },
+          {
+            "line": 41,
+            "text": "    parameter STRB_WIDTH = (DATA_WIDTH/8),"
+          },
+          {
+            "line": 42,
+            "text": "    // Timeout delay (cycles)"
+          },
+          {
+            "line": 43,
+            "text": "    parameter TIMEOUT = 4"
+          },
+          {
+            "line": 44,
+            "text": ")"
+          },
+          {
+            "line": 45,
+            "text": "("
+          },
+          {
+            "line": 46,
+            "text": "    input  wire                   clk,"
+          },
+          {
+            "line": 47,
+            "text": "    input  wire                   rst,"
+          },
+          {
+            "line": 48,
+            "text": ""
+          },
+          {
+            "line": 49,
+            "text": "    /*"
+          },
+          {
+            "line": 50,
+            "text": "     * AXI-Lite slave interface"
+          },
+          {
+            "line": 51,
+            "text": "     */"
+          },
+          {
+            "line": 52,
+            "text": "    input  wire [ADDR_WIDTH-1:0]  s_axil_awaddr,"
+          },
+          {
+            "line": 53,
+            "text": "    input  wire [2:0]             s_axil_awprot,"
+          },
+          {
+            "line": 54,
+            "text": "    input  wire                   s_axil_awvalid,"
+          },
+          {
+            "line": 55,
+            "text": "    output wire                   s_axil_awready,"
+          },
+          {
+            "line": 56,
+            "text": "    input  wire [DATA_WIDTH-1:0]  s_axil_wdata,"
+          },
+          {
+            "line": 57,
+            "text": "    input  wire [STRB_WIDTH-1:0]  s_axil_wstrb,"
+          },
+          {
+            "line": 58,
+            "text": "    input  wire                   s_axil_wvalid,"
+          },
+          {
+            "line": 59,
+            "text": "    output wire                   s_axil_wready,"
+          },
+          {
+            "line": 60,
+            "text": "    output wire [1:0]             s_axil_bresp,"
+          },
+          {
+            "line": 61,
+            "text": "    output wire                   s_axil_bvalid,"
+          },
+          {
+            "line": 62,
+            "text": "    input  wire                   s_axil_bready,"
+          },
+          {
+            "line": 63,
+            "text": ""
+          },
+          {
+            "line": 64,
+            "text": "    /*"
+          },
+          {
+            "line": 65,
+            "text": "     * Register interface"
+          },
+          {
+            "line": 66,
+            "text": "     */"
+          },
+          {
+            "line": 67,
+            "text": "    output wire [ADDR_WIDTH-1:0]  reg_wr_addr,"
+          },
+          {
+            "line": 68,
+            "text": "    output wire [DATA_WIDTH-1:0]  reg_wr_data,"
+          },
+          {
+            "line": 69,
+            "text": "    output wire [STRB_WIDTH-1:0]  reg_wr_strb,"
+          },
+          {
+            "line": 70,
+            "text": "    output wire                   reg_wr_en,"
+          },
+          {
+            "line": 71,
+            "text": "    input  wire                   reg_wr_wait,"
+          },
+          {
+            "line": 72,
+            "text": "    input  wire                   reg_wr_ack"
+          },
+          {
+            "line": 73,
+            "text": ");"
+          },
+          {
+            "line": 74,
+            "text": ""
+          },
+          {
+            "line": 75,
+            "text": "parameter TIMEOUT_WIDTH = $clog2(TIMEOUT);"
+          },
+          {
+            "line": 76,
+            "text": ""
+          },
+          {
+            "line": 77,
+            "text": "reg [TIMEOUT_WIDTH-1:0] timeout_count_reg = 0, timeout_count_next;"
+          },
+          {
+            "line": 78,
+            "text": ""
+          },
+          {
+            "line": 79,
+            "text": "reg [ADDR_WIDTH-1:0] s_axil_awaddr_reg = {ADDR_WIDTH{1'b0}}, s_axil_awaddr_next;"
+          },
+          {
+            "line": 80,
+            "text": "reg s_axil_awvalid_reg = 1'b0, s_axil_awvalid_next;"
+          },
+          {
+            "line": 81,
+            "text": "reg [DATA_WIDTH-1:0] s_axil_wdata_reg = {DATA_WIDTH{1'b0}}, s_axil_wdata_next;"
+          },
+          {
+            "line": 82,
+            "text": "reg [STRB_WIDTH-1:0] s_axil_wstrb_reg = {STRB_WIDTH{1'b0}}, s_axil_wstrb_next;"
+          },
+          {
+            "line": 83,
+            "text": "reg s_axil_wvalid_reg = 1'b0, s_axil_wvalid_next;"
+          },
+          {
+            "line": 84,
+            "text": "reg s_axil_bvalid_reg = 1'b0, s_axil_bvalid_next;"
+          },
+          {
+            "line": 85,
+            "text": ""
+          },
+          {
+            "line": 86,
+            "text": "reg reg_wr_en_reg = 1'b0, reg_wr_en_next;"
+          },
+          {
+            "line": 87,
+            "text": ""
+          },
+          {
+            "line": 88,
+            "text": "assign s_axil_awready = !s_axil_awvalid_reg;"
+          },
+          {
+            "line": 89,
+            "text": "assign s_axil_wready = !s_axil_wvalid_reg;"
+          },
+          {
+            "line": 90,
+            "text": "assign s_axil_bresp = 2'b00;"
+          },
+          {
+            "line": 91,
+            "text": "assign s_axil_bvalid = s_axil_bvalid_reg;"
+          },
+          {
+            "line": 92,
+            "text": ""
+          },
+          {
+            "line": 93,
+            "text": "assign reg_wr_addr = s_axil_awaddr_reg;"
+          },
+          {
+            "line": 94,
+            "text": "assign reg_wr_data = s_axil_wdata_reg;"
+          },
+          {
+            "line": 95,
+            "text": "assign reg_wr_strb = s_axil_wstrb_reg;"
+          },
+          {
+            "line": 96,
+            "text": "assign reg_wr_en = reg_wr_en_reg;"
+          },
+          {
+            "line": 97,
+            "text": ""
+          },
+          {
+            "line": 98,
+            "text": "always @* begin"
+          },
+          {
+            "line": 99,
+            "text": "    timeout_count_next = timeout_count_reg;"
+          },
+          {
+            "line": 100,
+            "text": ""
+          },
+          {
+            "line": 101,
+            "text": "    s_axil_awaddr_next = s_axil_awaddr_reg;"
+          },
+          {
+            "line": 102,
+            "text": "    s_axil_awvalid_next = s_axil_awvalid_reg;"
+          },
+          {
+            "line": 103,
+            "text": "    s_axil_wdata_next = s_axil_wdata_reg;"
+          },
+          {
+            "line": 104,
+            "text": "    s_axil_wstrb_next = s_axil_wstrb_reg;"
+          },
+          {
+            "line": 105,
+            "text": "    s_axil_wvalid_next = s_axil_wvalid_reg;"
+          },
+          {
+            "line": 106,
+            "text": "    s_axil_bvalid_next = 1'b0;"
+          },
+          {
+            "line": 107,
+            "text": ""
+          },
+          {
+            "line": 108,
+            "text": "    if (reg_wr_en_reg && (reg_wr_ack || timeout_count_reg == 0)) begin"
+          },
+          {
+            "line": 109,
+            "text": "        s_axil_awvalid_next = 1'b0;"
+          },
+          {
+            "line": 110,
+            "text": "        s_axil_wvalid_next = 1'b0;"
+          },
+          {
+            "line": 111,
+            "text": "        s_axil_bvalid_next = 1'b1;"
+          },
+          {
+            "line": 112,
+            "text": "    end"
+          },
+          {
+            "line": 113,
+            "text": ""
+          },
+          {
+            "line": 114,
+            "text": "    if (!s_axil_awvalid_reg) begin"
+          },
+          {
+            "line": 115,
+            "text": "        s_axil_awaddr_next = s_axil_awaddr;"
+          },
+          {
+            "line": 116,
+            "text": "        s_axil_awvalid_next = s_axil_awvalid;"
+          },
+          {
+            "line": 117,
+            "text": "        timeout_count_next = TIMEOUT-1;"
+          },
+          {
+            "line": 118,
+            "text": "    end"
+          },
+          {
+            "line": 119,
+            "text": ""
+          },
+          {
+            "line": 120,
+            "text": "    if (!s_axil_wvalid_reg) begin"
+          },
+          {
+            "line": 121,
+            "text": "        s_axil_wdata_next = s_axil_wdata;"
+          },
+          {
+            "line": 122,
+            "text": "        s_axil_wstrb_next = s_axil_wstrb;"
+          },
+          {
+            "line": 123,
+            "text": "        s_axil_wvalid_next = s_axil_wvalid;"
+          },
+          {
+            "line": 124,
+            "text": "    end"
+          },
+          {
+            "line": 125,
+            "text": ""
+          },
+          {
+            "line": 126,
+            "text": "    if (reg_wr_en && !reg_wr_wait && timeout_count_reg != 0)begin"
+          },
+          {
+            "line": 127,
+            "text": "        timeout_count_next = timeout_count_reg - 1;"
+          },
+          {
+            "line": 128,
+            "text": "    end"
+          },
+          {
+            "line": 129,
+            "text": ""
+          },
+          {
+            "line": 130,
+            "text": "    reg_wr_en_next = s_axil_awvalid_next && s_axil_wvalid_next && !s_axil_bvalid_next;"
+          },
+          {
+            "line": 131,
+            "text": "end"
+          },
+          {
+            "line": 132,
+            "text": ""
+          },
+          {
+            "line": 133,
+            "text": "always @(posedge clk) begin"
+          },
+          {
+            "line": 134,
+            "text": "    timeout_count_reg <= timeout_count_next;"
+          },
+          {
+            "line": 135,
+            "text": ""
+          },
+          {
+            "line": 136,
+            "text": "    s_axil_awaddr_reg <= s_axil_awaddr_next;"
+          },
+          {
+            "line": 137,
+            "text": "    s_axil_awvalid_reg <= s_axil_awvalid_next;"
+          },
+          {
+            "line": 138,
+            "text": "    s_axil_wdata_reg <= s_axil_wdata_next;"
+          },
+          {
+            "line": 139,
+            "text": "    s_axil_wstrb_reg <= s_axil_wstrb_next;"
+          },
+          {
+            "line": 140,
+            "text": "    s_axil_wvalid_reg <= s_axil_wvalid_next;"
+          },
+          {
+            "line": 141,
+            "text": "    s_axil_bvalid_reg <= s_axil_bvalid_next;"
+          },
+          {
+            "line": 142,
+            "text": ""
+          },
+          {
+            "line": 143,
+            "text": "    reg_wr_en_reg <= reg_wr_en_next;"
+          },
+          {
+            "line": 144,
+            "text": ""
+          },
+          {
+            "line": 145,
+            "text": "    if (rst) begin"
+          },
+          {
+            "line": 146,
+            "text": "        s_axil_awvalid_reg <= 1'b0;"
+          },
+          {
+            "line": 147,
+            "text": "        s_axil_wvalid_reg <= 1'b0;"
+          },
+          {
+            "line": 148,
+            "text": "        s_axil_bvalid_reg <= 1'b0;"
+          },
+          {
+            "line": 149,
+            "text": "        reg_wr_en_reg <= 1'b0;"
+          },
+          {
+            "line": 150,
+            "text": "    end"
+          },
+          {
+            "line": 151,
+            "text": "end"
+          },
+          {
+            "line": 152,
+            "text": ""
+          },
+          {
+            "line": 153,
+            "text": "endmodule"
+          },
+          {
+            "line": 154,
+            "text": ""
+          },
+          {
+            "line": 155,
+            "text": "`resetall"
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

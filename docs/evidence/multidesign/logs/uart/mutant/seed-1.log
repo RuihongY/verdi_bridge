@@ -1,0 +1,43 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2_Full64; Runtime version U-2023.03-SP2_Full64;  Oct 12 23:58 2026
+BIT_MISMATCH time_ns=1415 frame=0 bit=7 expected=0 actual=1
+FIRST_ERROR time_ns=1415 kind=serial_data_bit frame=0
+BIT_MISMATCH time_ns=3695 frame=1 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=3855 frame=1 bit=4 expected=0 actual=1
+BIT_MISMATCH time_ns=4015 frame=1 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=4335 frame=1 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=5955 frame=2 bit=4 expected=1 actual=0
+BIT_MISMATCH time_ns=6115 frame=2 bit=5 expected=1 actual=0
+BIT_MISMATCH time_ns=6435 frame=2 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=7095 frame=3 bit=0 expected=0 actual=1
+BIT_MISMATCH time_ns=7415 frame=3 bit=2 expected=1 actual=0
+BIT_MISMATCH time_ns=7735 frame=3 bit=4 expected=0 actual=1
+BIT_MISMATCH time_ns=7895 frame=3 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=8055 frame=3 bit=6 expected=0 actual=1
+BIT_MISMATCH time_ns=8215 frame=3 bit=7 expected=1 actual=0
+BIT_MISMATCH time_ns=9055 frame=4 bit=0 expected=0 actual=1
+BIT_MISMATCH time_ns=9215 frame=4 bit=1 expected=0 actual=1
+BIT_MISMATCH time_ns=9535 frame=4 bit=3 expected=1 actual=0
+BIT_MISMATCH time_ns=9695 frame=4 bit=4 expected=1 actual=0
+BIT_MISMATCH time_ns=10175 frame=4 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=11315 frame=5 bit=1 expected=1 actual=0
+BIT_MISMATCH time_ns=11955 frame=5 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=12275 frame=5 bit=7 expected=1 actual=0
+BIT_MISMATCH time_ns=13755 frame=6 bit=2 expected=1 actual=0
+BIT_MISMATCH time_ns=15855 frame=7 bit=0 expected=0 actual=1
+BIT_MISMATCH time_ns=16175 frame=7 bit=2 expected=1 actual=0
+BIT_MISMATCH time_ns=16335 frame=7 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=16495 frame=7 bit=4 expected=0 actual=1
+BIT_MISMATCH time_ns=16655 frame=7 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=16815 frame=7 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=16975 frame=7 bit=7 expected=1 actual=0
+RESULT seed=1 errors=38 sent=12 received=8 first_error_ns=1415
+$finish called from file "/tmp/verdi-bridge-project/examples/multidesign/uart_tb.sv", line 64.
+$finish at simulation time             18170000
+           V C S   S i m u l a t i o n   R e p o r t
+Time: 18170000 ps
+CPU Time:      0.220 seconds;       Data structure size:   0.0Mb
+Mon Oct 12 23:58:46 2026

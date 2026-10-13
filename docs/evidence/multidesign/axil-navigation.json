@@ -1,0 +1,46 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "goto_source",
+      "arguments": {
+        "scope": "tb.dut",
+        "line": 106
+      },
+      "is_error": false,
+      "result": {
+        "scope": "tb.dut",
+        "line": 106
+      }
+    },
+    {
+      "tool": "set_cursor",
+      "arguments": {
+        "time": "105",
+        "unit": "ns"
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "105000",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps"
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

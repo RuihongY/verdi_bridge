@@ -1,0 +1,85 @@
+[
+  {
+    "tool": "session_status"
+  },
+  {
+    "tool": "browse_scope",
+    "arguments": {
+      "scope": "/tb/dut"
+    }
+  },
+  {
+    "tool": "add_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axis_tvalid",
+        "/tb/dut/s_axis_tready",
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/txd",
+        "/tb/dut/bit_cnt[3:0]",
+        "/tb/dut/prescale_reg[18:0]",
+        "/tb/dut/data_reg[8:0]"
+      ]
+    }
+  },
+  {
+    "tool": "jump_before_error",
+    "arguments": {
+      "error_time": "1415",
+      "period": "10",
+      "cycles": 20
+    }
+  },
+  {
+    "tool": "set_time_window",
+    "arguments": {
+      "start": "0",
+      "end": "1700"
+    }
+  },
+  {
+    "tool": "sample_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axis_tvalid",
+        "/tb/dut/s_axis_tready",
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/txd",
+        "/tb/dut/bit_cnt[3:0]",
+        "/tb/dut/prescale_reg[18:0]",
+        "/tb/dut/data_reg[8:0]"
+      ],
+      "times": [
+        "46",
+        "56",
+        "216",
+        "376",
+        "1176",
+        "1336",
+        "1415",
+        "1496"
+      ],
+      "radix": "UDec"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.txd_reg"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.bit_cnt"
+    }
+  },
+  {
+    "tool": "read_source",
+    "arguments": {
+      "signal": "tb.dut.txd_reg",
+      "start": 1,
+      "count": 200
+    }
+  }
+]

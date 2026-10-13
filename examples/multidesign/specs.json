@@ -1,0 +1,33 @@
+{
+  "uart": {
+    "repository": "https://github.com/alexforencich/verilog-uart",
+    "commit": "1b867e53af738e4a8bc7c839ca2f1c07f40382dc",
+    "files": {
+      "uart_tx.v": "e9559ddebf124f8fbface06bf7091296baa78c7acab95a36b40a919663349d34"
+    },
+    "target": "uart_tx.v",
+    "original": "bit_cnt <= DATA_WIDTH+1;",
+    "mutated": "bit_cnt <= DATA_WIDTH;"
+  },
+  "axil": {
+    "repository": "https://github.com/alexforencich/verilog-axi",
+    "commit": "516bd5dadc3365b7f9e225d2af8fe0b8d804fe53",
+    "files": {
+      "axil_reg_if_wr.v": "ec2f3d3d97b694dd4ff046d791fc7a0f95856c41049a107eac1aa3b3daab7412"
+    },
+    "target": "axil_reg_if_wr.v",
+    "original": "s_axil_bvalid_next = s_axil_bvalid_reg && !s_axil_bready;",
+    "mutated": "s_axil_bvalid_next = 1'b0;"
+  },
+  "arbiter": {
+    "repository": "https://github.com/alexforencich/verilog-axis",
+    "commit": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+    "files": {
+      "arbiter.v": "d54d337db4812f927b2e9b5788dfa39f9bd578ad01b7846c5fa7f2610b0923fa",
+      "priority_encoder.v": "df28220d95b47df349a72803a9751aad331eb8e1435416e8686d00572a974dd5"
+    },
+    "target": "arbiter.v",
+    "original": "mask_reg <= mask_next;",
+    "mutated": "mask_reg <= 0;"
+  }
+}

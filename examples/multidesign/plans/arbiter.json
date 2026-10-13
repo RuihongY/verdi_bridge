@@ -1,0 +1,85 @@
+[
+  {
+    "tool": "session_status"
+  },
+  {
+    "tool": "browse_scope",
+    "arguments": {
+      "scope": "/tb/dut"
+    }
+  },
+  {
+    "tool": "add_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/request[3:0]",
+        "/tb/dut/grant[3:0]",
+        "/tb/dut/grant_encoded[1:0]",
+        "/tb/dut/grant_valid",
+        "/tb/dut/mask_reg[3:0]",
+        "/tb/dut/mask_next[3:0]",
+        "/tb/dut/masked_request_valid"
+      ]
+    }
+  },
+  {
+    "tool": "jump_before_error",
+    "arguments": {
+      "error_time": "56",
+      "period": "10",
+      "cycles": 20
+    }
+  },
+  {
+    "tool": "set_time_window",
+    "arguments": {
+      "start": "0",
+      "end": "200"
+    }
+  },
+  {
+    "tool": "sample_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/request[3:0]",
+        "/tb/dut/grant[3:0]",
+        "/tb/dut/grant_encoded[1:0]",
+        "/tb/dut/grant_valid",
+        "/tb/dut/mask_reg[3:0]",
+        "/tb/dut/mask_next[3:0]",
+        "/tb/dut/masked_request_valid"
+      ],
+      "times": [
+        "36",
+        "46",
+        "56",
+        "66",
+        "76",
+        "86",
+        "96",
+        "106"
+      ],
+      "radix": "UDec"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.grant_reg"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.mask_reg"
+    }
+  },
+  {
+    "tool": "read_source",
+    "arguments": {
+      "signal": "tb.dut.grant_reg",
+      "start": 1,
+      "count": 200
+    }
+  }
+]

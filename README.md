@@ -1,7 +1,7 @@
 # Verdi Bridge
 
 A small open-source MCP server for controlling a live, licensed Synopsys Verdi GUI.
-Version 0.1.0. Experimental; tested with Verdi T-2022.06-SP2-1 on Linux.
+Version 0.1.1. Experimental; tested with Verdi T-2022.06-SP2-1 on Linux.
 
 Ask your MCP-enabled assistant: “Add the FIFO read/write pointers, go 20 cycles
 before this error, and investigate why full stayed asserted.” The assistant calls
@@ -80,8 +80,14 @@ Read-source access is restricted to colon-separated source roots (default: GUI c
 
 ## Validation and limitations
 
-See [validation](docs/validation.md) and [external RTL benchmark](examples/axis_fifo/README.md).
-Run `uv run pytest` and `uv run ruff check .` without a vendor license. These tests
+See the [UART / AXI-Lite / arbiter results](docs/multidesign-validation.md):
+27 VCS runs across three designs, baseline/mutant/repaired variants, and three seeds.
+All baseline and repaired runs passed; every mutant was detected. Seed-1 cases were
+inspected through real MCP and Verdi. These are known mutations, not blind evaluation.
+
+The [original validation record](docs/validation.md) and
+[FIFO benchmark](examples/axis_fifo/README.md) are retained.
+Run `uv run pytest` and `uv run ruff check .` without a vendor license. Protocol tests
 use a Tcl simulator double; they do not replace the documented real-Verdi runs.
 
 The bridge has no generic eval/exec tool and does not compile, edit RTL, or close
