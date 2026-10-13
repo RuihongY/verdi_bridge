@@ -24,7 +24,7 @@
 
 https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7
 
-[English video](https://github.com/user-attachments/assets/bef00220-182e-430e-bce1-a1f487d904b2) · [中文视频](https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7)
+[English 原生会话](https://github.com/user-attachments/assets/b041c1bd-4be5-4040-b281-2f15001b1e35) · [中文视频](https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7)
 
 [录制说明与真实调用记录](docs/agent-demo.md) · [安装教程](docs/video-walkthrough.md)
 

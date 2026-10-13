@@ -1,0 +1,1 @@
+There is a bug. Find the relevant signals and analyze the problem. The error log is sim.log, and the RTL and testbench are in this directory. Please operate the connected Verdi session, show the key waveforms and source, and explain your findings in English.
