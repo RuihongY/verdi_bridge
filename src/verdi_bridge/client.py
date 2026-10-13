@@ -97,6 +97,9 @@ class Client:
         # One in-flight request per helper. A broken/slow helper is discarded;
         # never replay a request whose GUI execution status is unknown.
         with self._lock:
+            if self._process is not None and self._process.poll() is not None:
+                self._stop()
+                raise BridgeError("Transport disconnected; execution status unknown")
             if self._process is None:
                 self._stderr = tempfile.TemporaryFile(mode="w+t")
                 try:

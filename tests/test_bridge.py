@@ -208,15 +208,17 @@ def test_file_reads_log_limits_and_symlinks(running, tmp_path):
 
 
 @pytest.mark.parametrize("persistent", [False, True])
-def test_ssh_shell_quoting_and_helper_reuse(running, tmp_path, monkeypatch, persistent):
+@pytest.mark.parametrize("shell_wrapper", [False, True])
+def test_ssh_shell_quoting_and_helper_reuse(running, tmp_path, monkeypatch, persistent, shell_wrapper):
     local, _ = running
     bindir = tmp_path / "bin"
     bindir.mkdir()
     calls = tmp_path / "ssh-calls"
     shim = bindir / "ssh"
+    shell_command = "sys.argv[-1] + '; :'" if shell_wrapper else "'exec ' + sys.argv[-1]"
     shim.write_text("#!/usr/bin/env python3\nimport os,sys\n"
                     "with open(os.environ['SSH_CALLS'], 'a') as f: f.write('start\\n')\n"
-                    "os.execl('/bin/sh', 'sh', '-c', sys.argv[-1])\n")
+                    f"os.execl('/bin/sh', 'sh', '-c', {shell_command})\n")
     shim.chmod(0o755)
     monkeypatch.setenv("PATH", str(bindir) + os.pathsep + os.environ["PATH"])
     monkeypatch.setenv("SSH_CALLS", str(calls))
@@ -277,7 +279,13 @@ def test_persistent_timeout_is_not_replayed(tmp_path, monkeypatch):
 
     class ShortDeadlineQueue(original_queue):
         def get(self, block=True, timeout=None):
-            return super().get(block=block, timeout=.3)
+            # Start the response deadline only once the shim is running. Avoid
+            # turning interpreter startup under CI load into a flaky assertion.
+            deadline = time.monotonic() + 10
+            while not counter.exists() and time.monotonic() < deadline:
+                time.sleep(.01)
+            assert counter.exists(), "SSH shim failed to start"
+            return super().get(block=block, timeout=.1)
 
     monkeypatch.setattr(client_module.queue, 'Queue', ShortDeadlineQueue)
     with Client(Config(str(tmp_path), host='test-host')) as remote:

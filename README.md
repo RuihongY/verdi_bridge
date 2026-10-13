@@ -106,7 +106,7 @@ accuracy improvement has yet been measured.
 
 ## Project status
 
-Experimental **v0.2.0**. Tested with Verdi T-2022.06-SP2-1 on Linux.
+Experimental **v0.2.1**. Tested with Verdi T-2022.06-SP2-1 on Linux.
 New-session startup is verified; attachment to an arbitrary existing GUI is not yet
 separately validated. The bridge does not automatically compile, edit or repair RTL.
 

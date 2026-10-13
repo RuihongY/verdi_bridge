@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 — 2026-10-13
+
+- Detect an exited SSH process before writing another request, even if a surviving
+  descendant still holds a pipe. Never continue or replay through a dead transport.
+- Make the local SSH shim exec its helper consistently on macOS and Linux.
+- The initial v0.2.0 tag failed Linux CI on this disconnect scenario. Its history
+  is retained; v0.2.1 is the release build.
+
 ## 0.2.0 — 2026-10-13
 
 - Add bounded transition/window queries, recursive signal search, clock measurement,
