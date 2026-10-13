@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/alexforencich/verilog-axis",
+  "commit": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+  "source_url": "https://raw.githubusercontent.com/alexforencich/verilog-axis/48ff7a7e2ef782cf778d47910cf85835c64b1bce/rtl/axis_fifo.v",
+  "sha256": "aefddc67fc3552d919280424606fc6b048e61d7df9ee7ee0f8801c082c1cfc39",
+  "license": "MIT",
+  "cases": {
+    "baseline": {},
+    "stalled_read_pointer": {
+      "line": 397,
+      "original": "rd_ptr_reg <= rd_ptr_reg + 1;",
+      "mutated": "rd_ptr_reg <= rd_ptr_reg;"
+    },
+    "wrong_full_compare": {
+      "line": 200,
+      "original": "wire full = wr_ptr_reg == (rd_ptr_reg ^ {1'b1, {ADDR_WIDTH{1'b0}}});",
+      "mutated": "wire full = wr_ptr_reg == rd_ptr_reg;"
+    }
+  }
+}

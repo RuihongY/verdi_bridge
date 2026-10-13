@@ -1,0 +1,906 @@
+{
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ],
+  "status": {
+    "window": "1ac3b470",
+    "time_unit": "1ps",
+    "cursor": [
+      "1",
+      "235000",
+      "x",
+      "1ps"
+    ],
+    "viewport": [
+      "1",
+      "0",
+      "500000"
+    ],
+    "signals": [
+      "/tb/clk",
+      "/tb/rst",
+      "/tb/dut/wr_ptr_reg[3:0]",
+      "/tb/dut/rd_ptr_reg[3:0]",
+      "/tb/dut/full",
+      "/tb/dut/empty",
+      "/tb/s_axis_tvalid",
+      "/tb/s_axis_tready",
+      "/tb/m_axis_tvalid",
+      "/tb/m_axis_tready",
+      "/tb/m_axis_tdata[7:0]",
+      "/tb/dut/pipe_ready",
+      "/tb/dut/m_axis_tready_pipe"
+    ]
+  },
+  "discovery": {
+    "scopes": [],
+    "signals": [
+      "bad_frame_reg",
+      "clk",
+      "depth_commit_reg[3:0]",
+      "depth_reg[3:0]",
+      "drop_frame_reg",
+      "empty",
+      "full",
+      "full_wr",
+      "good_frame_reg",
+      "j",
+      "m_axis[7:0]",
+      "m_axis_tdata[7:0]",
+      "m_axis_tdata_out[7:0]",
+      "m_axis_tdata_pipe[7:0]",
+      "m_axis_tdest[7:0]",
+      "m_axis_tdest_out[7:0]",
+      "m_axis_tdest_pipe[7:0]",
+      "m_axis_tid[7:0]",
+      "m_axis_tid_out[7:0]",
+      "m_axis_tid_pipe[7:0]",
+      "m_axis_tkeep[0:0]",
+      "m_axis_tkeep_out[0:0]",
+      "m_axis_tkeep_pipe[0:0]",
+      "m_axis_tlast",
+      "m_axis_tlast_out",
+      "m_axis_tlast_pipe",
+      "m_axis_tready",
+      "m_axis_tready_out",
+      "m_axis_tready_pipe",
+      "m_axis_tuser[0:0]",
+      "m_axis_tuser_out[0:0]",
+      "m_axis_tuser_pipe[0:0]",
+      "m_axis_tvalid",
+      "m_axis_tvalid_out",
+      "m_axis_tvalid_pipe",
+      "m_axis_tvalid_pipe_reg[1:0]",
+      "mark_frame_reg",
+      "mem_read_data_valid_reg",
+      "overflow_reg",
+      "pause_ack",
+      "pause_req",
+      "pipe_ready",
+      "rd_ptr_reg[3:0]",
+      "rst",
+      "s_axis[7:0]",
+      "s_axis_tdata[7:0]",
+      "s_axis_tdest[7:0]",
+      "s_axis_tid[7:0]",
+      "s_axis_tkeep[0:0]",
+      "s_axis_tlast",
+      "s_axis_tready",
+      "s_axis_tuser[0:0]",
+      "s_axis_tvalid",
+      "s_frame_reg",
+      "send_frame_reg",
+      "status_bad_frame",
+      "status_depth[3:0]",
+      "status_depth_commit[3:0]",
+      "status_good_frame",
+      "status_overflow",
+      "wr_ptr_commit_reg[3:0]",
+      "wr_ptr_reg[3:0]"
+    ]
+  },
+  "add": {
+    "signals": [
+      "/tb/clk",
+      "/tb/rst",
+      "/tb/dut/wr_ptr_reg[3:0]",
+      "/tb/dut/rd_ptr_reg[3:0]",
+      "/tb/dut/full",
+      "/tb/dut/empty",
+      "/tb/s_axis_tvalid",
+      "/tb/s_axis_tready",
+      "/tb/m_axis_tvalid",
+      "/tb/m_axis_tready",
+      "/tb/m_axis_tdata[7:0]",
+      "/tb/dut/pipe_ready",
+      "/tb/dut/m_axis_tready_pipe",
+      "/tb/clk",
+      "/tb/rst",
+      "/tb/dut/wr_ptr_reg[3:0]",
+      "/tb/dut/rd_ptr_reg[3:0]",
+      "/tb/dut/full",
+      "/tb/dut/empty",
+      "/tb/s_axis_tvalid",
+      "/tb/s_axis_tready",
+      "/tb/m_axis_tvalid",
+      "/tb/m_axis_tready",
+      "/tb/m_axis_tdata[7:0]",
+      "/tb/dut/pipe_ready",
+      "/tb/dut/m_axis_tready_pipe"
+    ]
+  },
+  "jump": {
+    "cursor": [
+      "1",
+      "235000",
+      "x",
+      "1ps"
+    ],
+    "time_unit": "1ps",
+    "clamped_at_zero": false,
+    "cycles": 20,
+    "note": "Preserves timestamp phase; does not snap to clock edges"
+  },
+  "zoom": {
+    "viewport": [
+      "1",
+      "0",
+      "500000"
+    ],
+    "time_unit": "1ps"
+  },
+  "samples": {
+    "radix": "UDec",
+    "samples": [
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "40",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "40",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "40",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "40",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "40",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "40",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "40",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "40",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "40",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "40",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "40",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "46",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "56",
+        "unit": "ns",
+        "value": "2"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "56",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "66",
+        "unit": "ns",
+        "value": "3"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "66",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "66",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "66",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "66",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "66",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "66",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "66",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "66",
+        "unit": "ns",
+        "value": "17"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "66",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "66",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "126",
+        "unit": "ns",
+        "value": "8"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "126",
+        "unit": "ns",
+        "value": "17"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "416",
+        "unit": "ns",
+        "value": "8"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "416",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "416",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "416",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "416",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "416",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "416",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "416",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "416",
+        "unit": "ns",
+        "value": "17"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "416",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "416",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "426",
+        "unit": "ns",
+        "value": "8"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "426",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "426",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "426",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "426",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "426",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "426",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "426",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "426",
+        "unit": "ns",
+        "value": "17"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "426",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "426",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "436",
+        "unit": "ns",
+        "value": "8"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "436",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "436",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "436",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "436",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "436",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "436",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "436",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "436",
+        "unit": "ns",
+        "value": "17"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "436",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "436",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "446",
+        "unit": "ns",
+        "value": "8"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "446",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "446",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "446",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "446",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "446",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "446",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "446",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "446",
+        "unit": "ns",
+        "value": "17"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "446",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "446",
+        "unit": "ns",
+        "value": "1"
+      }
+    ]
+  },
+  "driver": {
+    "signal": "tb.dut.rd_ptr_reg",
+    "driver": [
+      "tb.dut",
+      "axis_fifo.v",
+      "397"
+    ]
+  },
+  "source": {
+    "file": "/tmp/verdi-bridge-project/build/axis_fifo/stalled_read_pointer/axis_fifo.v",
+    "definition_line": "189",
+    "lines": [
+      {
+        "line": 375,
+        "text": "always @(posedge clk) begin"
+      },
+      {
+        "line": 376,
+        "text": "    if (m_axis_tready_pipe) begin"
+      },
+      {
+        "line": 377,
+        "text": "        // output ready; invalidate stage"
+      },
+      {
+        "line": 378,
+        "text": "        m_axis_tvalid_pipe_reg[RAM_PIPELINE+1-1] <= 1'b0;"
+      },
+      {
+        "line": 379,
+        "text": "    end"
+      },
+      {
+        "line": 380,
+        "text": ""
+      },
+      {
+        "line": 381,
+        "text": "    for (j = RAM_PIPELINE+1-1; j > 0; j = j - 1) begin"
+      },
+      {
+        "line": 382,
+        "text": "        if (m_axis_tready_pipe || ((~m_axis_tvalid_pipe_reg) >> j)) begin"
+      },
+      {
+        "line": 383,
+        "text": "            // output ready or bubble in pipeline; transfer down pipeline"
+      },
+      {
+        "line": 384,
+        "text": "            m_axis_tvalid_pipe_reg[j] <= m_axis_tvalid_pipe_reg[j-1];"
+      },
+      {
+        "line": 385,
+        "text": "            m_axis_pipe_reg[j] <= m_axis_pipe_reg[j-1];"
+      },
+      {
+        "line": 386,
+        "text": "            m_axis_tvalid_pipe_reg[j-1] <= 1'b0;"
+      },
+      {
+        "line": 387,
+        "text": "        end"
+      },
+      {
+        "line": 388,
+        "text": "    end"
+      },
+      {
+        "line": 389,
+        "text": ""
+      },
+      {
+        "line": 390,
+        "text": "    if (m_axis_tready_pipe || ~m_axis_tvalid_pipe_reg) begin"
+      },
+      {
+        "line": 391,
+        "text": "        // output ready or bubble in pipeline; read new data from FIFO"
+      },
+      {
+        "line": 392,
+        "text": "        m_axis_tvalid_pipe_reg[0] <= 1'b0;"
+      },
+      {
+        "line": 393,
+        "text": "        m_axis_pipe_reg[0] <= mem[rd_ptr_reg[ADDR_WIDTH-1:0]];"
+      },
+      {
+        "line": 394,
+        "text": "        if (!empty && pipe_ready) begin"
+      },
+      {
+        "line": 395,
+        "text": "            // not empty, increment pointer"
+      },
+      {
+        "line": 396,
+        "text": "            m_axis_tvalid_pipe_reg[0] <= 1'b1;"
+      },
+      {
+        "line": 397,
+        "text": "            rd_ptr_reg <= rd_ptr_reg;"
+      },
+      {
+        "line": 398,
+        "text": "        end"
+      },
+      {
+        "line": 399,
+        "text": "    end"
+      },
+      {
+        "line": 400,
+        "text": ""
+      },
+      {
+        "line": 401,
+        "text": "    if (rst) begin"
+      },
+      {
+        "line": 402,
+        "text": "        rd_ptr_reg <= {ADDR_WIDTH+1{1'b0}};"
+      },
+      {
+        "line": 403,
+        "text": "        m_axis_tvalid_pipe_reg <= 0;"
+      },
+      {
+        "line": 404,
+        "text": "    end"
+      },
+      {
+        "line": 405,
+        "text": "end"
+      },
+      {
+        "line": 406,
+        "text": ""
+      }
+    ]
+  },
+  "navigate": {
+    "scope": "tb.dut",
+    "line": 397
+  }
+}

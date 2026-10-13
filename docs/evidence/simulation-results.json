@@ -1,0 +1,74 @@
+[
+  {
+    "seed": 1,
+    "errors": 0,
+    "sent": 64,
+    "received": 64,
+    "first_error_ns": -1,
+    "case": "baseline"
+  },
+  {
+    "seed": 7,
+    "errors": 0,
+    "sent": 64,
+    "received": 64,
+    "first_error_ns": -1,
+    "case": "baseline"
+  },
+  {
+    "seed": 42,
+    "errors": 0,
+    "sent": 64,
+    "received": 64,
+    "first_error_ns": -1,
+    "case": "baseline"
+  },
+  {
+    "seed": 1,
+    "errors": 224,
+    "sent": 8,
+    "received": 224,
+    "first_error_ns": 435,
+    "case": "stalled_read_pointer"
+  },
+  {
+    "seed": 7,
+    "errors": 217,
+    "sent": 8,
+    "received": 217,
+    "first_error_ns": 435,
+    "case": "stalled_read_pointer"
+  },
+  {
+    "seed": 42,
+    "errors": 224,
+    "sent": 8,
+    "received": 224,
+    "first_error_ns": 425,
+    "case": "stalled_read_pointer"
+  },
+  {
+    "seed": 1,
+    "errors": 1,
+    "sent": 0,
+    "received": 0,
+    "first_error_ns": 3340,
+    "case": "wrong_full_compare"
+  },
+  {
+    "seed": 7,
+    "errors": 1,
+    "sent": 0,
+    "received": 0,
+    "first_error_ns": 3340,
+    "case": "wrong_full_compare"
+  },
+  {
+    "seed": 42,
+    "errors": 1,
+    "sent": 0,
+    "received": 0,
+    "first_error_ns": 3340,
+    "case": "wrong_full_compare"
+  }
+]

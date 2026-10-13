@@ -1,0 +1,766 @@
+{
+  "method": "explicit evidence replay; not autonomous diagnosis",
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ],
+  "status": {
+    "window": "194fdb40",
+    "time_unit": "1ps",
+    "cursor": [
+      "1",
+      "0",
+      "x",
+      "1ps"
+    ],
+    "viewport": [
+      "1",
+      "0",
+      "337340"
+    ],
+    "signals": []
+  },
+  "discovery": {
+    "scope": "/tb/dut",
+    "scopes": [],
+    "signals": [
+      "bad_frame_reg",
+      "clk",
+      "depth_commit_reg[3:0]",
+      "depth_reg[3:0]",
+      "drop_frame_reg",
+      "empty",
+      "full",
+      "full_wr",
+      "good_frame_reg",
+      "j",
+      "m_axis[7:0]",
+      "m_axis_tdata[7:0]",
+      "m_axis_tdata_out[7:0]",
+      "m_axis_tdata_pipe[7:0]",
+      "m_axis_tdest[7:0]",
+      "m_axis_tdest_out[7:0]",
+      "m_axis_tdest_pipe[7:0]",
+      "m_axis_tid[7:0]",
+      "m_axis_tid_out[7:0]",
+      "m_axis_tid_pipe[7:0]",
+      "m_axis_tkeep[0:0]",
+      "m_axis_tkeep_out[0:0]",
+      "m_axis_tkeep_pipe[0:0]",
+      "m_axis_tlast",
+      "m_axis_tlast_out",
+      "m_axis_tlast_pipe",
+      "m_axis_tready",
+      "m_axis_tready_out",
+      "m_axis_tready_pipe",
+      "m_axis_tuser[0:0]",
+      "m_axis_tuser_out[0:0]",
+      "m_axis_tuser_pipe[0:0]",
+      "m_axis_tvalid",
+      "m_axis_tvalid_out",
+      "m_axis_tvalid_pipe",
+      "m_axis_tvalid_pipe_reg[1:0]",
+      "mark_frame_reg",
+      "mem_read_data_valid_reg",
+      "overflow_reg",
+      "pause_ack",
+      "pause_req",
+      "pipe_ready",
+      "rd_ptr_reg[3:0]",
+      "rst",
+      "s_axis[7:0]",
+      "s_axis_tdata[7:0]",
+      "s_axis_tdest[7:0]",
+      "s_axis_tid[7:0]",
+      "s_axis_tkeep[0:0]",
+      "s_axis_tlast",
+      "s_axis_tready",
+      "s_axis_tuser[0:0]",
+      "s_axis_tvalid",
+      "s_frame_reg",
+      "send_frame_reg",
+      "status_bad_frame",
+      "status_depth[3:0]",
+      "status_depth_commit[3:0]",
+      "status_good_frame",
+      "status_overflow",
+      "wr_ptr_commit_reg[3:0]",
+      "wr_ptr_reg[3:0]"
+    ],
+    "names_relative": true
+  },
+  "add": {
+    "signals": [
+      "/tb/clk",
+      "/tb/rst",
+      "/tb/dut/wr_ptr_reg[3:0]",
+      "/tb/dut/rd_ptr_reg[3:0]",
+      "/tb/dut/full",
+      "/tb/dut/empty",
+      "/tb/s_axis_tvalid",
+      "/tb/s_axis_tready",
+      "/tb/m_axis_tvalid",
+      "/tb/m_axis_tready",
+      "/tb/m_axis_tdata[7:0]",
+      "/tb/dut/pipe_ready",
+      "/tb/dut/m_axis_tready_pipe"
+    ]
+  },
+  "jump": {
+    "cursor": [
+      "1",
+      "3140000",
+      "x",
+      "1ps"
+    ],
+    "time_unit": "1ps",
+    "clamped_at_zero": false,
+    "cycles": 20,
+    "note": "Preserves timestamp phase; does not snap to clock edges"
+  },
+  "zoom": {
+    "viewport": [
+      "1",
+      "0",
+      "200000"
+    ],
+    "time_unit": "1ps"
+  },
+  "samples": {
+    "radix": "UDec",
+    "samples": [
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "0",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "0",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "0",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "0",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "0",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "36",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "36",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "36",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "36",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "36",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "46",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "46",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "46",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "56",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "56",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "56",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "126",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "126",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "126",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "1000",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "1000",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "1000",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "1000",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "1000",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "1000",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "1000",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "1000",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "1000",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "1000",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "1000",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/wr_ptr_reg[3:0]",
+        "time": "3336",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/rd_ptr_reg[3:0]",
+        "time": "3336",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/dut/full",
+        "time": "3336",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/empty",
+        "time": "3336",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/s_axis_tvalid",
+        "time": "3336",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/s_axis_tready",
+        "time": "3336",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tvalid",
+        "time": "3336",
+        "unit": "ns",
+        "value": "0"
+      },
+      {
+        "signal": "/tb/m_axis_tready",
+        "time": "3336",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/m_axis_tdata[7:0]",
+        "time": "3336",
+        "unit": "ns",
+        "value": "X"
+      },
+      {
+        "signal": "/tb/dut/pipe_ready",
+        "time": "3336",
+        "unit": "ns",
+        "value": "1"
+      },
+      {
+        "signal": "/tb/dut/m_axis_tready_pipe",
+        "time": "3336",
+        "unit": "ns",
+        "value": "1"
+      }
+    ]
+  },
+  "driver": {
+    "signal": "tb.dut.full",
+    "driver": [
+      "tb.dut",
+      "axis_fifo.v",
+      "200"
+    ]
+  },
+  "source": {
+    "file": "/tmp/verdi-bridge-project/build/axis_fifo/wrong_full_compare/axis_fifo.v",
+    "definition_line": "200",
+    "lines": [
+      {
+        "line": 185,
+        "text": "localparam WIDTH       = USER_OFFSET + (USER_ENABLE ? USER_WIDTH : 0);"
+      },
+      {
+        "line": 186,
+        "text": ""
+      },
+      {
+        "line": 187,
+        "text": "reg [ADDR_WIDTH:0] wr_ptr_reg = {ADDR_WIDTH+1{1'b0}};"
+      },
+      {
+        "line": 188,
+        "text": "reg [ADDR_WIDTH:0] wr_ptr_commit_reg = {ADDR_WIDTH+1{1'b0}};"
+      },
+      {
+        "line": 189,
+        "text": "reg [ADDR_WIDTH:0] rd_ptr_reg = {ADDR_WIDTH+1{1'b0}};"
+      },
+      {
+        "line": 190,
+        "text": ""
+      },
+      {
+        "line": 191,
+        "text": "(* ramstyle = \"no_rw_check\" *)"
+      },
+      {
+        "line": 192,
+        "text": "reg [WIDTH-1:0] mem[(2**ADDR_WIDTH)-1:0];"
+      },
+      {
+        "line": 193,
+        "text": "reg mem_read_data_valid_reg = 1'b0;"
+      },
+      {
+        "line": 194,
+        "text": ""
+      },
+      {
+        "line": 195,
+        "text": "(* shreg_extract = \"no\" *)"
+      },
+      {
+        "line": 196,
+        "text": "reg [WIDTH-1:0] m_axis_pipe_reg[RAM_PIPELINE+1-1:0];"
+      },
+      {
+        "line": 197,
+        "text": "reg [RAM_PIPELINE+1-1:0] m_axis_tvalid_pipe_reg = 0;"
+      },
+      {
+        "line": 198,
+        "text": ""
+      },
+      {
+        "line": 199,
+        "text": "// full when first MSB different but rest same"
+      },
+      {
+        "line": 200,
+        "text": "wire full = wr_ptr_reg == rd_ptr_reg;"
+      },
+      {
+        "line": 201,
+        "text": "// empty when pointers match exactly"
+      },
+      {
+        "line": 202,
+        "text": "wire empty = wr_ptr_commit_reg == rd_ptr_reg;"
+      },
+      {
+        "line": 203,
+        "text": "// overflow within packet"
+      },
+      {
+        "line": 204,
+        "text": "wire full_wr = wr_ptr_reg == (wr_ptr_commit_reg ^ {1'b1, {ADDR_WIDTH{1'b0}}});"
+      },
+      {
+        "line": 205,
+        "text": ""
+      },
+      {
+        "line": 206,
+        "text": "reg s_frame_reg = 1'b0;"
+      },
+      {
+        "line": 207,
+        "text": ""
+      },
+      {
+        "line": 208,
+        "text": "reg drop_frame_reg = 1'b0;"
+      },
+      {
+        "line": 209,
+        "text": "reg mark_frame_reg = 1'b0;"
+      },
+      {
+        "line": 210,
+        "text": "reg send_frame_reg = 1'b0;"
+      },
+      {
+        "line": 211,
+        "text": "reg [ADDR_WIDTH:0] depth_reg = 0;"
+      },
+      {
+        "line": 212,
+        "text": "reg [ADDR_WIDTH:0] depth_commit_reg = 0;"
+      },
+      {
+        "line": 213,
+        "text": "reg overflow_reg = 1'b0;"
+      },
+      {
+        "line": 214,
+        "text": "reg bad_frame_reg = 1'b0;"
+      },
+      {
+        "line": 215,
+        "text": "reg good_frame_reg = 1'b0;"
+      },
+      {
+        "line": 216,
+        "text": ""
+      },
+      {
+        "line": 217,
+        "text": "assign s_axis_tready = FRAME_FIFO ? (!full || (full_wr && DROP_OVERSIZE_FRAME) || DROP_WHEN_FULL) : (!full || MARK_WHEN_FULL);"
+      },
+      {
+        "line": 218,
+        "text": ""
+      },
+      {
+        "line": 219,
+        "text": "wire [WIDTH-1:0] s_axis;"
+      },
+      {
+        "line": 220,
+        "text": ""
+      }
+    ]
+  },
+  "navigate": {
+    "scope": "tb.dut",
+    "line": 200
+  }
+}
