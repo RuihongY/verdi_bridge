@@ -25,6 +25,14 @@ Let an AI agent inspect waveforms, trace signal drivers, and navigate RTL in a
 The agent reasons about the design. Verdi Bridge provides ten typed MCP tools that
 return waveform values and source evidence while operating the GUI you can inspect.
 
+## Video walkthrough
+
+Install, connect, then watch real MCP calls add signals, move the cursor and navigate RTL. A 1m46s silent tutorial with captions; the live GUI segment replays a known UART bug.
+
+https://github.com/user-attachments/assets/19017ecd-0095-46d3-86dd-f408385808f3
+
+[Step-by-step notes and timestamps](docs/video-walkthrough.md)
+
 ## Quick start
 
 ```sh
@@ -72,6 +80,12 @@ The seed-1 cases were inspected through real MCP calls and a live Verdi GUI.
 These are **known, locally injected mutations**, not upstream defects or a blinded
 accuracy benchmark. Driver tracing can return an initializer rather than the fault;
 source inspection and waveform reasoning remain necessary.
+
+A separate [independent-agent blind trial](docs/blind-validation.md) used three
+new bugs: the fresh-context diagnostician identified all three exact statements
+with 21 live MCP calls, and its proposed repairs passed 9/9 runs. Answers were
+frozen before revealing mutations. This was procedural isolation on a shared
+filesystem, a small trial with no RTL-only comparison.
 
 <details>
 <summary>View a real Verdi debugging session</summary>

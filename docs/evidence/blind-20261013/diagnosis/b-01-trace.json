@@ -1,0 +1,65 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "session_status",
+      "is_error": false,
+      "result": {
+        "window": "199844c0",
+        "time_unit": "1ps",
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "viewport": [
+          "1",
+          "0",
+          "2012930"
+        ],
+        "signals": []
+      }
+    },
+    {
+      "tool": "browse_scope",
+      "arguments": {
+        "scope": "/tb/dut"
+      },
+      "is_error": false,
+      "result": {
+        "scope": "/tb/dut",
+        "scopes": [],
+        "signals": [
+          "bit_cnt[3:0]",
+          "busy",
+          "busy_reg",
+          "clk",
+          "data_reg[8:0]",
+          "prescale[15:0]",
+          "prescale_reg[18:0]",
+          "rst",
+          "s_axis_tdata[7:0]",
+          "s_axis_tready",
+          "s_axis_tready_reg",
+          "s_axis_tvalid",
+          "txd",
+          "txd_reg"
+        ],
+        "names_relative": true
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

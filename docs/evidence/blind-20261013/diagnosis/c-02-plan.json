@@ -1,0 +1,77 @@
+[
+  {
+    "tool": "add_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axil_awaddr[15:0]",
+        "/tb/dut/s_axil_awvalid",
+        "/tb/dut/s_axil_awready",
+        "/tb/dut/s_axil_wdata[31:0]",
+        "/tb/dut/s_axil_wvalid",
+        "/tb/dut/s_axil_wready",
+        "/tb/dut/s_axil_wstrb[3:0]",
+        "/tb/dut/s_axil_wstrb_next[3:0]",
+        "/tb/dut/reg_wr_strb[3:0]",
+        "/tb/dut/reg_wr_data[31:0]",
+        "/tb/dut/reg_wr_addr[15:0]",
+        "/tb/dut/reg_wr_en"
+      ]
+    }
+  },
+  {
+    "tool": "jump_before_error",
+    "arguments": {
+      "error_time": "85",
+      "period": "10",
+      "cycles": 4,
+      "unit": "ns"
+    }
+  },
+  {
+    "tool": "sample_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axil_awaddr[15:0]",
+        "/tb/dut/s_axil_awvalid",
+        "/tb/dut/s_axil_awready",
+        "/tb/dut/s_axil_wdata[31:0]",
+        "/tb/dut/s_axil_wvalid",
+        "/tb/dut/s_axil_wready",
+        "/tb/dut/s_axil_wstrb[3:0]",
+        "/tb/dut/s_axil_wstrb_next[3:0]",
+        "/tb/dut/reg_wr_strb[3:0]",
+        "/tb/dut/reg_wr_data[31:0]",
+        "/tb/dut/reg_wr_addr[15:0]",
+        "/tb/dut/reg_wr_en"
+      ],
+      "times": [
+        "54",
+        "56",
+        "64",
+        "66",
+        "74",
+        "76",
+        "84",
+        "85",
+        "86",
+        "96"
+      ],
+      "unit": "ns",
+      "radix": "Hex"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.s_axil_wstrb_reg"
+    }
+  },
+  {
+    "tool": "read_source",
+    "arguments": {
+      "signal": "tb.dut.s_axil_wstrb_reg",
+      "start": 98,
+      "count": 52
+    }
+  }
+]

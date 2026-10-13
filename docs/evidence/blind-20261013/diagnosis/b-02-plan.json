@@ -1,0 +1,73 @@
+[
+  {
+    "tool": "add_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/s_axis_tvalid",
+        "/tb/dut/s_axis_tready",
+        "/tb/dut/data_reg[8:0]",
+        "/tb/dut/prescale_reg[18:0]",
+        "/tb/dut/bit_cnt[3:0]",
+        "/tb/dut/txd"
+      ]
+    }
+  },
+  {
+    "tool": "jump_before_error",
+    "arguments": {
+      "error_time": "455",
+      "period": "10",
+      "cycles": 4,
+      "unit": "ns"
+    }
+  },
+  {
+    "tool": "sample_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/s_axis_tvalid",
+        "/tb/dut/s_axis_tready",
+        "/tb/dut/data_reg[8:0]",
+        "/tb/dut/prescale_reg[18:0]",
+        "/tb/dut/bit_cnt[3:0]",
+        "/tb/dut/txd"
+      ],
+      "times": [
+        "54",
+        "56",
+        "214",
+        "216",
+        "295",
+        "374",
+        "376",
+        "455",
+        "535",
+        "615",
+        "775",
+        "935",
+        "1095",
+        "1255",
+        "1415",
+        "1575"
+      ],
+      "unit": "ns",
+      "radix": "Hex"
+    }
+  },
+  {
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.data_reg"
+    }
+  },
+  {
+    "tool": "read_source",
+    "arguments": {
+      "signal": "tb.dut.data_reg",
+      "start": 78,
+      "count": 36
+    }
+  }
+]

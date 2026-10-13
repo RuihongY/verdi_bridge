@@ -1,0 +1,290 @@
+{
+  "created_utc": "2026-10-13T05:21:15.638545+00:00",
+  "procedure": "Three frozen single-site new mutants selected before diagnosis; honor-based blindness. No testbench adjustments.",
+  "cases": {
+    "case_a": {
+      "design": "arbiter",
+      "repository": "https://github.com/alexforencich/verilog-axis",
+      "commit": "48ff7a7e2ef782cf778d47910cf85835c64b1bce",
+      "source_origin": "<project>/build/multidesign/arbiter/baseline",
+      "target": "arbiter.v",
+      "line": 119,
+      "original": "grant_encoded_next = masked_request_index;",
+      "mutated": "grant_encoded_next = request_index;",
+      "root_cause": "Masked arbitration winner uses the unmasked encoder index for grant_encoded, mismatching the one-hot grant.",
+      "files": {
+        "arbiter.v": {
+          "baseline_sha256": "d54d337db4812f927b2e9b5788dfa39f9bd578ad01b7846c5fa7f2610b0923fa",
+          "mutant_sha256": "43713cd9b5ef6fc5aeff060b367eedfa0158972da052bb0622f3f84ea56e028d"
+        },
+        "priority_encoder.v": {
+          "baseline_sha256": "df28220d95b47df349a72803a9751aad331eb8e1435416e8686d00572a974dd5",
+          "mutant_sha256": "df28220d95b47df349a72803a9751aad331eb8e1435416e8686d00572a974dd5"
+        }
+      },
+      "tb_sha256": "8ccaaaf40344ac4b17d830656b55c9cadad42fce9b356e9ebfc7880f50fa1ef4",
+      "tb_adjustments": null,
+      "tests": {
+        "baseline": [
+          {
+            "seed": 1,
+            "errors": 0,
+            "sent": 100,
+            "received": 100,
+            "first_error_ns": -1,
+            "sim_log_sha256": "177b59816f15f996edcf001164ccc9a84d448d4f8e1c60d2ff086e897d85da44",
+            "wave_sha256": "49334951ac47777a97ab70458b1af5fedf827ffb017d7a72b731b94a19667443"
+          },
+          {
+            "seed": 7,
+            "errors": 0,
+            "sent": 100,
+            "received": 100,
+            "first_error_ns": -1,
+            "sim_log_sha256": "cd0de57b029e205d411eeddf4ace1f4b0efc6689a5596d7851e70f185da10994",
+            "wave_sha256": "b536d5f3dbe529384cc370c07482d33f30152876ae8186f461fa3b869bc97275"
+          },
+          {
+            "seed": 42,
+            "errors": 0,
+            "sent": 100,
+            "received": 100,
+            "first_error_ns": -1,
+            "sim_log_sha256": "0043827d63a3424648bc33fa1023ba4e0f1df83bed259c589e95345681e0a2e7",
+            "wave_sha256": "46bd1106e0f2732172692be95a51af6152f86186ea4e0cd1591ef9cef60a678b"
+          }
+        ],
+        "mutant": [
+          {
+            "seed": 1,
+            "errors": 43,
+            "sent": 100,
+            "received": 100,
+            "first_error_ns": 56,
+            "sim_log_sha256": "5834bf1ccd472b0d993dd67d5d88e3daa867ad8c3ee5d57547f9d2fd0f83a778",
+            "wave_sha256": "279cc1064a4e8ae6af50cfbfa3ae17909461614f85b0a85c9bfcd0144a650823"
+          },
+          {
+            "seed": 7,
+            "errors": 42,
+            "sent": 100,
+            "received": 100,
+            "first_error_ns": 56,
+            "sim_log_sha256": "b4933c2af6e4601fb8fa498adb310ac35395d4f66a4e51d44d857df247fe49e0",
+            "wave_sha256": "c1c54fbc60dfb275b7cd23714bb9e9d3c86682a3edbbfe39afaadbbd5d807c83"
+          },
+          {
+            "seed": 42,
+            "errors": 42,
+            "sent": 100,
+            "received": 100,
+            "first_error_ns": 56,
+            "sim_log_sha256": "9f7564245429be5d34f38ea8e225ab51650f24d86d0a9829e499268c8c9cb383",
+            "wave_sha256": "8d2a30e07b35c9231f133a3ec6614e3ce361d4f5bcb0462c4148dc82fd469c99"
+          }
+        ]
+      }
+    },
+    "case_b": {
+      "design": "uart",
+      "repository": "https://github.com/alexforencich/verilog-uart",
+      "commit": "1b867e53af738e4a8bc7c839ca2f1c07f40382dc",
+      "source_origin": "<project>/build/multidesign/uart/baseline",
+      "target": "uart_tx.v",
+      "line": 97,
+      "original": "data_reg <= {1'b1, s_axis_tdata};",
+      "mutated": "data_reg <= {s_axis_tdata, 1'b1};",
+      "root_cause": "UART frame payload load places padding at the least significant end, shifting serial data by one bit.",
+      "files": {
+        "uart_tx.v": {
+          "baseline_sha256": "e9559ddebf124f8fbface06bf7091296baa78c7acab95a36b40a919663349d34",
+          "mutant_sha256": "b86a0cc87b23333b7ae2343d88320fe32b4bddc503de46b3cc417ca8d7fe503d"
+        }
+      },
+      "tb_sha256": "77cb84459ca00a33a0ef48b53a6990b8992efc592c31f5276395d97e01102142",
+      "tb_adjustments": null,
+      "tests": {
+        "baseline": [
+          {
+            "seed": 1,
+            "errors": 0,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": -1,
+            "sim_log_sha256": "e682e3c51f79e37237bd9f5fd8d9e026115d404912cda53f3840f489fc122abb",
+            "wave_sha256": "4718bfdcfd2f385a0776545e81ae4a3e4e3219dc1f763a93790b8098b6935bf7"
+          },
+          {
+            "seed": 7,
+            "errors": 0,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": -1,
+            "sim_log_sha256": "925df8193db01e20a8dc3f059b474d6652c224b1d2d2b080f826cdbf835d599a",
+            "wave_sha256": "5038d45e6aacf6859ea41f8d9a0ec4858e0282d6b4c06c114f8430805eb1bc2c"
+          },
+          {
+            "seed": 42,
+            "errors": 0,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": -1,
+            "sim_log_sha256": "37610f8b9c4550b32e963d7281c032306f695febff12e8deae7fe47baa09c197",
+            "wave_sha256": "5e6410c0f858653efdfa1dbcbf59290f809096eadfe4bd8410cc20e9482410fd"
+          }
+        ],
+        "mutant": [
+          {
+            "seed": 1,
+            "errors": 38,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": 455,
+            "sim_log_sha256": "f4857c8eedd8ea79b046bdb154a2270217426179ed759b10558a1393edd85ffe",
+            "wave_sha256": "5706f0011a5f0fe8433bc6ed5ee55dde8ef890ee5045da4df33ab8918071fde8"
+          },
+          {
+            "seed": 7,
+            "errors": 45,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": 455,
+            "sim_log_sha256": "bb2de406d697c29fa9ecea2bdb81eef422aafd6b77f706424cc3b24266f86f50",
+            "wave_sha256": "805e7c07f48eeeea3411ce3a5735ccd3db426de18baafb9bfaadb62de976d487"
+          },
+          {
+            "seed": 42,
+            "errors": 51,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": 455,
+            "sim_log_sha256": "cacc52c6da17beba03db13bf6d9cef02f0006023c0040818e8a3d9fbc892a2e1",
+            "wave_sha256": "47b2f702581511888b82ae4dd1b797d6c8dc8e8dfec93a2253963b8ac3e09ca2"
+          }
+        ]
+      }
+    },
+    "case_c": {
+      "design": "axil",
+      "repository": "https://github.com/alexforencich/verilog-axi",
+      "commit": "516bd5dadc3365b7f9e225d2af8fe0b8d804fe53",
+      "source_origin": "<project>/build/multidesign/axil/baseline",
+      "target": "axil_reg_if_wr.v",
+      "line": 122,
+      "original": "s_axil_wstrb_next = s_axil_wstrb;",
+      "mutated": "s_axil_wstrb_next = {STRB_WIDTH{1'b1}};",
+      "root_cause": "Write capture substitutes all byte lanes for the accepted WSTRB, corrupting partial writes.",
+      "files": {
+        "axil_reg_if_wr.v": {
+          "baseline_sha256": "ec2f3d3d97b694dd4ff046d791fc7a0f95856c41049a107eac1aa3b3daab7412",
+          "mutant_sha256": "315fe652175711011830a8ec69d192d894df2414188e4a4b9eabb4ae80695582"
+        }
+      },
+      "tb_sha256": "881689c52991d0f312c4180b702150ee248ef4c35c26f3fe5b6bc2182428c320",
+      "tb_adjustments": null,
+      "tests": {
+        "baseline": [
+          {
+            "seed": 1,
+            "errors": 0,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": -1,
+            "sim_log_sha256": "f991a70342e4a7f8d7ee0ae39e92d00f06560127237203124741f8f43b7ae52c",
+            "wave_sha256": "3518258101f36e76fb4b726774cc090fb7e79e6fa915a1bd9b207ca8e06e951f"
+          },
+          {
+            "seed": 7,
+            "errors": 0,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": -1,
+            "sim_log_sha256": "f5a51ed374759f81b0324f48151ecea1aee824cff1bdff0743eda4569bcdf844",
+            "wave_sha256": "007eeeb7f246b39815f8b1e82b6b708351d31ba8beacc4e0db59cd160704930c"
+          },
+          {
+            "seed": 42,
+            "errors": 0,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": -1,
+            "sim_log_sha256": "7dfff57b2f6e87e4fca398bad7ebb9fbfc2e6128f3f1fcee3a2b6dfb6257e07c",
+            "wave_sha256": "47c3c3b21fc98842ef1570854d772bc21d83d560a476062a7269a80ff06836d3"
+          }
+        ],
+        "mutant": [
+          {
+            "seed": 1,
+            "errors": 12,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": 85,
+            "sim_log_sha256": "023411413b25eed6a6c23794a055311734e688c3411482207db360c1e3620509",
+            "wave_sha256": "157cd179d80efe679a505785b0b1193f0edf743c4d9406abc30a4355fcc24ee7"
+          },
+          {
+            "seed": 7,
+            "errors": 12,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": 95,
+            "sim_log_sha256": "fc178a97dd80fcfd431d21930d872180a42b82c1c9adc607a79866aed6fe7fdb",
+            "wave_sha256": "47697020a02932d7a23793f7694e5a7c9b02db24b580a02a3f33224f9f93a692"
+          },
+          {
+            "seed": 42,
+            "errors": 12,
+            "sent": 12,
+            "received": 12,
+            "first_error_ns": 95,
+            "sim_log_sha256": "52ab6581188cacb7847b5411b66353576a958037344d0a210d2f3112d9da2daa",
+            "wave_sha256": "9f5d9c8a06063584cd955a79a1a97d4e191dcbd73d0403de75b09fbb715aa4a5"
+          }
+        ]
+      }
+    }
+  },
+  "verification_completed_utc": "2026-10-13T05:22:36.240573+00:00",
+  "tool_version": "Synopsys VCS V-2023.03",
+  "clock_period_ns": 10,
+  "public_tree_sha256": {
+    "README.md": "9d7ccf4c26f8082e1da515b85ae5371ded34085d1a98d944cd5e86e5a5e8ff00",
+    "case_a/compile.log": "63d2fd23475d30f0a2bfc1320d40a9dda41624b41118b9a9dcf7b08acb1e677f",
+    "case_a/rtl/arbiter.v": "43713cd9b5ef6fc5aeff060b367eedfa0158972da052bb0622f3f84ea56e028d",
+    "case_a/rtl/priority_encoder.v": "df28220d95b47df349a72803a9751aad331eb8e1435416e8686d00572a974dd5",
+    "case_a/seed-1/sim.log": "5834bf1ccd472b0d993dd67d5d88e3daa867ad8c3ee5d57547f9d2fd0f83a778",
+    "case_a/seed-1/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_a/seed-1/wave.vcd": "279cc1064a4e8ae6af50cfbfa3ae17909461614f85b0a85c9bfcd0144a650823",
+    "case_a/seed-42/sim.log": "9f7564245429be5d34f38ea8e225ab51650f24d86d0a9829e499268c8c9cb383",
+    "case_a/seed-42/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_a/seed-42/wave.vcd": "8d2a30e07b35c9231f133a3ec6614e3ce361d4f5bcb0462c4148dc82fd469c99",
+    "case_a/seed-7/sim.log": "b4933c2af6e4601fb8fa498adb310ac35395d4f66a4e51d44d857df247fe49e0",
+    "case_a/seed-7/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_a/seed-7/wave.vcd": "c1c54fbc60dfb275b7cd23714bb9e9d3c86682a3edbbfe39afaadbbd5d807c83",
+    "case_a/tb.sv": "8ccaaaf40344ac4b17d830656b55c9cadad42fce9b356e9ebfc7880f50fa1ef4",
+    "case_b/compile.log": "10ab309dea700d423215c9bb1c6bb037c31c5e69f0c4cf4f917220f56199b4a4",
+    "case_b/rtl/uart_tx.v": "b86a0cc87b23333b7ae2343d88320fe32b4bddc503de46b3cc417ca8d7fe503d",
+    "case_b/seed-1/sim.log": "f4857c8eedd8ea79b046bdb154a2270217426179ed759b10558a1393edd85ffe",
+    "case_b/seed-1/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_b/seed-1/wave.vcd": "5706f0011a5f0fe8433bc6ed5ee55dde8ef890ee5045da4df33ab8918071fde8",
+    "case_b/seed-42/sim.log": "cacc52c6da17beba03db13bf6d9cef02f0006023c0040818e8a3d9fbc892a2e1",
+    "case_b/seed-42/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_b/seed-42/wave.vcd": "47b2f702581511888b82ae4dd1b797d6c8dc8e8dfec93a2253963b8ac3e09ca2",
+    "case_b/seed-7/sim.log": "bb2de406d697c29fa9ecea2bdb81eef422aafd6b77f706424cc3b24266f86f50",
+    "case_b/seed-7/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_b/seed-7/wave.vcd": "805e7c07f48eeeea3411ce3a5735ccd3db426de18baafb9bfaadb62de976d487",
+    "case_b/tb.sv": "77cb84459ca00a33a0ef48b53a6990b8992efc592c31f5276395d97e01102142",
+    "case_c/compile.log": "f4121c277196e8b57d7d60d210369b228a63c8b3ede4c0eaf8d6c8f039b90598",
+    "case_c/rtl/axil_reg_if_wr.v": "315fe652175711011830a8ec69d192d894df2414188e4a4b9eabb4ae80695582",
+    "case_c/seed-1/sim.log": "023411413b25eed6a6c23794a055311734e688c3411482207db360c1e3620509",
+    "case_c/seed-1/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_c/seed-1/wave.vcd": "157cd179d80efe679a505785b0b1193f0edf743c4d9406abc30a4355fcc24ee7",
+    "case_c/seed-42/sim.log": "52ab6581188cacb7847b5411b66353576a958037344d0a210d2f3112d9da2daa",
+    "case_c/seed-42/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_c/seed-42/wave.vcd": "9f5d9c8a06063584cd955a79a1a97d4e191dcbd73d0403de75b09fbb715aa4a5",
+    "case_c/seed-7/sim.log": "fc178a97dd80fcfd431d21930d872180a42b82c1c9adc607a79866aed6fe7fdb",
+    "case_c/seed-7/ucli.key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "case_c/seed-7/wave.vcd": "47697020a02932d7a23793f7694e5a7c9b02db24b580a02a3f33224f9f93a692",
+    "case_c/tb.sv": "881689c52991d0f312c4180b702150ee248ef4c35c26f3fe5b6bc2182428c320"
+  }
+}

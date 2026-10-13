@@ -1,0 +1,11 @@
+[
+  {
+    "tool": "session_status"
+  },
+  {
+    "tool": "browse_scope",
+    "arguments": {
+      "scope": "/tb/dut"
+    }
+  }
+]

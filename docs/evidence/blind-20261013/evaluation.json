@@ -1,0 +1,251 @@
+{
+  "freeze_verified": true,
+  "top_one_exact_statement_matches": 3,
+  "proposed_repairs_equal_baseline": 3,
+  "simulator": "VCS U-2023.03-SP2_Full64",
+  "runs": [
+    {
+      "case_id": "case_a",
+      "variant": "baseline",
+      "seed": 1,
+      "errors": 0,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_a",
+      "variant": "baseline",
+      "seed": 7,
+      "errors": 0,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_a",
+      "variant": "baseline",
+      "seed": 42,
+      "errors": 0,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_a",
+      "variant": "mutant",
+      "seed": 1,
+      "errors": 43,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": 56
+    },
+    {
+      "case_id": "case_a",
+      "variant": "mutant",
+      "seed": 7,
+      "errors": 42,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": 56
+    },
+    {
+      "case_id": "case_a",
+      "variant": "mutant",
+      "seed": 42,
+      "errors": 42,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": 56
+    },
+    {
+      "case_id": "case_a",
+      "variant": "repaired",
+      "seed": 1,
+      "errors": 0,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_a",
+      "variant": "repaired",
+      "seed": 7,
+      "errors": 0,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_a",
+      "variant": "repaired",
+      "seed": 42,
+      "errors": 0,
+      "sent": 100,
+      "received": 100,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_b",
+      "variant": "baseline",
+      "seed": 1,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_b",
+      "variant": "baseline",
+      "seed": 7,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_b",
+      "variant": "baseline",
+      "seed": 42,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_b",
+      "variant": "mutant",
+      "seed": 1,
+      "errors": 38,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": 455
+    },
+    {
+      "case_id": "case_b",
+      "variant": "mutant",
+      "seed": 7,
+      "errors": 45,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": 455
+    },
+    {
+      "case_id": "case_b",
+      "variant": "mutant",
+      "seed": 42,
+      "errors": 51,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": 455
+    },
+    {
+      "case_id": "case_b",
+      "variant": "repaired",
+      "seed": 1,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_b",
+      "variant": "repaired",
+      "seed": 7,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_b",
+      "variant": "repaired",
+      "seed": 42,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_c",
+      "variant": "baseline",
+      "seed": 1,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_c",
+      "variant": "baseline",
+      "seed": 7,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_c",
+      "variant": "baseline",
+      "seed": 42,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_c",
+      "variant": "mutant",
+      "seed": 1,
+      "errors": 12,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": 85
+    },
+    {
+      "case_id": "case_c",
+      "variant": "mutant",
+      "seed": 7,
+      "errors": 12,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": 95
+    },
+    {
+      "case_id": "case_c",
+      "variant": "mutant",
+      "seed": 42,
+      "errors": 12,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": 95
+    },
+    {
+      "case_id": "case_c",
+      "variant": "repaired",
+      "seed": 1,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_c",
+      "variant": "repaired",
+      "seed": 7,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    },
+    {
+      "case_id": "case_c",
+      "variant": "repaired",
+      "seed": 42,
+      "errors": 0,
+      "sent": 12,
+      "received": 12,
+      "first_error_ns": -1
+    }
+  ]
+}

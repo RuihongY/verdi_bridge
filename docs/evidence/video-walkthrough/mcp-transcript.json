@@ -1,0 +1,410 @@
+[
+  {
+    "time": 6.833299994468689e-05,
+    "title": "01  Connect to the live session",
+    "tool": "session_status",
+    "arguments": {},
+    "note": "The adapter is already loaded in this licensed Verdi GUI.",
+    "result": {
+      "window": "1a74be10",
+      "time_unit": "1ps",
+      "cursor": [
+        "1",
+        "0",
+        "x",
+        "1ps"
+      ],
+      "viewport": [
+        "1",
+        "0",
+        "2012930"
+      ],
+      "signals": []
+    },
+    "is_error": false,
+    "completed": 0.3316034580057021
+  },
+  {
+    "time": 6.3327808330068365,
+    "title": "02  Discover exact signal names",
+    "tool": "browse_scope",
+    "arguments": {
+      "scope": "/tb/dut"
+    },
+    "note": "Use the discovered hierarchy and bus ranges; do not guess names.",
+    "result": {
+      "scope": "/tb/dut",
+      "scopes": [],
+      "signals": [
+        "bit_cnt[3:0]",
+        "busy",
+        "busy_reg",
+        "clk",
+        "data_reg[8:0]",
+        "prescale[15:0]",
+        "prescale_reg[18:0]",
+        "rst",
+        "s_axis_tdata[7:0]",
+        "s_axis_tready",
+        "s_axis_tready_reg",
+        "s_axis_tvalid",
+        "txd",
+        "txd_reg"
+      ],
+      "names_relative": true
+    },
+    "is_error": false,
+    "completed": 6.707659125007922
+  },
+  {
+    "time": 12.708803125002305,
+    "title": "03  Add UART signals to nWave",
+    "tool": "add_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/s_axis_tvalid",
+        "/tb/dut/s_axis_tready",
+        "/tb/dut/txd",
+        "/tb/dut/data_reg[8:0]",
+        "/tb/dut/bit_cnt[3:0]"
+      ]
+    },
+    "note": "Payload, handshake, serial output, shift register and bit counter.",
+    "result": {
+      "signals": [
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/s_axis_tvalid",
+        "/tb/dut/s_axis_tready",
+        "/tb/dut/txd",
+        "/tb/dut/data_reg[8:0]",
+        "/tb/dut/bit_cnt[3:0]"
+      ]
+    },
+    "is_error": false,
+    "completed": 13.08626875000482
+  },
+  {
+    "time": 19.08739145800064,
+    "title": "04  Show the first UART frame",
+    "tool": "set_time_window",
+    "arguments": {
+      "start": "0",
+      "end": "1700",
+      "unit": "ns"
+    },
+    "note": "Zoom from 0 to 1700 ns to see start, data and stop bits.",
+    "result": {
+      "viewport": [
+        "1",
+        "0",
+        "1700000"
+      ],
+      "time_unit": "1ps"
+    },
+    "is_error": false,
+    "completed": 19.369784082999104
+  },
+  {
+    "time": 25.37098958301067,
+    "title": "05  Go 20 cycles before the error",
+    "tool": "jump_before_error",
+    "arguments": {
+      "error_time": "455",
+      "period": "10",
+      "cycles": 20,
+      "unit": "ns"
+    },
+    "note": "455 ns - 20 x 10 ns = 255 ns. Watch the cursor move.",
+    "result": {
+      "cursor": [
+        "1",
+        "255000",
+        "x",
+        "1ps"
+      ],
+      "time_unit": "1ps",
+      "clamped_at_zero": false,
+      "cycles": 20,
+      "note": "Preserves timestamp phase; does not snap to clock edges"
+    },
+    "is_error": false,
+    "completed": 25.704121000002488
+  },
+  {
+    "time": 31.705308708013035,
+    "title": "06  Inspect the failing bit",
+    "tool": "set_cursor",
+    "arguments": {
+      "time": "455",
+      "unit": "ns"
+    },
+    "note": "First checker error: serial data bit 1 is high, but should be low.",
+    "result": {
+      "cursor": [
+        "1",
+        "455000",
+        "x",
+        "1ps"
+      ],
+      "time_unit": "1ps"
+    },
+    "is_error": false,
+    "completed": 31.982259083000827
+  },
+  {
+    "time": 37.9834262910008,
+    "title": "07  Query actual waveform values",
+    "tool": "sample_signals",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axis_tdata[7:0]",
+        "/tb/dut/data_reg[8:0]",
+        "/tb/dut/txd"
+      ],
+      "times": [
+        "54",
+        "56",
+        "455"
+      ],
+      "unit": "ns",
+      "radix": "Hex"
+    },
+    "note": "At 56 ns, input 0x35 has been loaded as 0x06b. Results are in the transcript.",
+    "result": {
+      "radix": "Hex",
+      "samples": [
+        {
+          "signal": "/tb/dut/s_axis_tdata[7:0]",
+          "time": "54",
+          "unit": "ns",
+          "value": "35"
+        },
+        {
+          "signal": "/tb/dut/data_reg[8:0]",
+          "time": "54",
+          "unit": "ns",
+          "value": "0"
+        },
+        {
+          "signal": "/tb/dut/txd",
+          "time": "54",
+          "unit": "ns",
+          "value": "1"
+        },
+        {
+          "signal": "/tb/dut/s_axis_tdata[7:0]",
+          "time": "56",
+          "unit": "ns",
+          "value": "35"
+        },
+        {
+          "signal": "/tb/dut/data_reg[8:0]",
+          "time": "56",
+          "unit": "ns",
+          "value": "6b"
+        },
+        {
+          "signal": "/tb/dut/txd",
+          "time": "56",
+          "unit": "ns",
+          "value": "0"
+        },
+        {
+          "signal": "/tb/dut/s_axis_tdata[7:0]",
+          "time": "455",
+          "unit": "ns",
+          "value": "35"
+        },
+        {
+          "signal": "/tb/dut/data_reg[8:0]",
+          "time": "455",
+          "unit": "ns",
+          "value": "1a"
+        },
+        {
+          "signal": "/tb/dut/txd",
+          "time": "455",
+          "unit": "ns",
+          "value": "1"
+        }
+      ]
+    },
+    "is_error": false,
+    "completed": 38.31975029100431
+  },
+  {
+    "time": 44.32094387500547,
+    "title": "08  Trace the register driver",
+    "tool": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.data_reg"
+    },
+    "note": "A driver may point to a declaration. Inspect the surrounding RTL.",
+    "result": {
+      "signal": "tb.dut.data_reg",
+      "driver": [
+        "tb.dut",
+        "./rtl/uart_tx.v",
+        "69"
+      ]
+    },
+    "is_error": false,
+    "completed": 44.713590458006365
+  },
+  {
+    "time": 50.71472650000942,
+    "title": "09  Read the loading logic",
+    "tool": "read_source",
+    "arguments": {
+      "signal": "tb.dut.data_reg",
+      "start": 85,
+      "count": 30
+    },
+    "note": "The shift register loads {s_axis_tdata, 1'b1}: padding is below the payload.",
+    "result": {
+      "file": "<demo-source>/rtl/uart_tx.v",
+      "definition_line": "69",
+      "lines": [
+        {
+          "line": 85,
+          "text": "    end else begin"
+        },
+        {
+          "line": 86,
+          "text": "        if (prescale_reg > 0) begin"
+        },
+        {
+          "line": 87,
+          "text": "            s_axis_tready_reg <= 0;"
+        },
+        {
+          "line": 88,
+          "text": "            prescale_reg <= prescale_reg - 1;"
+        },
+        {
+          "line": 89,
+          "text": "        end else if (bit_cnt == 0) begin"
+        },
+        {
+          "line": 90,
+          "text": "            s_axis_tready_reg <= 1;"
+        },
+        {
+          "line": 91,
+          "text": "            busy_reg <= 0;"
+        },
+        {
+          "line": 92,
+          "text": ""
+        },
+        {
+          "line": 93,
+          "text": "            if (s_axis_tvalid) begin"
+        },
+        {
+          "line": 94,
+          "text": "                s_axis_tready_reg <= !s_axis_tready_reg;"
+        },
+        {
+          "line": 95,
+          "text": "                prescale_reg <= (prescale << 3)-1;"
+        },
+        {
+          "line": 96,
+          "text": "                bit_cnt <= DATA_WIDTH+1;"
+        },
+        {
+          "line": 97,
+          "text": "                data_reg <= {s_axis_tdata, 1'b1};"
+        },
+        {
+          "line": 98,
+          "text": "                txd_reg <= 0;"
+        },
+        {
+          "line": 99,
+          "text": "                busy_reg <= 1;"
+        },
+        {
+          "line": 100,
+          "text": "            end"
+        },
+        {
+          "line": 101,
+          "text": "        end else begin"
+        },
+        {
+          "line": 102,
+          "text": "            if (bit_cnt > 1) begin"
+        },
+        {
+          "line": 103,
+          "text": "                bit_cnt <= bit_cnt - 1;"
+        },
+        {
+          "line": 104,
+          "text": "                prescale_reg <= (prescale << 3)-1;"
+        },
+        {
+          "line": 105,
+          "text": "                {data_reg, txd_reg} <= {1'b0, data_reg};"
+        },
+        {
+          "line": 106,
+          "text": "            end else if (bit_cnt == 1) begin"
+        },
+        {
+          "line": 107,
+          "text": "                bit_cnt <= bit_cnt - 1;"
+        },
+        {
+          "line": 108,
+          "text": "                prescale_reg <= (prescale << 3);"
+        },
+        {
+          "line": 109,
+          "text": "                txd_reg <= 1;"
+        },
+        {
+          "line": 110,
+          "text": "            end"
+        },
+        {
+          "line": 111,
+          "text": "        end"
+        },
+        {
+          "line": 112,
+          "text": "    end"
+        },
+        {
+          "line": 113,
+          "text": "end"
+        },
+        {
+          "line": 114,
+          "text": ""
+        }
+      ]
+    },
+    "is_error": false,
+    "completed": 51.000438791001216
+  },
+  {
+    "time": 57.00164862500969,
+    "title": "10  Navigate to the faulty statement",
+    "tool": "goto_source",
+    "arguments": {
+      "scope": "tb.dut",
+      "line": 97
+    },
+    "note": "Line 97. Correct preload: {1'b1, s_axis_tdata}. Known injected example.",
+    "result": {
+      "scope": "tb.dut",
+      "line": 97
+    },
+    "is_error": false,
+    "completed": 57.383849750010995
+  }
+]

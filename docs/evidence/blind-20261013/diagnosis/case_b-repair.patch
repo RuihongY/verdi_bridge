@@ -1,0 +1,11 @@
+--- a/public/case_b/rtl/uart_tx.v
++++ b/public/case_b/rtl/uart_tx.v
+@@ -94,7 +94,7 @@
+                 s_axis_tready_reg <= !s_axis_tready_reg;
+                 prescale_reg <= (prescale << 3)-1;
+                 bit_cnt <= DATA_WIDTH+1;
+-                data_reg <= {s_axis_tdata, 1'b1};
++                data_reg <= {1'b1, s_axis_tdata};
+                 txd_reg <= 0;
+                 busy_reg <= 1;
+             end

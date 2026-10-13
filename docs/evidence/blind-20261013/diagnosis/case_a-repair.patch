@@ -1,0 +1,11 @@
+--- a/public/case_a/rtl/arbiter.v
++++ b/public/case_a/rtl/arbiter.v
+@@ -116,7 +116,7 @@
+             if (masked_request_valid) begin
+                 grant_valid_next = 1;
+                 grant_next = masked_request_mask;
+-                grant_encoded_next = request_index;
++                grant_encoded_next = masked_request_index;
+                 if (ARB_LSB_HIGH_PRIORITY) begin
+                     mask_next = {PORTS{1'b1}} << (masked_request_index + 1);
+                 end else begin

@@ -1,0 +1,754 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "add_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/request[3:0]",
+          "/tb/dut/grant[3:0]",
+          "/tb/dut/grant_encoded[1:0]",
+          "/tb/dut/grant_encoded_next[1:0]",
+          "/tb/dut/mask_reg[3:0]",
+          "/tb/dut/masked_request_valid",
+          "/tb/dut/masked_request_index[1:0]",
+          "/tb/dut/request_index[1:0]"
+        ]
+      },
+      "is_error": false,
+      "result": {
+        "signals": [
+          "/tb/dut/request[3:0]",
+          "/tb/dut/grant[3:0]",
+          "/tb/dut/grant_encoded[1:0]",
+          "/tb/dut/grant_encoded_next[1:0]",
+          "/tb/dut/mask_reg[3:0]",
+          "/tb/dut/masked_request_valid",
+          "/tb/dut/masked_request_index[1:0]",
+          "/tb/dut/request_index[1:0]"
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "56",
+        "period": "10",
+        "cycles": 4,
+        "unit": "ns"
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "16000",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": false,
+        "cycles": 4,
+        "note": "Preserves timestamp phase; does not snap to clock edges"
+      }
+    },
+    {
+      "tool": "sample_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/request[3:0]",
+          "/tb/dut/grant[3:0]",
+          "/tb/dut/grant_encoded[1:0]",
+          "/tb/dut/grant_encoded_next[1:0]",
+          "/tb/dut/mask_reg[3:0]",
+          "/tb/dut/masked_request_valid",
+          "/tb/dut/masked_request_index[1:0]",
+          "/tb/dut/request_index[1:0]"
+        ],
+        "times": [
+          "44",
+          "46",
+          "54",
+          "56",
+          "64",
+          "66",
+          "76",
+          "86"
+        ],
+        "unit": "ns",
+        "radix": "Hex"
+      },
+      "is_error": false,
+      "result": {
+        "radix": "Hex",
+        "samples": [
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "44",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "3"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "44",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "e"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "46",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "e"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "c"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "c"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "64",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "4"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "66",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "3"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "3"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/request[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/grant[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded[1:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/grant_encoded_next[1:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/mask_reg[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "e"
+          },
+          {
+            "signal": "/tb/dut/masked_request_valid",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/masked_request_index[1:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/request_index[1:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.grant_encoded"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.grant_encoded",
+        "driver": [
+          "tb.dut",
+          "./rtl/arbiter.v",
+          "64"
+        ]
+      }
+    },
+    {
+      "tool": "read_source",
+      "arguments": {
+        "signal": "tb.dut.grant_encoded",
+        "start": 98,
+        "count": 60
+      },
+      "is_error": false,
+      "result": {
+        "file": "<remote-experiment>/public/case_a/rtl/arbiter.v",
+        "definition_line": "55",
+        "lines": [
+          {
+            "line": 98,
+            "text": "always @* begin"
+          },
+          {
+            "line": 99,
+            "text": "    grant_next = 0;"
+          },
+          {
+            "line": 100,
+            "text": "    grant_valid_next = 0;"
+          },
+          {
+            "line": 101,
+            "text": "    grant_encoded_next = 0;"
+          },
+          {
+            "line": 102,
+            "text": "    mask_next = mask_reg;"
+          },
+          {
+            "line": 103,
+            "text": ""
+          },
+          {
+            "line": 104,
+            "text": "    if (ARB_BLOCK && !ARB_BLOCK_ACK && grant_reg & request) begin"
+          },
+          {
+            "line": 105,
+            "text": "        // granted request still asserted; hold it"
+          },
+          {
+            "line": 106,
+            "text": "        grant_valid_next = grant_valid_reg;"
+          },
+          {
+            "line": 107,
+            "text": "        grant_next = grant_reg;"
+          },
+          {
+            "line": 108,
+            "text": "        grant_encoded_next = grant_encoded_reg;"
+          },
+          {
+            "line": 109,
+            "text": "    end else if (ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge)) begin"
+          },
+          {
+            "line": 110,
+            "text": "        // granted request not yet acknowledged; hold it"
+          },
+          {
+            "line": 111,
+            "text": "        grant_valid_next = grant_valid_reg;"
+          },
+          {
+            "line": 112,
+            "text": "        grant_next = grant_reg;"
+          },
+          {
+            "line": 113,
+            "text": "        grant_encoded_next = grant_encoded_reg;"
+          },
+          {
+            "line": 114,
+            "text": "    end else if (request_valid) begin"
+          },
+          {
+            "line": 115,
+            "text": "        if (ARB_TYPE_ROUND_ROBIN) begin"
+          },
+          {
+            "line": 116,
+            "text": "            if (masked_request_valid) begin"
+          },
+          {
+            "line": 117,
+            "text": "                grant_valid_next = 1;"
+          },
+          {
+            "line": 118,
+            "text": "                grant_next = masked_request_mask;"
+          },
+          {
+            "line": 119,
+            "text": "                grant_encoded_next = request_index;"
+          },
+          {
+            "line": 120,
+            "text": "                if (ARB_LSB_HIGH_PRIORITY) begin"
+          },
+          {
+            "line": 121,
+            "text": "                    mask_next = {PORTS{1'b1}} << (masked_request_index + 1);"
+          },
+          {
+            "line": 122,
+            "text": "                end else begin"
+          },
+          {
+            "line": 123,
+            "text": "                    mask_next = {PORTS{1'b1}} >> (PORTS - masked_request_index);"
+          },
+          {
+            "line": 124,
+            "text": "                end"
+          },
+          {
+            "line": 125,
+            "text": "            end else begin"
+          },
+          {
+            "line": 126,
+            "text": "                grant_valid_next = 1;"
+          },
+          {
+            "line": 127,
+            "text": "                grant_next = request_mask;"
+          },
+          {
+            "line": 128,
+            "text": "                grant_encoded_next = request_index;"
+          },
+          {
+            "line": 129,
+            "text": "                if (ARB_LSB_HIGH_PRIORITY) begin"
+          },
+          {
+            "line": 130,
+            "text": "                    mask_next = {PORTS{1'b1}} << (request_index + 1);"
+          },
+          {
+            "line": 131,
+            "text": "                end else begin"
+          },
+          {
+            "line": 132,
+            "text": "                    mask_next = {PORTS{1'b1}} >> (PORTS - request_index);"
+          },
+          {
+            "line": 133,
+            "text": "                end"
+          },
+          {
+            "line": 134,
+            "text": "            end"
+          },
+          {
+            "line": 135,
+            "text": "        end else begin"
+          },
+          {
+            "line": 136,
+            "text": "            grant_valid_next = 1;"
+          },
+          {
+            "line": 137,
+            "text": "            grant_next = request_mask;"
+          },
+          {
+            "line": 138,
+            "text": "            grant_encoded_next = request_index;"
+          },
+          {
+            "line": 139,
+            "text": "        end"
+          },
+          {
+            "line": 140,
+            "text": "    end"
+          },
+          {
+            "line": 141,
+            "text": "end"
+          },
+          {
+            "line": 142,
+            "text": ""
+          },
+          {
+            "line": 143,
+            "text": "always @(posedge clk) begin"
+          },
+          {
+            "line": 144,
+            "text": "    grant_reg <= grant_next;"
+          },
+          {
+            "line": 145,
+            "text": "    grant_valid_reg <= grant_valid_next;"
+          },
+          {
+            "line": 146,
+            "text": "    grant_encoded_reg <= grant_encoded_next;"
+          },
+          {
+            "line": 147,
+            "text": "    mask_reg <= mask_next;"
+          },
+          {
+            "line": 148,
+            "text": ""
+          },
+          {
+            "line": 149,
+            "text": "    if (rst) begin"
+          },
+          {
+            "line": 150,
+            "text": "        grant_reg <= 0;"
+          },
+          {
+            "line": 151,
+            "text": "        grant_valid_reg <= 0;"
+          },
+          {
+            "line": 152,
+            "text": "        grant_encoded_reg <= 0;"
+          },
+          {
+            "line": 153,
+            "text": "        mask_reg <= 0;"
+          },
+          {
+            "line": 154,
+            "text": "    end"
+          },
+          {
+            "line": 155,
+            "text": "end"
+          },
+          {
+            "line": 156,
+            "text": ""
+          },
+          {
+            "line": 157,
+            "text": "endmodule"
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

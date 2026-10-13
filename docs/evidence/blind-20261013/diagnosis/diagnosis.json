@@ -1,0 +1,217 @@
+{
+  "status": "submitted_for_freeze",
+  "cases": [
+    {
+      "case_id": "case_a",
+      "top_one": {
+        "file": "public/case_a/rtl/arbiter.v",
+        "line": 119,
+        "statement": "grant_encoded_next = request_index;",
+        "cause": "In the masked round-robin winner branch, the one-hot grant uses masked_request_mask but the encoded grant uses the unmasked request_index. With all requests active, request_index stays 0 while masked winners rotate through ports 1, 2 and 3. The encoded output therefore disagrees with the correct one-hot grant."
+      },
+      "evidence": [
+        {
+          "reference": "diagnosis/a-02-trace.json calls[2] sample_signals",
+          "observation": "At 54 ns request=0xf, mask_reg=0xe, masked_request_valid=1, masked_request_index=1, request_index=0, but grant_encoded_next=0. At 56 ns the registered grant is 0x2 while grant_encoded=0; it must encode port 1."
+        },
+        {
+          "reference": "diagnosis/a-02-trace.json calls[2] sample_signals",
+          "observation": "At 46, 56, 66, 76 and 86 ns grant is respectively 0x1, 0x2, 0x4, 0x8, 0x1, while grant_encoded remains 0. This isolates encoded selection rather than round-robin one-hot scheduling."
+        },
+        {
+          "reference": "diagnosis/a-02-trace.json calls[3:5] trace_driver/read_source",
+          "observation": "Driver query identifies the output assignment at line 64, not the root cause. Source read shows masked winner branch at 116-124, faulty index selection at 119 and registration at 146."
+        },
+        {
+          "reference": "public/case_a/tb.sv and seed-{1,7,42}/sim.log",
+          "observation": "Independent cyclic scan checks grant_encoded against chosen port. All seeds first fail encoded_grant at 56 ns while expected and actual one-hot grant both equal 0010; errors are 43, 42 and 42 for seeds 1, 7 and 42."
+        }
+      ],
+      "proposed_repair": {
+        "file": "public/case_a/rtl/arbiter.v",
+        "old": "                grant_next = masked_request_mask;\n                grant_encoded_next = request_index;",
+        "new": "                grant_next = masked_request_mask;\n                grant_encoded_next = masked_request_index;",
+        "patch": "diagnosis/case_a-repair.patch"
+      },
+      "confidence": 0.995,
+      "alternative_hypotheses": [],
+      "limitations": [
+        "Waveform samples cover initial sustained contention in the live session. All three supplied failure logs were read; no new simulation or repaired RTL test was run. Other arbiter parameter combinations are not established by this evidence."
+      ]
+    },
+    {
+      "case_id": "case_b",
+      "top_one": {
+        "file": "public/case_b/rtl/uart_tx.v",
+        "line": 97,
+        "statement": "data_reg <= {s_axis_tdata, 1'b1};",
+        "cause": "The preload appends a constant 1 as the least significant shift-register bit. The right-shift transmitter consequently emits 1, then payload bits 0 through 6 in its eight data slots, losing bit 7. The constant belongs above the payload so that bit 0 is transmitted first."
+      },
+      "evidence": [
+        {
+          "reference": "diagnosis/b-02-trace.json calls[2] sample_signals",
+          "observation": "At 54 ns s_axis_tdata=0x35, tvalid=tready=1, bit_cnt=0. At 56 ns data_reg=0x06b, bit_cnt=9, prescale_reg=0xf, txd=0. This is exactly (0x35<<1)|1 loaded at the 55 ns edge."
+        },
+        {
+          "reference": "diagnosis/b-02-trace.json calls[2] sample_signals",
+          "observation": "At 214 ns data_reg=0x6b, prescale_reg=0, bit_cnt=9, txd=0. At 216 ns data_reg=0x35, prescale_reg=0xf, bit_cnt=8, txd=1. At 374 ns data_reg=0x35 and prescale_reg=0; at 376 ns data_reg=0x1a, bit_cnt=7, txd=1. The shift operation itself consistently emits the old low bit."
+        },
+        {
+          "reference": "diagnosis/b-02-trace.json calls[2] sample_signals and public/case_b/tb.sv",
+          "observation": "Data-slot center samples at 295,455,615,775,935,1095,1255,1415 ns give txd bits 1,1,0,1,0,1,1,0: byte 0x6b rather than input 0x35. At first error 455 ns bit 1 is 1 rather than 0. The spacing is the specified 160 ns per bit; txd is high at stop center 1575 ns."
+        },
+        {
+          "reference": "diagnosis/b-02-trace.json calls[3:5] trace_driver/read_source",
+          "observation": "trace_driver returns declaration line 69. Source inspection identifies preload at 97; line 105 shifts right into txd; counter allows eight such data shifts before explicit stop generation."
+        },
+        {
+          "reference": "public/case_b/seed-{1,7,42}/sim.log",
+          "observation": "All seeds first fail serial_data_bit at 455 ns and complete 12 sent/received frames; errors are 38,45,51 for seeds 1,7,42."
+        }
+      ],
+      "proposed_repair": {
+        "file": "public/case_b/rtl/uart_tx.v",
+        "old": "                data_reg <= {s_axis_tdata, 1'b1};",
+        "new": "                data_reg <= {1'b1, s_axis_tdata};",
+        "patch": "diagnosis/case_b-repair.patch"
+      },
+      "confidence": 0.995,
+      "alternative_hypotheses": [],
+      "limitations": [
+        "Detailed waveform evidence is from the first frame of the live session. Repairs are proposed, not simulated; additional prescale values and DATA_WIDTH configurations were not tested. The fault statement is inferred from observed preload and shift behavior, not the driver declaration."
+      ]
+    },
+    {
+      "case_id": "case_c",
+      "top_one": {
+        "file": "public/case_c/rtl/axil_reg_if_wr.v",
+        "line": 122,
+        "statement": "s_axil_wstrb_next = {STRB_WIDTH{1'b1}};",
+        "cause": "The W-channel capture logic ignores incoming byte strobes and fills the stored strobe with ones. Partial writes therefore reach the register interface as full-width writes, even though captured address and data are correct."
+      },
+      "evidence": [
+        {
+          "reference": "diagnosis/c-02-trace.json calls[2] sample_signals",
+          "observation": "At 54 ns AWVALID=AWREADY=1 and AWADDR=0; at 56 ns AWREADY=0. At 74 ns WVALID=WREADY=1, WDATA=0xac000001, WSTRB=1, but s_axil_wstrb_next=0xf."
+        },
+        {
+          "reference": "diagnosis/c-02-trace.json calls[2] sample_signals",
+          "observation": "At 76 ns WREADY=0, reg_wr_en=1, reg_wr_addr=0, reg_wr_data=0xac000001 and reg_wr_strb=0xf. At 84 ns the same active register write retains strobe 0xf while the input strobe is 1. Address and data match the request; strobe alone differs."
+        },
+        {
+          "reference": "public/case_c/tb.sv, seed-1/sim.log and diagnosis/c-02-trace.json calls[2]",
+          "observation": "Checker reports register_payload at 85 ns. It observes pre-NBA reg_wr_en=1 on the positive edge; settled waveform at 85 ns already shows reg_wr_en=0. The 84 ns sample establishes the payload seen by that checker without confusing pre-edge and post-edge values."
+        },
+        {
+          "reference": "diagnosis/c-02-trace.json calls[3:5] trace_driver/read_source",
+          "observation": "Driver query returns strobe register declaration at line 82. Source shows constant capture at 122, strobe registration at 139 and source assignment of reg_wr_strb to the stored strobe in the locally read RTL at 95."
+        },
+        {
+          "reference": "public/case_c/seed-{1,7,42}/sim.log",
+          "observation": "All seeds report 12 payload errors with 12 sent and received. First errors occur at 85 ns for seed 1 and 95 ns for seeds 7 and 42."
+        }
+      ],
+      "proposed_repair": {
+        "file": "public/case_c/rtl/axil_reg_if_wr.v",
+        "old": "        s_axil_wstrb_next = {STRB_WIDTH{1'b1}};",
+        "new": "        s_axil_wstrb_next = s_axil_wstrb;",
+        "patch": "diagnosis/case_c-repair.patch"
+      },
+      "confidence": 0.995,
+      "alternative_hypotheses": [],
+      "limitations": [
+        "Detailed waveform inspection covers the first write of the live session; supplied logs cover all seeds. No repaired simulation was performed. Wait/timeout behavior and arbitrary back-to-back traffic remain untested by this diagnosis."
+      ]
+    }
+  ],
+  "access_audit": [
+    {
+      "operation": "Local file content reads",
+      "paths": [
+        "<experiment>/harness/README.txt",
+        "<experiment>/harness/protocol.md",
+        "<experiment>/harness/tools.md",
+        "<experiment>/harness/record_mcp.py",
+        "<experiment>/public/README.md",
+        "<experiment>/public/case_a/tb.sv",
+        "<experiment>/public/case_a/rtl/arbiter.v",
+        "<experiment>/public/case_a/seed-1/sim.log",
+        "<experiment>/public/case_a/seed-7/sim.log",
+        "<experiment>/public/case_a/seed-42/sim.log",
+        "<experiment>/public/case_b/tb.sv",
+        "<experiment>/public/case_b/rtl/uart_tx.v",
+        "<experiment>/public/case_b/seed-1/sim.log",
+        "<experiment>/public/case_b/seed-7/sim.log",
+        "<experiment>/public/case_b/seed-42/sim.log",
+        "<experiment>/public/case_c/tb.sv",
+        "<experiment>/public/case_c/rtl/axil_reg_if_wr.v",
+        "<experiment>/public/case_c/seed-1/sim.log",
+        "<experiment>/public/case_c/seed-7/sim.log",
+        "<experiment>/public/case_c/seed-42/sim.log"
+      ],
+      "commands": [
+        "cat allowed harness files and recorder",
+        "cat public README, all case testbenches and all nine seed sim.log files",
+        "nl -ba three main mutated RTL files",
+        "Python read_text on the three main mutated RTL files to generate proposed patches only"
+      ]
+    },
+    {
+      "operation": "Directory inventory only",
+      "path": "<experiment>/public",
+      "command": "rg --files work/blind-20261013/public",
+      "note": "Listed public compile logs, ucli.key, all VCDs and priority_encoder.v, but did not read their contents directly."
+    },
+    {
+      "operation": "Diagnosis reads and writes",
+      "path": "<experiment>/diagnosis",
+      "commands": [
+        "mkdir -p diagnosis",
+        "Python JSON plan generation",
+        "cat diagnosis/*-01-trace.json",
+        "Python read/print diagnosis/*-02-trace.json",
+        "Python generate diagnosis.json and three unified repair patches"
+      ],
+      "note": "All plan and transcript files are retained."
+    },
+    {
+      "operation": "Real Verdi MCP calls via recorder",
+      "remote_sessions": [
+        "<remote-experiment>/session-case_a.ZDKU0rNN",
+        "<remote-experiment>/session-case_b.88B5RyvK",
+        "<remote-experiment>/session-case_c.2gu4N79w"
+      ],
+      "source_paths": [
+        "<remote-experiment>/public/case_a/rtl/arbiter.v",
+        "<remote-experiment>/public/case_b/rtl/uart_tx.v",
+        "<remote-experiment>/public/case_c/rtl/axil_reg_if_wr.v"
+      ],
+      "command_template": "VERDI_BRIDGE_HOST=<ssh-host> VERDI_BRIDGE_CONTROL_PATH=<control-socket> VERDI_BRIDGE_DIR=<designated session> uv run --project <project> python <experiment>/harness/record_mcp.py <diagnosis plan> <diagnosis transcript>",
+      "note": "Six recorder runs: a,b,c stages 01 and 02. Live waveform identity comes from the designated session; its first-frame values match supplied seed-1 logs and TB. session_status does not expose the waveform filename; exact loaded file was not independently queried."
+    },
+    {
+      "operation": "Runtime only",
+      "path": "<project>",
+      "note": "Used exclusively as uv project runtime/dependency source; no runtime files were inspected."
+    },
+    {
+      "operation": "Accidental violations",
+      "violations": [],
+      "note": "No private data, pristine RTL, git/history, other examples, internet, injector messages, RTL edits, or simulations were accessed/performed."
+    }
+  ],
+  "call_count": 21,
+  "call_count_detail": {
+    "mcp_tool_calls": 21,
+    "per_case": 7,
+    "tool_errors": 0,
+    "recorder_runs": 6,
+    "discovery_list_tools_requests": 6,
+    "note": "Each recorder also initializes an MCP session; call budget counts actual tools/call invocations."
+  },
+  "global_limitations": [
+    "Honor-based scope isolation, not OS-enforced isolation. Source inspection was allowed and used before waveform selection.",
+    "No correctness feedback or mutation manifest was received. Proposed repair behavior is not yet validated.",
+    "Confidence numbers are subjective assessments of these supplied cases, not measured general debugging accuracy."
+  ]
+}

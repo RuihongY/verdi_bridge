@@ -1,0 +1,951 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "add_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axis_tdata[7:0]",
+          "/tb/dut/s_axis_tvalid",
+          "/tb/dut/s_axis_tready",
+          "/tb/dut/data_reg[8:0]",
+          "/tb/dut/prescale_reg[18:0]",
+          "/tb/dut/bit_cnt[3:0]",
+          "/tb/dut/txd"
+        ]
+      },
+      "is_error": false,
+      "result": {
+        "signals": [
+          "/tb/dut/s_axis_tdata[7:0]",
+          "/tb/dut/s_axis_tvalid",
+          "/tb/dut/s_axis_tready",
+          "/tb/dut/data_reg[8:0]",
+          "/tb/dut/prescale_reg[18:0]",
+          "/tb/dut/bit_cnt[3:0]",
+          "/tb/dut/txd"
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "455",
+        "period": "10",
+        "cycles": 4,
+        "unit": "ns"
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "415000",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": false,
+        "cycles": 4,
+        "note": "Preserves timestamp phase; does not snap to clock edges"
+      }
+    },
+    {
+      "tool": "sample_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axis_tdata[7:0]",
+          "/tb/dut/s_axis_tvalid",
+          "/tb/dut/s_axis_tready",
+          "/tb/dut/data_reg[8:0]",
+          "/tb/dut/prescale_reg[18:0]",
+          "/tb/dut/bit_cnt[3:0]",
+          "/tb/dut/txd"
+        ],
+        "times": [
+          "54",
+          "56",
+          "214",
+          "216",
+          "295",
+          "374",
+          "376",
+          "455",
+          "535",
+          "615",
+          "775",
+          "935",
+          "1095",
+          "1255",
+          "1415",
+          "1575"
+        ],
+        "unit": "ns",
+        "radix": "Hex"
+      },
+      "is_error": false,
+      "result": {
+        "radix": "Hex",
+        "samples": [
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "6b"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "9"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "214",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "214",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "214",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "214",
+            "unit": "ns",
+            "value": "6b"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "214",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "214",
+            "unit": "ns",
+            "value": "9"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "214",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "216",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "216",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "216",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "216",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "295",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "295",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "295",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "295",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "295",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "295",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "295",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "374",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "374",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "374",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "374",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "374",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "374",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "374",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "376",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "376",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "1a"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "376",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "376",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "455",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "455",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "455",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "455",
+            "unit": "ns",
+            "value": "1a"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "455",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "455",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "455",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "535",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "535",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "535",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "535",
+            "unit": "ns",
+            "value": "d"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "535",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "535",
+            "unit": "ns",
+            "value": "6"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "535",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "615",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "615",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "615",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "615",
+            "unit": "ns",
+            "value": "d"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "615",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "615",
+            "unit": "ns",
+            "value": "6"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "615",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "775",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "775",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "775",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "775",
+            "unit": "ns",
+            "value": "6"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "775",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "775",
+            "unit": "ns",
+            "value": "5"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "775",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "935",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "935",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "935",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "935",
+            "unit": "ns",
+            "value": "3"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "935",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "935",
+            "unit": "ns",
+            "value": "4"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "935",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1095",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1095",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1095",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1095",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1095",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1095",
+            "unit": "ns",
+            "value": "3"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1095",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1255",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1255",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1255",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1255",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1255",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1255",
+            "unit": "ns",
+            "value": "2"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1255",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "7"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1415",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1415",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tdata[7:0]",
+            "time": "1575",
+            "unit": "ns",
+            "value": "35"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tvalid",
+            "time": "1575",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axis_tready",
+            "time": "1575",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/data_reg[8:0]",
+            "time": "1575",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/prescale_reg[18:0]",
+            "time": "1575",
+            "unit": "ns",
+            "value": "8"
+          },
+          {
+            "signal": "/tb/dut/bit_cnt[3:0]",
+            "time": "1575",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/txd",
+            "time": "1575",
+            "unit": "ns",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.data_reg"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.data_reg",
+        "driver": [
+          "tb.dut",
+          "./rtl/uart_tx.v",
+          "69"
+        ]
+      }
+    },
+    {
+      "tool": "read_source",
+      "arguments": {
+        "signal": "tb.dut.data_reg",
+        "start": 78,
+        "count": 36
+      },
+      "is_error": false,
+      "result": {
+        "file": "<remote-experiment>/public/case_b/rtl/uart_tx.v",
+        "definition_line": "69",
+        "lines": [
+          {
+            "line": 78,
+            "text": "always @(posedge clk) begin"
+          },
+          {
+            "line": 79,
+            "text": "    if (rst) begin"
+          },
+          {
+            "line": 80,
+            "text": "        s_axis_tready_reg <= 0;"
+          },
+          {
+            "line": 81,
+            "text": "        txd_reg <= 1;"
+          },
+          {
+            "line": 82,
+            "text": "        prescale_reg <= 0;"
+          },
+          {
+            "line": 83,
+            "text": "        bit_cnt <= 0;"
+          },
+          {
+            "line": 84,
+            "text": "        busy_reg <= 0;"
+          },
+          {
+            "line": 85,
+            "text": "    end else begin"
+          },
+          {
+            "line": 86,
+            "text": "        if (prescale_reg > 0) begin"
+          },
+          {
+            "line": 87,
+            "text": "            s_axis_tready_reg <= 0;"
+          },
+          {
+            "line": 88,
+            "text": "            prescale_reg <= prescale_reg - 1;"
+          },
+          {
+            "line": 89,
+            "text": "        end else if (bit_cnt == 0) begin"
+          },
+          {
+            "line": 90,
+            "text": "            s_axis_tready_reg <= 1;"
+          },
+          {
+            "line": 91,
+            "text": "            busy_reg <= 0;"
+          },
+          {
+            "line": 92,
+            "text": ""
+          },
+          {
+            "line": 93,
+            "text": "            if (s_axis_tvalid) begin"
+          },
+          {
+            "line": 94,
+            "text": "                s_axis_tready_reg <= !s_axis_tready_reg;"
+          },
+          {
+            "line": 95,
+            "text": "                prescale_reg <= (prescale << 3)-1;"
+          },
+          {
+            "line": 96,
+            "text": "                bit_cnt <= DATA_WIDTH+1;"
+          },
+          {
+            "line": 97,
+            "text": "                data_reg <= {s_axis_tdata, 1'b1};"
+          },
+          {
+            "line": 98,
+            "text": "                txd_reg <= 0;"
+          },
+          {
+            "line": 99,
+            "text": "                busy_reg <= 1;"
+          },
+          {
+            "line": 100,
+            "text": "            end"
+          },
+          {
+            "line": 101,
+            "text": "        end else begin"
+          },
+          {
+            "line": 102,
+            "text": "            if (bit_cnt > 1) begin"
+          },
+          {
+            "line": 103,
+            "text": "                bit_cnt <= bit_cnt - 1;"
+          },
+          {
+            "line": 104,
+            "text": "                prescale_reg <= (prescale << 3)-1;"
+          },
+          {
+            "line": 105,
+            "text": "                {data_reg, txd_reg} <= {1'b0, data_reg};"
+          },
+          {
+            "line": 106,
+            "text": "            end else if (bit_cnt == 1) begin"
+          },
+          {
+            "line": 107,
+            "text": "                bit_cnt <= bit_cnt - 1;"
+          },
+          {
+            "line": 108,
+            "text": "                prescale_reg <= (prescale << 3);"
+          },
+          {
+            "line": 109,
+            "text": "                txd_reg <= 1;"
+          },
+          {
+            "line": 110,
+            "text": "            end"
+          },
+          {
+            "line": 111,
+            "text": "        end"
+          },
+          {
+            "line": 112,
+            "text": "    end"
+          },
+          {
+            "line": 113,
+            "text": "end"
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "frozen_at": "2026-10-13T05:25:35.029221+00:00",
+  "sha256": {
+    "diagnosis/a-01-plan.json": "f5e8fc109e178f3680cafde3563f17296e778c1cf2662ebb23c87ca3a9b02795",
+    "diagnosis/a-01-trace.json": "711271a22c11b75b8a78dbaa6462493fe27b356c433814ce8eec5320c02568ac",
+    "diagnosis/a-02-plan.json": "d651595cdcd07bc835931cbf9474be5ee2a03aa9c2ac02114b03527ec48fb091",
+    "diagnosis/a-02-trace.json": "6eab3d1ea05b722307502a76a113355509d7e0e7829947a18bfa10fe6f87bdb4",
+    "diagnosis/b-01-plan.json": "f5e8fc109e178f3680cafde3563f17296e778c1cf2662ebb23c87ca3a9b02795",
+    "diagnosis/b-01-trace.json": "a593dfd88998aee5b1e960a25446a435a33a4e4cd3ed603e6b0d0ad28feab8b6",
+    "diagnosis/b-02-plan.json": "75761c299506ff6151e33267ce8fa549bc5120386538eaa1420fd87ef74136c5",
+    "diagnosis/b-02-trace.json": "00e3bc6ce23f3de1e33f85d33c0755185a2b20e97b90d15134bedf902274ff86",
+    "diagnosis/c-01-plan.json": "f5e8fc109e178f3680cafde3563f17296e778c1cf2662ebb23c87ca3a9b02795",
+    "diagnosis/c-01-trace.json": "788a788ac5e4b049eda50d595fec16beb01ecc8032f328effe5b52517d5d8c74",
+    "diagnosis/c-02-plan.json": "205c5ba37977dfd8cae46c164452d73606d3e86377c656fb74135174a9d4ff64",
+    "diagnosis/c-02-trace.json": "9459ce6288150237cce0383ecce526c215d322df96a49d6cffaea85b56f25e19",
+    "diagnosis/case_a-repair.patch": "127860f70646bbb54666f535dca072dd4fe8a7a4213e6df875e018033dd12cf0",
+    "diagnosis/case_b-repair.patch": "9d9977f60a9bc97d17b219b5a748fa2b4dbc7ed465b3cd6075fb9eb41c1087a6",
+    "diagnosis/case_c-repair.patch": "2e26be347cb9afe0668ee6b6283051def364d4a1890b4447ef6620c703cb7868",
+    "diagnosis/diagnosis.json": "415cc4bc835ee6ab40a6526713c7182d83f0ffbb904ee5fe2e1b5f61da4e04f4"
+  }
+}

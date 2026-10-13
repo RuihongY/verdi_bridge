@@ -1,0 +1,26 @@
+[
+  {
+    "case_id": "case_a",
+    "file": "arbiter.v",
+    "before_sha256": "43713cd9b5ef6fc5aeff060b367eedfa0158972da052bb0622f3f84ea56e028d",
+    "after_sha256": "d54d337db4812f927b2e9b5788dfa39f9bd578ad01b7846c5fa7f2610b0923fa",
+    "old": "                grant_next = masked_request_mask;\n                grant_encoded_next = request_index;",
+    "new": "                grant_next = masked_request_mask;\n                grant_encoded_next = masked_request_index;"
+  },
+  {
+    "case_id": "case_b",
+    "file": "uart_tx.v",
+    "before_sha256": "b86a0cc87b23333b7ae2343d88320fe32b4bddc503de46b3cc417ca8d7fe503d",
+    "after_sha256": "e9559ddebf124f8fbface06bf7091296baa78c7acab95a36b40a919663349d34",
+    "old": "                data_reg <= {s_axis_tdata, 1'b1};",
+    "new": "                data_reg <= {1'b1, s_axis_tdata};"
+  },
+  {
+    "case_id": "case_c",
+    "file": "axil_reg_if_wr.v",
+    "before_sha256": "315fe652175711011830a8ec69d192d894df2414188e4a4b9eabb4ae80695582",
+    "after_sha256": "ec2f3d3d97b694dd4ff046d791fc7a0f95856c41049a107eac1aa3b3daab7412",
+    "old": "        s_axil_wstrb_next = {STRB_WIDTH{1'b1}};",
+    "new": "        s_axil_wstrb_next = s_axil_wstrb;"
+  }
+]

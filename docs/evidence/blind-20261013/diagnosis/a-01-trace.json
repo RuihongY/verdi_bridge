@@ -1,0 +1,75 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "session_status",
+      "is_error": false,
+      "result": {
+        "window": "1b3e42f0",
+        "time_unit": "1ps",
+        "cursor": [
+          "1",
+          "0",
+          "x",
+          "1ps"
+        ],
+        "viewport": [
+          "1",
+          "0",
+          "105040"
+        ],
+        "signals": []
+      }
+    },
+    {
+      "tool": "browse_scope",
+      "arguments": {
+        "scope": "/tb/dut"
+      },
+      "is_error": false,
+      "result": {
+        "scope": "/tb/dut",
+        "scopes": [
+          "priority_encoder_inst",
+          "priority_encoder_masked"
+        ],
+        "signals": [
+          "acknowledge[3:0]",
+          "clk",
+          "grant[3:0]",
+          "grant_encoded[1:0]",
+          "grant_encoded_next[1:0]",
+          "grant_encoded_reg[1:0]",
+          "grant_next[3:0]",
+          "grant_reg[3:0]",
+          "grant_valid",
+          "grant_valid_next",
+          "grant_valid_reg",
+          "mask_next[3:0]",
+          "mask_reg[3:0]",
+          "masked_request_index[1:0]",
+          "masked_request_mask[3:0]",
+          "masked_request_valid",
+          "request[3:0]",
+          "request_index[1:0]",
+          "request_mask[3:0]",
+          "request_valid",
+          "rst"
+        ],
+        "names_relative": true
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

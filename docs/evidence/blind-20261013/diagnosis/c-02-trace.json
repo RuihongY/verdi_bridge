@@ -1,0 +1,1072 @@
+{
+  "method": "investigator-selected MCP calls",
+  "calls": [
+    {
+      "tool": "add_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axil_awaddr[15:0]",
+          "/tb/dut/s_axil_awvalid",
+          "/tb/dut/s_axil_awready",
+          "/tb/dut/s_axil_wdata[31:0]",
+          "/tb/dut/s_axil_wvalid",
+          "/tb/dut/s_axil_wready",
+          "/tb/dut/s_axil_wstrb[3:0]",
+          "/tb/dut/s_axil_wstrb_next[3:0]",
+          "/tb/dut/reg_wr_strb[3:0]",
+          "/tb/dut/reg_wr_data[31:0]",
+          "/tb/dut/reg_wr_addr[15:0]",
+          "/tb/dut/reg_wr_en"
+        ]
+      },
+      "is_error": false,
+      "result": {
+        "signals": [
+          "/tb/dut/s_axil_awaddr[15:0]",
+          "/tb/dut/s_axil_awvalid",
+          "/tb/dut/s_axil_awready",
+          "/tb/dut/s_axil_wdata[31:0]",
+          "/tb/dut/s_axil_wvalid",
+          "/tb/dut/s_axil_wready",
+          "/tb/dut/s_axil_wstrb[3:0]",
+          "/tb/dut/s_axil_wstrb_next[3:0]",
+          "/tb/dut/reg_wr_strb[3:0]",
+          "/tb/dut/reg_wr_data[31:0]",
+          "/tb/dut/reg_wr_addr[15:0]",
+          "/tb/dut/reg_wr_en"
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "85",
+        "period": "10",
+        "cycles": 4,
+        "unit": "ns"
+      },
+      "is_error": false,
+      "result": {
+        "cursor": [
+          "1",
+          "45000",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": false,
+        "cycles": 4,
+        "note": "Preserves timestamp phase; does not snap to clock edges"
+      }
+    },
+    {
+      "tool": "sample_signals",
+      "arguments": {
+        "signals": [
+          "/tb/dut/s_axil_awaddr[15:0]",
+          "/tb/dut/s_axil_awvalid",
+          "/tb/dut/s_axil_awready",
+          "/tb/dut/s_axil_wdata[31:0]",
+          "/tb/dut/s_axil_wvalid",
+          "/tb/dut/s_axil_wready",
+          "/tb/dut/s_axil_wstrb[3:0]",
+          "/tb/dut/s_axil_wstrb_next[3:0]",
+          "/tb/dut/reg_wr_strb[3:0]",
+          "/tb/dut/reg_wr_data[31:0]",
+          "/tb/dut/reg_wr_addr[15:0]",
+          "/tb/dut/reg_wr_en"
+        ],
+        "times": [
+          "54",
+          "56",
+          "64",
+          "66",
+          "74",
+          "76",
+          "84",
+          "85",
+          "86",
+          "96"
+        ],
+        "unit": "ns",
+        "radix": "Hex"
+      },
+      "is_error": false,
+      "result": {
+        "radix": "Hex",
+        "samples": [
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "54",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "54",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "56",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "56",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "64",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "64",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "66",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "66",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "74",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "74",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "74",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "74",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "74",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "74",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "76",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "76",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "84",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "84",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "84",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "84",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "84",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "84",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "85",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "85",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "85",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "85",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "85",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "85",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "86",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awaddr[15:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awvalid",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_awready",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wdata[31:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wvalid",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wready",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_strb[3:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "f"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_data[31:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "ac000001"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_addr[15:0]",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          },
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "time": "96",
+            "unit": "ns",
+            "value": "0"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "trace_driver",
+      "arguments": {
+        "signal": "tb.dut.s_axil_wstrb_reg"
+      },
+      "is_error": false,
+      "result": {
+        "signal": "tb.dut.s_axil_wstrb_reg",
+        "driver": [
+          "tb.dut",
+          "./rtl/axil_reg_if_wr.v",
+          "82"
+        ]
+      }
+    },
+    {
+      "tool": "read_source",
+      "arguments": {
+        "signal": "tb.dut.s_axil_wstrb_reg",
+        "start": 98,
+        "count": 52
+      },
+      "is_error": false,
+      "result": {
+        "file": "<remote-experiment>/public/case_c/rtl/axil_reg_if_wr.v",
+        "definition_line": "82",
+        "lines": [
+          {
+            "line": 98,
+            "text": "always @* begin"
+          },
+          {
+            "line": 99,
+            "text": "    timeout_count_next = timeout_count_reg;"
+          },
+          {
+            "line": 100,
+            "text": ""
+          },
+          {
+            "line": 101,
+            "text": "    s_axil_awaddr_next = s_axil_awaddr_reg;"
+          },
+          {
+            "line": 102,
+            "text": "    s_axil_awvalid_next = s_axil_awvalid_reg;"
+          },
+          {
+            "line": 103,
+            "text": "    s_axil_wdata_next = s_axil_wdata_reg;"
+          },
+          {
+            "line": 104,
+            "text": "    s_axil_wstrb_next = s_axil_wstrb_reg;"
+          },
+          {
+            "line": 105,
+            "text": "    s_axil_wvalid_next = s_axil_wvalid_reg;"
+          },
+          {
+            "line": 106,
+            "text": "    s_axil_bvalid_next = s_axil_bvalid_reg && !s_axil_bready;"
+          },
+          {
+            "line": 107,
+            "text": ""
+          },
+          {
+            "line": 108,
+            "text": "    if (reg_wr_en_reg && (reg_wr_ack || timeout_count_reg == 0)) begin"
+          },
+          {
+            "line": 109,
+            "text": "        s_axil_awvalid_next = 1'b0;"
+          },
+          {
+            "line": 110,
+            "text": "        s_axil_wvalid_next = 1'b0;"
+          },
+          {
+            "line": 111,
+            "text": "        s_axil_bvalid_next = 1'b1;"
+          },
+          {
+            "line": 112,
+            "text": "    end"
+          },
+          {
+            "line": 113,
+            "text": ""
+          },
+          {
+            "line": 114,
+            "text": "    if (!s_axil_awvalid_reg) begin"
+          },
+          {
+            "line": 115,
+            "text": "        s_axil_awaddr_next = s_axil_awaddr;"
+          },
+          {
+            "line": 116,
+            "text": "        s_axil_awvalid_next = s_axil_awvalid;"
+          },
+          {
+            "line": 117,
+            "text": "        timeout_count_next = TIMEOUT-1;"
+          },
+          {
+            "line": 118,
+            "text": "    end"
+          },
+          {
+            "line": 119,
+            "text": ""
+          },
+          {
+            "line": 120,
+            "text": "    if (!s_axil_wvalid_reg) begin"
+          },
+          {
+            "line": 121,
+            "text": "        s_axil_wdata_next = s_axil_wdata;"
+          },
+          {
+            "line": 122,
+            "text": "        s_axil_wstrb_next = {STRB_WIDTH{1'b1}};"
+          },
+          {
+            "line": 123,
+            "text": "        s_axil_wvalid_next = s_axil_wvalid;"
+          },
+          {
+            "line": 124,
+            "text": "    end"
+          },
+          {
+            "line": 125,
+            "text": ""
+          },
+          {
+            "line": 126,
+            "text": "    if (reg_wr_en && !reg_wr_wait && timeout_count_reg != 0)begin"
+          },
+          {
+            "line": 127,
+            "text": "        timeout_count_next = timeout_count_reg - 1;"
+          },
+          {
+            "line": 128,
+            "text": "    end"
+          },
+          {
+            "line": 129,
+            "text": ""
+          },
+          {
+            "line": 130,
+            "text": "    reg_wr_en_next = s_axil_awvalid_next && s_axil_wvalid_next && !s_axil_bvalid_next;"
+          },
+          {
+            "line": 131,
+            "text": "end"
+          },
+          {
+            "line": 132,
+            "text": ""
+          },
+          {
+            "line": 133,
+            "text": "always @(posedge clk) begin"
+          },
+          {
+            "line": 134,
+            "text": "    timeout_count_reg <= timeout_count_next;"
+          },
+          {
+            "line": 135,
+            "text": ""
+          },
+          {
+            "line": 136,
+            "text": "    s_axil_awaddr_reg <= s_axil_awaddr_next;"
+          },
+          {
+            "line": 137,
+            "text": "    s_axil_awvalid_reg <= s_axil_awvalid_next;"
+          },
+          {
+            "line": 138,
+            "text": "    s_axil_wdata_reg <= s_axil_wdata_next;"
+          },
+          {
+            "line": 139,
+            "text": "    s_axil_wstrb_reg <= s_axil_wstrb_next;"
+          },
+          {
+            "line": 140,
+            "text": "    s_axil_wvalid_reg <= s_axil_wvalid_next;"
+          },
+          {
+            "line": 141,
+            "text": "    s_axil_bvalid_reg <= s_axil_bvalid_next;"
+          },
+          {
+            "line": 142,
+            "text": ""
+          },
+          {
+            "line": 143,
+            "text": "    reg_wr_en_reg <= reg_wr_en_next;"
+          },
+          {
+            "line": 144,
+            "text": ""
+          },
+          {
+            "line": 145,
+            "text": "    if (rst) begin"
+          },
+          {
+            "line": 146,
+            "text": "        s_axil_awvalid_reg <= 1'b0;"
+          },
+          {
+            "line": 147,
+            "text": "        s_axil_wvalid_reg <= 1'b0;"
+          },
+          {
+            "line": 148,
+            "text": "        s_axil_bvalid_reg <= 1'b0;"
+          },
+          {
+            "line": 149,
+            "text": "        reg_wr_en_reg <= 1'b0;"
+          }
+        ]
+      }
+    }
+  ],
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source"
+  ]
+}

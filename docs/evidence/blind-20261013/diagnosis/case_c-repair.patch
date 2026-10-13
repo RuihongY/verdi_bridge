@@ -1,0 +1,11 @@
+--- a/public/case_c/rtl/axil_reg_if_wr.v
++++ b/public/case_c/rtl/axil_reg_if_wr.v
+@@ -119,7 +119,7 @@
+ 
+     if (!s_axil_wvalid_reg) begin
+         s_axil_wdata_next = s_axil_wdata;
+-        s_axil_wstrb_next = {STRB_WIDTH{1'b1}};
++        s_axil_wstrb_next = s_axil_wstrb;
+         s_axil_wvalid_next = s_axil_wvalid;
+     end
+ 
