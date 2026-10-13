@@ -1,6 +1,6 @@
 # Agent in action / Agent 调试演示
 
-[Home](../README.md) · [Setup](guide.md) · [Installation video](video-walkthrough.md)
+[Home](../../../../README.md) · [Setup](../../../guide.md) · [Installation video](../../../video-walkthrough.md)
 
 ## English
 
@@ -23,7 +23,7 @@ correcting itself. Verdi Bridge has no Virtuoso dependency. For this new recordi
 the skill was disabled only in the CLI invocation, and case instructions explicitly
 limited debugging to Verdi MCP. No global skill configuration was changed. The new
 agent neither mentions nor loads that skill. We reran the conversation rather than
-silently rewriting the previous agent's statements. [Previous recording notes](agent-demo-v1.md).
+silently rewriting the previous agent's statements. [Previous recording notes](../agent-demo-v1/README.md).
 
 旧版开头的 Virtuoso 来自 agent 误选本机技能，不是本项目的依赖。新版在启动时禁用了
 该技能，并重新录制了真实会话；没有直接修改旧对话来掩盖错误。
@@ -57,15 +57,15 @@ mismatch and source diagnosis remain supported by the samples.
 
 ## Evidence
 
-[Prompt](evidence/agent-demo-v2/prompt.txt) ·
-[Case instructions](evidence/agent-demo-v2/case-instructions.md) ·
-[Invocation](evidence/agent-demo-v2/invocation.json) ·
-[Original events](evidence/agent-demo-v2/events.json) ·
-[Original final answer](evidence/agent-demo-v2/answer.md) ·
-[English translations](evidence/agent-demo-v2/translations-en.json)
+[Prompt](prompt.txt) ·
+[Case instructions](case-instructions.md) ·
+[Invocation](invocation.json) ·
+[Original events](events.json) ·
+[Original final answer](answer.md) ·
+[English translations](translations-en.json)
 
 Published event records include user-facing messages and MCP events. Machine paths
 are redacted; shell-output bulk and internal reasoning are excluded. Original local
-recordings and event streams are retained. The existing [blind experiment](blind-validation.md)
+recordings and event streams are retained. The existing [blind experiment](../../../blind-validation.md)
 is separate. See [official skill configuration](https://learn.chatgpt.com/docs/build-skills)
 for disabling an unrelated skill without deleting it.

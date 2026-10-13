@@ -6,6 +6,7 @@ import subprocess
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
+from decimal import Decimal
 from pathlib import Path
 
 import pytest
@@ -125,7 +126,8 @@ def test_mcp_stdio_end_to_end(running):
             async with ClientSession(read, write) as session:
                 await session.initialize()
                 names = {t.name for t in (await session.list_tools()).tools}
-                assert len(names) == 10
+                assert len(names) == 16
+                assert {p.name for p in (await session.list_prompts()).prompts} == {"debug_failure"}
                 assert "sample_signals" in names
                 result = await session.call_tool("jump_before_error", {"error_time": "356", "period": "10"})
                 assert not result.isError
@@ -141,3 +143,145 @@ def test_missing_signal_is_error(running):
         client.sample(["/tb/missing"], ["1"])
     with pytest.raises(BridgeError, match="signal not found"):
         client.add_signals(["/tb/missing"])
+
+
+def test_interval_narrow_pulse_boundaries_and_restoration(running):
+    client, _ = running
+    client.set_cursor("22")
+    before = client.status()
+    result = client.find_transitions("/tb/pulse", "0", "6")
+    assert result["signals"][0]["changes"] == [
+        {"time": "5", "before": "0", "after": "1"},
+        {"time": "5.001", "before": "1", "after": "0"}]
+    assert not result["truncated"]
+    assert client.status() == before
+    assert client.find_transitions("/tb/pulse", "5", "5.001")["signals"][0]["changes"] == [
+        {"time": "5.001", "before": "1", "after": "0"}]
+    assert client.find_transitions("/tb/pulse", "0", "6", max=1)["truncated"]
+    assert not client.find_transitions("/tb/pulse", "0", "5", max=1)["truncated"]
+    batch = client.get_value_changes(["/tb/flat", "/tb/pulse"], "0", "6", max=8)
+    assert batch["signals"][0]["initial"] == "x"
+    assert batch["signals"][0]["changes"] == []
+    assert client.sample(["/tb/signed"], ["0"], radix="Dec")["samples"][0]["value"] == "-1"
+
+
+def test_clock_measurement_and_edge_snap(running):
+    client, _ = running
+    result = client.measure_clock("/tb/clk", "50", window="40")
+    assert Decimal(result["period"]) == 10
+    assert Decimal(result["phase"]) == 5
+    assert result["constant_in_window"]
+    snap = client.before_error("86", cycles=2, clock_signal="/tb/clk")
+    assert snap["snapped_to_rising_edge"]
+    assert float(snap["cursor"][1]) == 65000
+    with pytest.raises(BridgeError, match="three rising edges"):
+        client.measure_clock("/tb/flat", "10")
+    with pytest.raises(BridgeError, match="disagrees"):
+        client.before_error("86", "9", clock_signal="/tb/clk", cycles=2)
+
+
+def test_recursive_search_limits_and_literal_bus(running):
+    client, _ = running
+    result = client.find_signals("ptr[3:0]")
+    assert "/tb/dut/nested/ptr[3:0]" in result["signals"]
+    assert not result["truncated"]
+    assert client.find_signals("ptr", depth=0)["truncated"]
+    assert client.find_signals("ptr", max=1)["truncated"]
+    assert client.find_signals("*/pulse", scope="/tb/dut", depth=1)["signals"] == [
+        "/tb/dut/pulse", "/tb/dut/nested/pulse"]
+
+
+def test_file_reads_log_limits_and_symlinks(running, tmp_path):
+    client, env = running
+    assert client.source_file(env["TEST_SOURCE"], 2, 1)["lines"][0]["line"] == 2
+    log = tmp_path / "sim.log"
+    log.write_text("start\nERROR at 10\nerror at 11\nERROR at 12\n")
+    result = client.read_log(str(log), max_lines=1)
+    assert result["lines"] == [{"line": 2, "text": "ERROR at 10"}]
+    assert result["truncated"]
+    log.unlink()
+    log.symlink_to("/etc/hosts")
+    with pytest.raises(BridgeError, match="outside"):
+        client.read_log(str(log), pattern="")
+    with pytest.raises(BridgeError, match="outside"):
+        client.source_file(str(log))
+
+
+@pytest.mark.parametrize("persistent", [False, True])
+def test_ssh_shell_quoting_and_helper_reuse(running, tmp_path, monkeypatch, persistent):
+    local, _ = running
+    bindir = tmp_path / "bin"
+    bindir.mkdir()
+    calls = tmp_path / "ssh-calls"
+    shim = bindir / "ssh"
+    shim.write_text("#!/usr/bin/env python3\nimport os,sys\n"
+                    "with open(os.environ['SSH_CALLS'], 'a') as f: f.write('start\\n')\n"
+                    "os.execl('/bin/sh', 'sh', '-c', sys.argv[-1])\n")
+    shim.chmod(0o755)
+    monkeypatch.setenv("PATH", str(bindir) + os.pathsep + os.environ["PATH"])
+    monkeypatch.setenv("SSH_CALLS", str(calls))
+    # Exercise shlex.quote on the *whole helper*, including executable shell-looking text.
+    helper = tmp_path / "helper.py"
+    helper.write_text(Path(client_module.remote_io.__file__).read_text() +
+                      "\n# quotes ' \" `touch INJECTED` $(touch INJECTED) \\ \n")
+    monkeypatch.setattr(client_module.remote_io, "__file__", str(helper))
+    with Client(Config(local.config.directory, host="test-host", timeout=2,
+                       persistent=persistent)) as remote:
+        assert remote.status()["time_unit"] == "1ps"
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            results = list(pool.map(lambda n: remote.sample([f"/tb/s{n}"], [str(n)]), range(4)))
+        assert [r["samples"][0]["signal"] for r in results] == [f"/tb/s{n}" for n in range(4)]
+        with pytest.raises(BridgeError, match="signal not found"):
+            remote.sample(["/tb/missing"], ["0"])
+        assert remote.status()["time_unit"] == "1ps"
+        if persistent:
+            proc = remote._process
+            proc.kill()
+            proc.wait()
+            with pytest.raises(BridgeError, match="disconnected"):
+                remote.status()
+            # A separate explicit next call may establish a new connection.
+            assert remote.status()["time_unit"] == "1ps"
+    assert len(calls.read_text().splitlines()) == (2 if persistent else 7)
+    assert not Path("INJECTED").exists()
+
+
+def test_interval_error_restores_gui(running):
+    client, _ = running
+    client.set_cursor('17')
+    before = client.status()
+    with pytest.raises(BridgeError, match='did not advance'):
+        client.find_transitions('/tb/stuck_search', '0', '10')
+    assert client.status() == before
+
+
+def test_parent_symlink_cannot_escape(running, tmp_path):
+    client, _ = running
+    (tmp_path / 'escape').symlink_to('/etc', target_is_directory=True)
+    with pytest.raises(BridgeError, match='outside'):
+        client.source_file(str(tmp_path / 'escape/hosts'))
+
+
+def test_persistent_timeout_is_not_replayed(tmp_path, monkeypatch):
+    bindir = tmp_path / 'bin'
+    bindir.mkdir()
+    counter = tmp_path / 'calls'
+    shim = bindir / 'ssh'
+    shim.write_text('#!/usr/bin/env python3\nimport os,time\n'
+                    "with open(os.environ['SSH_CALLS'], 'a') as f: f.write('start\\n')\n"
+                    'time.sleep(60)\n')
+    shim.chmod(0o755)
+    monkeypatch.setenv('PATH', str(bindir) + os.pathsep + os.environ['PATH'])
+    monkeypatch.setenv('SSH_CALLS', str(counter))
+    original_queue = client_module.queue.Queue
+
+    class ShortDeadlineQueue(original_queue):
+        def get(self, block=True, timeout=None):
+            return super().get(block=block, timeout=.3)
+
+    monkeypatch.setattr(client_module.queue, 'Queue', ShortDeadlineQueue)
+    with Client(Config(str(tmp_path), host='test-host')) as remote:
+        with pytest.raises(BridgeError, match='execution status unknown'):
+            remote.set_cursor('10')
+        assert remote._process is None
+    assert counter.read_text().splitlines() == ['start']

@@ -22,7 +22,7 @@ Let an AI agent inspect waveforms, trace signal drivers, and navigate RTL in a
 >
 > “Why did this AXI-Lite response disappear before BREADY?”
 
-The agent reasons about the design. Verdi Bridge provides ten typed MCP tools that
+The agent reasons about the design. Verdi Bridge provides sixteen typed MCP tools that
 return waveform values and source evidence while operating the GUI you can inspect.
 
 ## Video walkthrough
@@ -53,10 +53,11 @@ The package is installed from this repository, not a published PyPI release.
 
 | Workflow | Tools |
 |---|---|
-| Find and display signals | `browse_scope`, `add_signals` |
+| Find and display signals | `find_signals`, `browse_scope`, `add_signals` |
 | Navigate an error window | `set_cursor`, `set_time_window`, `jump_before_error` |
-| Inspect actual waveform values | `sample_signals`, `session_status` |
-| Follow drivers into RTL | `trace_driver`, `read_source`, `goto_source` |
+| Inspect actual waveform values | `find_transitions`, `get_value_changes`, `sample_signals` |
+| Discover error times and clocks | `read_log`, `measure_clock` |
+| Follow drivers into RTL | `trace_driver`, `read_source`, `read_source_file`, `goto_source` |
 
 Waveform queries preserve X/Z values. Time arguments carry explicit units.
 The same interface works with different RTL designs; no FIFO-specific logic is
@@ -96,9 +97,16 @@ filesystem, a small trial with no RTL-only comparison.
 
 </details>
 
+Interval tools query Verdi transition times rather than guessed sample points.
+They report truncation and preserve the cursor/viewport; this vendor API skips
+glitches, so delta-cycle completeness is not claimed. SSH requests reuse one helper.
+See [v0.2 validation](docs/interval-validation.md) and the
+[paired evaluation protocol](docs/paired-evaluation.md). No agent call-count or
+accuracy improvement has yet been measured.
+
 ## Project status
 
-Experimental **v0.1.1**. Tested with Verdi T-2022.06-SP2-1 on Linux.
+Experimental **v0.2.0**. Tested with Verdi T-2022.06-SP2-1 on Linux.
 New-session startup is verified; attachment to an arbitrary existing GUI is not yet
 separately validated. The bridge does not automatically compile, edit or repair RTL.
 

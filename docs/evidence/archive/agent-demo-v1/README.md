@@ -1,6 +1,6 @@
 # Agent in action
 
-[Home](../README.md) · [Setup guide](guide.md) · [Earlier installation video](video-walkthrough.md)
+[Home](../../../../README.md) · [Setup guide](../../../guide.md) · [Earlier installation video](../../../video-walkthrough.md)
 
 https://github.com/user-attachments/assets/6775f3ea-e09d-49c8-8896-746474410999
 
@@ -10,11 +10,11 @@ signals, samples the actual waveform, and navigates to a suspected faulty statem
 No signal list, fault location or tool-call sequence is supplied to the agent.
 
 The Chinese prompt begins: “现在有个 bug，帮我抓 bug 相关信号，分析问题。”
-See the [complete prompt](evidence/agent-demo/prompt.txt),
-[case instructions](evidence/agent-demo/case-instructions.md),
-[invocation](evidence/agent-demo/invocation.json),
-[actual conversation and MCP events](evidence/agent-demo/events.json), and
-[original final answer](evidence/agent-demo/answer.md).
+See the [complete prompt](prompt.txt),
+[case instructions](case-instructions.md),
+[invocation](invocation.json),
+[actual conversation and MCP events](events.json), and
+[original final answer](answer.md).
 
 ## What you are watching
 
@@ -27,7 +27,7 @@ See the [complete prompt](evidence/agent-demo/prompt.txt),
 - The last ten seconds are an explicitly labeled paused replay of the 00:46 source
   evidence, next to an excerpt of the actual final answer. This is not a new GUI action.
 
-This run uses the known injected AXI-Lite case from the [blind experiment](blind-validation.md).
+This run uses the known injected AXI-Lite case from the [blind experiment](../../../blind-validation.md).
 It is a product demonstration, not another blind evaluation or an accuracy claim.
 An earlier take failed because the non-interactive CLI lacked the intended MCP
 approval setting. That failed setup take is excluded; the successful run is preserved.
@@ -57,4 +57,4 @@ labeled evidence replay shows the actual earlier line-122 frame.
 The public event file contains user-facing messages and MCP events; shell-output
 bulk, internal reasoning, local paths and machine identity are not published. A
 full local raw recording and event stream were retained for audit. Setup and
-installation steps remain in the [separate tutorial](video-walkthrough.md).
+installation steps remain in the [separate tutorial](../../../video-walkthrough.md).

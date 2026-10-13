@@ -62,6 +62,52 @@ proc ::vb::timevalue {w value unit} {
 proc ::vb::arity {argsv n} {
     if {[llength $argsv] != $n} {error "wrong argument count"}
 }
+proc ::vb::allowed_file {path} {
+    variable source_roots
+    if {![file isfile $path]} {error "file unavailable"}
+    set path [file normalize $path]
+    for {set hops 0} {[file type $path] eq "link"} {incr hops} {
+        if {$hops >= 40} {error "source symlink loop"}
+        set path [file normalize [file join [file dirname $path] [file readlink $path]]]
+    }
+    foreach base $source_roots {
+        if {$path eq $base || [string first "${base}/" $path] == 0} {return $path}
+    }
+    error "file is outside VERDI_BRIDGE_SOURCE_ROOTS"
+}
+proc ::vb::read_lines {path start count} {
+    if {![string is integer -strict $start] || ![string is integer -strict $count] ||
+        $start < 1 || $count < 1 || $count > 200} {error "invalid line range"}
+    if {[file size $path] > 8388608} {error "file exceeds 8 MiB read limit"}
+    set f [open $path r]; set lines {}; set i 0
+    try {
+        while {[gets $f line] >= 0} {
+            incr i
+            if {$i >= $start} {lappend lines [obj line $i text [q $line]]}
+            if {[llength $lines] >= $count} {break}
+        }
+    } finally {close $f}
+    return "\[[join $lines ,]\]"
+}
+proc ::vb::value {w s radix t} {
+    if {$radix eq "Dec"} {
+        # Request the complete bit width before interpreting two's complement.
+        # Vendor 2Com returned an incorrect zero in our real 2022.06 probe.
+        set bits [wvGetSigValueByTime -win $w $s -format Bin -lz -time $t]
+        if {$bits eq ""} {error "no waveform value for $s"}
+        if {![regexp {^[01]+$} $bits]} {return $bits}
+        set v [expr "0b$bits"]
+        if {[string index $bits 0] eq "1"} {set v [expr {$v - (1 << [string length $bits])}]}
+        return $v
+    }
+    set v [wvGetSigValueByTime -win $w $s -format $radix -time $t]
+    if {$v eq ""} {error "no waveform value for $s"}
+    return $v
+}
+proc ::vb::child_path {scope child} {
+    if {[string index $child 0] eq "/"} {return $child}
+    return "[string trimright $scope /]/$child"
+}
 proc ::vb::dispatch {op argv} {
     variable source_roots
     set w [wvGetCurrentWindow]
@@ -107,7 +153,7 @@ proc ::vb::dispatch {op argv} {
         }
         sample {
             lassign $argv unit radix n
-            if {$radix ni {Bin Hex UDec} || ![string is integer -strict $n] || $n < 1 || $n > 128} {
+            if {$radix ni {Bin Hex UDec Dec} || ![string is integer -strict $n] || $n < 1 || $n > 128} {
                 error "invalid sample configuration"
             }
             set signals [lrange $argv 3 [expr {$n+2}]]
@@ -121,7 +167,7 @@ proc ::vb::dispatch {op argv} {
                 set native [timevalue $w $t $unit]
                 foreach s $signals {
                     name $s
-                    set v [wvGetSigValueByTime -win $w $s -format $radix -time $native]
+                    set v [value $w $s $radix $native]
                     if {$v eq ""} {error "no waveform value for $s"}
                     lappend rows [obj signal [q $s] time [q $t] unit [q $unit] value [q $v]]
                 }
@@ -133,37 +179,126 @@ proc ::vb::dispatch {op argv} {
             set signal [name [lindex $argv 0]]
             set result [srcTraceDriver $signal]
             if {$result eq "0" || $result eq ""} {error "no driver found"}
-            return [obj signal [q $signal] driver [arr $result]]
+            set drivers {}
+            foreach {scope file line} $result {
+                lappend drivers [obj scope [q $scope] file [q $file] line [q $line] \
+                    type [q "unknown"]]
+            }
+            return [obj signal [q $signal] driver [arr $result] \
+                drivers "\[[join $drivers ,]\]" \
+                type_note [q "srcTraceDriver does not provide assignment types"]]
         }
         source {
             arity $argv 3
             lassign $argv signal start count
             name $signal
-            if {![string is integer -strict $start] || ![string is integer -strict $count] ||
-                $start < 1 || $count < 1 || $count > 200} {error "invalid line range"}
-            set file [srcGetFileName $signal]
-            if {![file isfile $file]} {error "source not available for $signal"}
-            set file [file normalize $file]
-            # normalize resolves parent links; resolve a final-component link too.
-            for {set hops 0} {[file type $file] eq "link"} {incr hops} {
-                if {$hops >= 40} {error "source symlink loop"}
-                set target [file readlink $file]
-                set file [file normalize [file join [file dirname $file] $target]]
-            }
-            set allowed 0
-            foreach base $source_roots {
-                if {$file eq $base || [string first "${base}/" $file] == 0} {set allowed 1}
-            }
-            if {!$allowed} {error "source is outside VERDI_BRIDGE_SOURCE_ROOTS"}
-            set f [open $file r]; set lines {}; set i 0
+            set file [allowed_file [srcGetFileName $signal]]
+            return [obj file [q $file] definition_line [q [srcGetDefLine $signal]] \
+                lines [read_lines $file $start $count]]
+        }
+        source_file {
+            arity $argv 3
+            lassign $argv file start count
+            set file [allowed_file $file]
+            return [obj file [q $file] lines [read_lines $file $start $count]]
+        }
+        read_log {
+            arity $argv 3
+            lassign $argv path pattern max
+            if {![string is integer -strict $max] || $max < 1 || $max > 200 ||
+                [string length $pattern] > 4096} {error "invalid log limits"}
+            set path [allowed_file $path]
+            if {[file size $path] > 8388608} {error "log exceeds 8 MiB read limit"}
+            set f [open $path r]; set rows {}; set i 0; set truncated false
             try {
                 while {[gets $f line] >= 0} {
                     incr i
-                    if {$i >= $start} {lappend lines [obj line $i text [q $line]]}
-                    if {[llength $lines] >= $count} {break}
+                    if {[string first $pattern $line] < 0} {continue}
+                    if {[llength $rows] == $max} {set truncated true; break}
+                    lappend rows [obj line $i text [q $line]]
                 }
             } finally {close $f}
-            return [obj file [q $file] definition_line [q [srcGetDefLine $signal]] lines "\[[join $lines ,]\]"]
+            return [obj file [q $path] pattern [q $pattern] lines "\[[join $rows ,]\]" \
+                truncated $truncated matching [q "literal substring, case sensitive"]]
+        }
+        find_signals {
+            arity $argv 4
+            lassign $argv pattern scope max depth
+            name $scope
+            if {[string index $scope 0] ne "/" || $pattern eq "" ||
+                [string length $pattern] > 4096 || ![string is integer -strict $max] ||
+                $max < 1 || $max > 1000 || ![string is integer -strict $depth] ||
+                $depth < 0 || $depth > 64} {error "invalid search limits"}
+            set queue [list [list $scope 0]]; set seen {}; set found {}; set truncated false
+            set visited 0
+            while {[llength $queue]} {
+                lassign [lindex $queue 0] current level
+                set queue [lrange $queue 1 end]
+                if {[dict exists $seen $current]} {continue}
+                dict set seen $current 1
+                incr visited
+                if {$visited > 2048} {set truncated true; break}
+                if {$current eq "/"} {set args {}} else {set args [list $current]}
+                foreach leaf [wvGetSignalsByScope -win $w {*}$args] {
+                    set path [child_path $current $leaf]
+                    if {[string first $pattern $path] >= 0 || [string match $pattern $path]} {
+                        if {[llength $found] == $max} {set truncated true; break}
+                        lappend found $path
+                    }
+                }
+                if {[llength $found] == $max && $truncated} {break}
+                set children [wvGetScope -win $w {*}$args]
+                if {$level == $depth && [llength $children]} {set truncated true; continue}
+                foreach child $children {
+                    lappend queue [list [child_path $current $child] [expr {$level+1}]]
+                }
+            }
+            return [obj signals [arr $found] truncated $truncated visited_scopes $visited \
+                depth $depth scope [q $scope] pattern [q $pattern]]
+        }
+        changes {
+            lassign $argv start end unit radix max
+            set signals [lrange $argv 5 end]
+            if {$radix ni {Bin Hex UDec Dec} || ![string is integer -strict $max] ||
+                $max < 1 || $max > 4096 || [llength $signals] < 1 ||
+                [llength $signals] > 128 || $max*[llength $signals] > 4096} {
+                error "invalid changes limits"
+            }
+            set a [timevalue $w $start $unit]; set b [timevalue $w $end $unit]
+            if {$b <= $a} {error "end must exceed start"}
+            foreach signal $signals {signal_exists $w $signal}
+            set scale [timevalue $w 1 $unit]
+            set cursor [wvGetCursor -win $w]; set view [wvGetViewTimeRange -win $w]
+            set results {}; set any_truncated false
+            try {
+                foreach signal $signals {
+                    set initial [value $w $signal $radix $a]
+                    set previous $initial; set t $a; set rows {}; set truncated false
+                    while {1} {
+                        set next [wvSearchNextBySignal -win $w -delim / $signal -time $t]
+                        if {[lindex $next 0] ne "1"} {break}
+                        set nt [lindex $next 1]
+                        if {![string is double -strict $nt] || $nt <= $t} {
+                            error "Verdi transition search did not advance"
+                        }
+                        if {$nt > $b} {break}
+                        if {[llength $rows] == $max} {set truncated true; set any_truncated true; break}
+                        set after [value $w $signal $radix $nt]
+                        lappend rows [obj time [q [format %.15g [expr {$nt/$scale}]]] \
+                            before [q $previous] after [q $after]]
+                        set previous $after; set t $nt
+                    }
+                    lappend results [obj signal [q $signal] initial [q $initial] \
+                        changes "\[[join $rows ,]\]" truncated $truncated]
+                }
+            } finally {
+                wvSetCursor -win $w [lindex $cursor 1]
+                wvZoom -win $w {*}[lrange $view 1 2]
+            }
+            return [obj unit [q $unit] radix [q $radix] interval [arr [list $start $end]] \
+                boundary [q "(start, end]; initial is the value at start"] \
+                signals "\[[join $results ,]\]" truncated $any_truncated \
+                glitches_skipped true]
         }
         goto_source {
             arity $argv 2

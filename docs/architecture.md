@@ -12,14 +12,19 @@ flowchart LR
     E --> G[nTrace source APIs]
 ```
 
-The Python server exposes ten typed operations using the MCP SDK. Tool arguments
+The Python server exposes sixteen typed operations using the MCP SDK. Tool arguments
 become data fields in a request; they are not interpolated into executable Tcl.
 The adapter dispatches only supported operations in Verdi's own Tcl event loop.
 No separate waveform parser or viewer is used to answer signal queries.
 
 The transport uses a private filesystem directory rather than a network listener.
 For remote use, SSH runs a small standard-library helper with Python 3.6+ on the
-Verdi host. The MCP SDK and Python 3.11+ runtime remain on the client machine.
+Verdi host. A remote Client keeps one SSH process and helper alive, exchanging
+JSON lines serially. Each line still uses a fresh request ID and checks the current
+GUI session. A disconnect/timeout discards the helper and never replays the call.
+The next explicit call may reconnect. Set `VERDI_BRIDGE_PERSISTENT=0` for one-shot
+transport. Use the Python client as a context manager or call `close()`; the MCP
+server closes its client on shutdown. The MCP SDK and Python 3.11+ runtime remain on the client machine.
 
 ## Request lifecycle
 

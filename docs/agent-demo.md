@@ -59,7 +59,7 @@ assignment at line 122 are supported by the waveform/source evidence.
 
 Published records contain user-facing messages and MCP events; machine paths are
 redacted, and shell-output bulk/internal reasoning are omitted. Full local raw
-captures and events are retained. See [Chinese recording notes](agent-demo-v2.md)
+captures and events are retained. See [Chinese recording notes](evidence/archive/agent-demo-v2/README.md)
 for its separate evidence and limitations. The former translated English version
 is historical and no longer the main English demo. The [blind trial](blind-validation.md)
 is a separate experiment.

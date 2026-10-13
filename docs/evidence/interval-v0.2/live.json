@@ -1,0 +1,386 @@
+[
+  {
+    "operation": "status",
+    "arguments": {},
+    "result": {
+      "window": "1ad5dae0",
+      "time_unit": "1ps",
+      "cursor": [
+        "1",
+        "0",
+        "x",
+        "1ps"
+      ],
+      "viewport": [
+        "1",
+        "0",
+        "191900"
+      ],
+      "signals": []
+    },
+    "seconds": 0.2701929159957217
+  },
+  {
+    "operation": "find_signals",
+    "arguments": {
+      "pattern": "clk"
+    },
+    "result": {
+      "signals": [
+        "/tb/clk",
+        "/tb/dut/clk"
+      ],
+      "truncated": false,
+      "visited_scopes": 11,
+      "depth": 16,
+      "scope": "/",
+      "pattern": "clk"
+    },
+    "seconds": 0.11963112499506678
+  },
+  {
+    "operation": "find_signals",
+    "arguments": {
+      "pattern": "wstrb"
+    },
+    "result": {
+      "signals": [
+        "/tb/s_axil_wstrb[3:0]",
+        "/tb/dut/s_axil_wstrb[3:0]",
+        "/tb/dut/s_axil_wstrb_next[3:0]",
+        "/tb/dut/s_axil_wstrb_reg[3:0]"
+      ],
+      "truncated": false,
+      "visited_scopes": 11,
+      "depth": 16,
+      "scope": "/",
+      "pattern": "wstrb"
+    },
+    "seconds": 0.12337358300283086
+  },
+  {
+    "operation": "find_transitions",
+    "arguments": {
+      "signal": "/tb/clk",
+      "start": "0",
+      "end": "100"
+    },
+    "result": {
+      "unit": "ns",
+      "radix": "Bin",
+      "interval": [
+        "0",
+        "100"
+      ],
+      "boundary": "(start, end]; initial is the value at start",
+      "signals": [
+        {
+          "signal": "/tb/clk",
+          "initial": "0",
+          "changes": [
+            {
+              "time": "5",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "10",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "15",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "20",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "25",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "30",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "35",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "40",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "45",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "50",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "55",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "60",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "65",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "70",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "75",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "80",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "85",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "90",
+              "before": "1",
+              "after": "0"
+            },
+            {
+              "time": "95",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "100",
+              "before": "1",
+              "after": "0"
+            }
+          ],
+          "truncated": false
+        }
+      ],
+      "truncated": false,
+      "glitches_skipped": true
+    },
+    "seconds": 0.11976954199781176
+  },
+  {
+    "operation": "get_value_changes",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axil_wstrb[3:0]",
+        "/tb/dut/s_axil_wstrb_next[3:0]",
+        "/tb/dut/reg_wr_en"
+      ],
+      "start": "50",
+      "end": "100",
+      "max": 16,
+      "radix": "Hex"
+    },
+    "result": {
+      "unit": "ns",
+      "radix": "Hex",
+      "interval": [
+        "50",
+        "100"
+      ],
+      "boundary": "(start, end]; initial is the value at start",
+      "signals": [
+        {
+          "signal": "/tb/dut/s_axil_wstrb[3:0]",
+          "initial": "0",
+          "changes": [
+            {
+              "time": "70",
+              "before": "0",
+              "after": "1"
+            }
+          ],
+          "truncated": false
+        },
+        {
+          "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+          "initial": "f",
+          "changes": [],
+          "truncated": false
+        },
+        {
+          "signal": "/tb/dut/reg_wr_en",
+          "initial": "0",
+          "changes": [
+            {
+              "time": "75",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "85",
+              "before": "1",
+              "after": "0"
+            }
+          ],
+          "truncated": false
+        }
+      ],
+      "truncated": false,
+      "glitches_skipped": true
+    },
+    "seconds": 0.1342710829921998
+  },
+  {
+    "operation": "measure_clock",
+    "arguments": {
+      "signal": "/tb/clk",
+      "around_time": "85"
+    },
+    "result": {
+      "signal": "/tb/clk",
+      "unit": "ns",
+      "period": "10",
+      "phase": "5",
+      "rising_edges": [
+        "5",
+        "15",
+        "25",
+        "35",
+        "45",
+        "55",
+        "65",
+        "75",
+        "85",
+        "95",
+        "105",
+        "115",
+        "125",
+        "135",
+        "145",
+        "155",
+        "165",
+        "175",
+        "185"
+      ],
+      "constant_in_window": true,
+      "window": [
+        "0",
+        "185"
+      ],
+      "note": "Local observation only; skipped glitches and gated/missing edges can bias period"
+    },
+    "seconds": 0.11998945899540558
+  },
+  {
+    "operation": "before_error",
+    "arguments": {
+      "error_time": "85",
+      "clock_signal": "/tb/clk",
+      "cycles": 2
+    },
+    "result": {
+      "cursor": [
+        "1",
+        "65000",
+        "x",
+        "1ps"
+      ],
+      "time_unit": "1ps",
+      "clamped_at_zero": false,
+      "cycles": 2,
+      "period": "10",
+      "snapped_to_rising_edge": true,
+      "note": "Snapped to an observed edge at/before target; assumes constant clock between windows"
+    },
+    "seconds": 0.3644745409983443
+  },
+  {
+    "operation": "read_log",
+    "arguments": {
+      "path": "<source-root>/seed-1/sim.log",
+      "pattern": "ERROR",
+      "max_lines": 3
+    },
+    "result": {
+      "file": "<source-root>/seed-1/sim.log",
+      "pattern": "ERROR",
+      "lines": [
+        {
+          "line": 6,
+          "text": "FIRST_ERROR time_ns=85 kind=register_payload"
+        }
+      ],
+      "truncated": false,
+      "matching": "literal substring, case sensitive"
+    },
+    "seconds": 0.12052899999252986
+  },
+  {
+    "operation": "trace_driver",
+    "arguments": {
+      "signal": "tb.dut.s_axil_wstrb_reg"
+    },
+    "result": {
+      "signal": "tb.dut.s_axil_wstrb_reg",
+      "driver": [
+        "tb.dut",
+        "./rtl/axil_reg_if_wr.v",
+        "82"
+      ],
+      "drivers": [
+        {
+          "scope": "tb.dut",
+          "file": "./rtl/axil_reg_if_wr.v",
+          "line": "82",
+          "type": "unknown"
+        }
+      ],
+      "type_note": "srcTraceDriver does not provide assignment types"
+    },
+    "seconds": 0.1711649169883458
+  },
+  {
+    "operation": "sample",
+    "arguments": {
+      "signals": [
+        "/tb/dut/s_axil_wstrb_next[3:0]"
+      ],
+      "times": [
+        "75"
+      ],
+      "radix": "Dec"
+    },
+    "result": {
+      "radix": "Dec",
+      "samples": [
+        {
+          "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+          "time": "75",
+          "unit": "ns",
+          "value": "-1"
+        }
+      ]
+    },
+    "seconds": 0.15672824998910073
+  }
+]

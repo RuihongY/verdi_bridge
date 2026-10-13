@@ -1,0 +1,307 @@
+{
+  "checks": [
+    {
+      "check": "exclusive start, inclusive end, exact-limit not truncated, GUI restored",
+      "result": {
+        "unit": "ns",
+        "radix": "Bin",
+        "interval": [
+          "50",
+          "75"
+        ],
+        "boundary": "(start, end]; initial is the value at start",
+        "signals": [
+          {
+            "signal": "/tb/clk",
+            "initial": "0",
+            "changes": [
+              {
+                "time": "55",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "60",
+                "before": "1",
+                "after": "0"
+              },
+              {
+                "time": "65",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "70",
+                "before": "1",
+                "after": "0"
+              },
+              {
+                "time": "75",
+                "before": "0",
+                "after": "1"
+              }
+            ],
+            "truncated": false
+          }
+        ],
+        "truncated": false,
+        "glitches_skipped": true
+      }
+    },
+    {
+      "check": "truncation",
+      "result": {
+        "unit": "ns",
+        "radix": "Bin",
+        "interval": [
+          "50",
+          "75"
+        ],
+        "boundary": "(start, end]; initial is the value at start",
+        "signals": [
+          {
+            "signal": "/tb/clk",
+            "initial": "0",
+            "changes": [
+              {
+                "time": "55",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "60",
+                "before": "1",
+                "after": "0"
+              },
+              {
+                "time": "65",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "70",
+                "before": "1",
+                "after": "0"
+              }
+            ],
+            "truncated": true
+          }
+        ],
+        "truncated": true,
+        "glitches_skipped": true
+      }
+    },
+    {
+      "check": "direct source at faulty statement",
+      "result": {
+        "file": "<source-root>/rtl/axil_reg_if_wr.v",
+        "lines": [
+          {
+            "line": 122,
+            "text": "        s_axil_wstrb_next = {STRB_WIDTH{1'b1}};"
+          }
+        ]
+      }
+    },
+    {
+      "check": "signed decimal full width",
+      "result": {
+        "radix": "Dec",
+        "samples": [
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "time": "75",
+            "unit": "ns",
+            "value": "1"
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb_next[3:0]",
+            "time": "75",
+            "unit": "ns",
+            "value": "-1"
+          }
+        ]
+      }
+    },
+    {
+      "check": "file outside roots rejected",
+      "error": "file is outside VERDI_BRIDGE_SOURCE_ROOTS"
+    }
+  ],
+  "status_transport_microbenchmark": {
+    "False": {
+      "n": 20,
+      "median_all_seconds": 0.25455866650736425,
+      "median_warm_seconds": 0.241280166512297,
+      "samples": [
+        {
+          "seconds": 0.26140954199945554,
+          "cold": true
+        },
+        {
+          "seconds": 0.2137482919933973,
+          "cold": false
+        },
+        {
+          "seconds": 0.26621858299768064,
+          "cold": false
+        },
+        {
+          "seconds": 0.21121887500339653,
+          "cold": false
+        },
+        {
+          "seconds": 0.26055954200273845,
+          "cold": false
+        },
+        {
+          "seconds": 0.2702473329991335,
+          "cold": true
+        },
+        {
+          "seconds": 0.22406979199149646,
+          "cold": false
+        },
+        {
+          "seconds": 0.23400254201260395,
+          "cold": false
+        },
+        {
+          "seconds": 0.22003754200704861,
+          "cold": false
+        },
+        {
+          "seconds": 0.27027658400766086,
+          "cold": false
+        },
+        {
+          "seconds": 0.22237554100865964,
+          "cold": true
+        },
+        {
+          "seconds": 0.2788919580052607,
+          "cold": false
+        },
+        {
+          "seconds": 0.2241526659927331,
+          "cold": false
+        },
+        {
+          "seconds": 0.22006804200646002,
+          "cold": false
+        },
+        {
+          "seconds": 0.2681577499897685,
+          "cold": false
+        },
+        {
+          "seconds": 0.359000707991072,
+          "cold": true
+        },
+        {
+          "seconds": 0.3257062089978717,
+          "cold": false
+        },
+        {
+          "seconds": 0.24855779101199005,
+          "cold": false
+        },
+        {
+          "seconds": 0.23050000000512227,
+          "cold": false
+        },
+        {
+          "seconds": 0.2721797500125831,
+          "cold": false
+        }
+      ]
+    },
+    "True": {
+      "n": 20,
+      "median_all_seconds": 0.1334126669971738,
+      "median_warm_seconds": 0.10898097899917047,
+      "samples": [
+        {
+          "seconds": 0.20819283300079405,
+          "cold": true
+        },
+        {
+          "seconds": 0.15658416600490455,
+          "cold": false
+        },
+        {
+          "seconds": 0.10783070800243877,
+          "cold": false
+        },
+        {
+          "seconds": 0.10686429199995473,
+          "cold": false
+        },
+        {
+          "seconds": 0.15649750000739004,
+          "cold": false
+        },
+        {
+          "seconds": 0.20831333300156984,
+          "cold": true
+        },
+        {
+          "seconds": 0.10687604200211354,
+          "cold": false
+        },
+        {
+          "seconds": 0.15815262499381788,
+          "cold": false
+        },
+        {
+          "seconds": 0.10982770800183062,
+          "cold": false
+        },
+        {
+          "seconds": 0.10813424999651033,
+          "cold": false
+        },
+        {
+          "seconds": 0.20698454199009575,
+          "cold": true
+        },
+        {
+          "seconds": 0.10667541698785499,
+          "cold": false
+        },
+        {
+          "seconds": 0.1591299170104321,
+          "cold": false
+        },
+        {
+          "seconds": 0.11032783398695756,
+          "cold": false
+        },
+        {
+          "seconds": 0.10810716600099113,
+          "cold": false
+        },
+        {
+          "seconds": 0.2139612080063671,
+          "cold": true
+        },
+        {
+          "seconds": 0.15752933300973382,
+          "cold": false
+        },
+        {
+          "seconds": 0.1072427500039339,
+          "cold": false
+        },
+        {
+          "seconds": 0.10660400000051595,
+          "cold": false
+        },
+        {
+          "seconds": 0.15851945799659006,
+          "cold": false
+        }
+      ]
+    }
+  }
+}

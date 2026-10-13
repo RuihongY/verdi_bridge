@@ -1,0 +1,244 @@
+{
+  "tools": [
+    "session_status",
+    "browse_scope",
+    "add_signals",
+    "set_cursor",
+    "set_time_window",
+    "jump_before_error",
+    "sample_signals",
+    "trace_driver",
+    "read_source",
+    "goto_source",
+    "find_transitions",
+    "get_value_changes",
+    "find_signals",
+    "measure_clock",
+    "read_log",
+    "read_source_file"
+  ],
+  "calls": [
+    {
+      "tool": "find_signals",
+      "arguments": {
+        "pattern": "wstrb"
+      },
+      "result": {
+        "signals": [
+          "/tb/s_axil_wstrb[3:0]",
+          "/tb/dut/s_axil_wstrb[3:0]",
+          "/tb/dut/s_axil_wstrb_next[3:0]",
+          "/tb/dut/s_axil_wstrb_reg[3:0]"
+        ],
+        "truncated": false,
+        "visited_scopes": 11,
+        "depth": 16,
+        "scope": "/",
+        "pattern": "wstrb"
+      }
+    },
+    {
+      "tool": "find_transitions",
+      "arguments": {
+        "signal": "/tb/clk",
+        "start": "50",
+        "end": "75"
+      },
+      "result": {
+        "unit": "ns",
+        "radix": "Bin",
+        "interval": [
+          "50",
+          "75"
+        ],
+        "boundary": "(start, end]; initial is the value at start",
+        "signals": [
+          {
+            "signal": "/tb/clk",
+            "initial": "0",
+            "changes": [
+              {
+                "time": "55",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "60",
+                "before": "1",
+                "after": "0"
+              },
+              {
+                "time": "65",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "70",
+                "before": "1",
+                "after": "0"
+              },
+              {
+                "time": "75",
+                "before": "0",
+                "after": "1"
+              }
+            ],
+            "truncated": false
+          }
+        ],
+        "truncated": false,
+        "glitches_skipped": true
+      }
+    },
+    {
+      "tool": "get_value_changes",
+      "arguments": {
+        "signals": [
+          "/tb/dut/reg_wr_en",
+          "/tb/dut/s_axil_wstrb[3:0]"
+        ],
+        "start": "50",
+        "end": "100"
+      },
+      "result": {
+        "unit": "ns",
+        "radix": "Bin",
+        "interval": [
+          "50",
+          "100"
+        ],
+        "boundary": "(start, end]; initial is the value at start",
+        "signals": [
+          {
+            "signal": "/tb/dut/reg_wr_en",
+            "initial": "0",
+            "changes": [
+              {
+                "time": "75",
+                "before": "0",
+                "after": "1"
+              },
+              {
+                "time": "85",
+                "before": "1",
+                "after": "0"
+              }
+            ],
+            "truncated": false
+          },
+          {
+            "signal": "/tb/dut/s_axil_wstrb[3:0]",
+            "initial": "0",
+            "changes": [
+              {
+                "time": "70",
+                "before": "0",
+                "after": "1"
+              }
+            ],
+            "truncated": false
+          }
+        ],
+        "truncated": false,
+        "glitches_skipped": true
+      }
+    },
+    {
+      "tool": "measure_clock",
+      "arguments": {
+        "signal": "/tb/clk",
+        "around_time": "85"
+      },
+      "result": {
+        "signal": "/tb/clk",
+        "unit": "ns",
+        "period": "10",
+        "phase": "5",
+        "rising_edges": [
+          "5",
+          "15",
+          "25",
+          "35",
+          "45",
+          "55",
+          "65",
+          "75",
+          "85",
+          "95",
+          "105",
+          "115",
+          "125",
+          "135",
+          "145",
+          "155",
+          "165",
+          "175",
+          "185"
+        ],
+        "constant_in_window": true,
+        "window": [
+          "0",
+          "185"
+        ],
+        "note": "Local observation only; skipped glitches and gated/missing edges can bias period"
+      }
+    },
+    {
+      "tool": "read_log",
+      "arguments": {
+        "path": "seed-1/sim.log"
+      },
+      "result": {
+        "file": "<source-root>/seed-1/sim.log",
+        "pattern": "ERROR",
+        "lines": [
+          {
+            "line": 6,
+            "text": "FIRST_ERROR time_ns=85 kind=register_payload"
+          }
+        ],
+        "truncated": false,
+        "matching": "literal substring, case sensitive"
+      }
+    },
+    {
+      "tool": "read_source_file",
+      "arguments": {
+        "file": "rtl/axil_reg_if_wr.v",
+        "start": 122,
+        "count": 1
+      },
+      "result": {
+        "file": "<source-root>/rtl/axil_reg_if_wr.v",
+        "lines": [
+          {
+            "line": 122,
+            "text": "        s_axil_wstrb_next = {STRB_WIDTH{1'b1}};"
+          }
+        ]
+      }
+    },
+    {
+      "tool": "jump_before_error",
+      "arguments": {
+        "error_time": "86",
+        "clock_signal": "/tb/clk",
+        "cycles": 2
+      },
+      "result": {
+        "cursor": [
+          "1",
+          "65000",
+          "x",
+          "1ps"
+        ],
+        "time_unit": "1ps",
+        "clamped_at_zero": false,
+        "cycles": 2,
+        "period": "10",
+        "snapped_to_rising_edge": true,
+        "note": "Snapped to an observed edge at/before target; assumes constant clock between windows"
+      }
+    }
+  ]
+}

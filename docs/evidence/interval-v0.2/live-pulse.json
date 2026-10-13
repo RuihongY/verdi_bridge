@@ -1,0 +1,62 @@
+{
+  "unit": "ns",
+  "radix": "Dec",
+  "interval": [
+    "0",
+    "10"
+  ],
+  "boundary": "(start, end]; initial is the value at start",
+  "signals": [
+    {
+      "signal": "/tb/pulse",
+      "initial": "0",
+      "changes": [
+        {
+          "time": "5",
+          "before": "0",
+          "after": "-1"
+        },
+        {
+          "time": "5.001",
+          "before": "-1",
+          "after": "0"
+        },
+        {
+          "time": "6",
+          "before": "0",
+          "after": "x"
+        },
+        {
+          "time": "7",
+          "before": "x",
+          "after": "z"
+        },
+        {
+          "time": "8",
+          "before": "z",
+          "after": "0"
+        }
+      ],
+      "truncated": false
+    },
+    {
+      "signal": "/tb/signed_value[7:0]",
+      "initial": "1",
+      "changes": [
+        {
+          "time": "5.001",
+          "before": "1",
+          "after": "-1"
+        },
+        {
+          "time": "10",
+          "before": "-1",
+          "after": "2"
+        }
+      ],
+      "truncated": false
+    }
+  ],
+  "truncated": false,
+  "glitches_skipped": true
+}

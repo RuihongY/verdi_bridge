@@ -127,3 +127,10 @@ requests because requests carry unique IDs and a session identifier. Late result
 may remain on disk for inspection.
 
 See [the trust boundary](../SECURITY.md) and [tested limitations](validation.md).
+
+## Upgrading to 0.2
+
+Update both the Python package and the Tcl adapter; restart in a fresh private
+GUI/session directory. Existing loaded Tcl does not acquire the new operations
+from a Python upgrade. Remote clients reuse one SSH/helper by default; set
+`VERDI_BRIDGE_PERSISTENT=0` for the previous one-shot transport.

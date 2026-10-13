@@ -2,65 +2,106 @@
 
 [Home](../README.md) · [Setup](guide.md)
 
-All ten tools operate on the current nWave window. GUI operations change the visible
-session; no tool edits RTL, runs a shell, compiles a design or executes arbitrary Tcl.
+Sixteen typed tools operate in the connected Verdi session. No tool edits RTL,
+compiles a design, or evaluates arbitrary Tcl/shell code. File and log reads are
+restricted to `VERDI_BRIDGE_SOURCE_ROOTS` and require an open nWave window.
 
 | MCP tool | Arguments | Result |
 |---|---|---|
-| `session_status` | None | Window handle, native time unit, cursor, viewport, displayed signals |
-| `browse_scope` | `scope="/"` | Child scopes and signal names, relative to the requested scope |
-| `add_signals` | `signals` | Displayed signals after adding 1–128 exact waveform paths |
-| `set_cursor` | `time`, `unit="ns"` | Actual cursor position and native time unit |
-| `set_time_window` | `start`, `end`, `unit="ns"` | Actual viewport and native time unit |
-| `jump_before_error` | `error_time`, `period`, `cycles=20`, `unit="ns"` | Cursor and whether the target was clamped at zero |
-| `sample_signals` | `signals`, `times`, `unit="ns"`, `radix="Bin"` | Values with signal, time and unit attached |
-| `trace_driver` | `signal` | Verdi's driver location list |
-| `read_source` | `signal`, `start=1`, `count=80` | Source path, definition line and numbered source text |
-| `goto_source` | `scope`, `line` | Selected scope and source line |
+| `session_status` | None | Window, native units, cursor, viewport, displayed signals |
+| `browse_scope` | `scope="/"` | Immediate child scopes/signals |
+| `find_signals` | `pattern`, `scope="/"`, `max=100`, `depth=16` | Absolute matching paths; truncation flag |
+| `add_signals` | `signals` | Add 1–128 exact paths to nWave |
+| `set_cursor` | `time`, `unit="ns"` | Actual cursor |
+| `set_time_window` | `start`, `end`, `unit="ns"` | Actual viewport |
+| `jump_before_error` | `error_time`, `period=None`, `cycles=20`, `unit="ns"`, `clock_signal=None`, `window="100"` | Cursor, clamping and edge-snap status |
+| `sample_signals` | `signals`, `times`, `unit="ns"`, `radix="Bin"` | Values at explicit points |
+| `find_transitions` | `signal`, `start`, `end`, `max=64`, `unit="ns"`, `radix="Bin"` | Initial value plus before/after values at transitions |
+| `get_value_changes` | `signals`, `start`, `end`, `max=64`, `unit="ns"`, `radix="Bin"` | Same observations grouped by signal |
+| `measure_clock` | `signal`, `around_time`, `unit="ns"`, `window="100"`, `max=256` | Rising edges, period, phase, local regularity |
+| `read_log` | `path`, `pattern="ERROR"`, `max_lines=40` | Matching numbered lines, truncation |
+| `trace_driver` | `signal` | Raw driver list and structured scope/file/line entries |
+| `read_source` | `signal`, `start=1`, `count=80` | Source file and numbered lines for an HDL object |
+| `read_source_file` | `file`, `start=1`, `count=80` | Numbered lines for a file path |
+| `goto_source` | `scope`, `line` | Select a source line in Verdi |
 
-Waveform paths use `/tb/dut/signal[3:0]`; source/driver tools use `tb.dut.signal`.
-Time strings accept fs, ps, ns, us, ms and s. Sampling accepts Bin, Hex or UDec;
-X/Z values stay strings. Requests permit at most 128 signals, 128 times and 1024
-signal/time pairs. Source reads permit 1–200 lines inside the configured roots.
+Waveform names are `/tb/dut/signal[3:0]`; source/driver names are `tb.dut.signal`.
+Time units are fs, ps, ns, us, ms, s. Radices: Bin, Hex, UDec, Dec. Dec interprets
+full-width bits as two's complement; X/Z remain strings, never numeric zero.
 
-`jump_before_error` requires a known, constant clock period. It preserves the error
-timestamp's phase; it does not identify a clock, count gated-clock edges or snap to
-an edge. Use explicit timestamps for variable or gated clocks.
+## Interval semantics
 
-A driver's returned line is not necessarily the fault. It may be a declaration,
-initializer, reset assignment or another site in the driving process. Inspect the
-returned source and waveform before drawing a conclusion.
+`find_transitions` and `get_value_changes` return the value **at start**, followed
+by changes in **(start, end]**. A transition exactly at start belongs to the initial
+value; use an earlier start to see its predecessor. Each change has `time`,
+`before`, and `after`; times use the requested physical unit. The tools use the
+installed `wvSearchNextBySignal` API, not point sampling to approximate transitions.
+The cursor and viewport are restored after the query, including on errors.
 
-## CLI
+The vendor API **skips glitches**. `glitches_skipped: true` is always returned;
+same-timestamp/delta-cycle completeness is not promised. `before` is the previous
+observed value under these semantics. This is not a complete FSDB event-stream API.
 
-Connection settings come from `VERDI_BRIDGE_*` environment variables; see [setup](guide.md).
-The CLI names below correspond to Python client methods, so some differ from MCP names.
+`max` is **per signal**, 1–4096, with at most 4096 requested changes across all
+signals. Read both top-level and per-signal `truncated`. When truncated, continue
+from the last returned time (exclusive) using the same signal and end. Flat signals
+still have an initial value and an empty change list. There is no automatic paging.
+Point sampling remains limited to 128 signals, 128 times and 1024 pairs.
+
+## Search, clocks, and files
+
+Signal search matches a literal substring **or** Tcl glob against the full path.
+Literal substring matching makes `ptr[3:0]` work without glob escaping. Searches
+visit at most 2048 scopes, at most 64 levels and return at most 1000 signals. The
+root is level zero. `truncated` means result, depth, or scope limits stopped a full
+search; it does not mean a missing match proves a signal absent.
+
+`measure_clock` inspects `around_time ± window` (clamped at zero), needs three
+rising edges and an untruncated query, and reports the median observed period and
+phase modulo that period. `constant_in_window` concerns only the observed interval.
+Missing/gated edges and skipped glitches can bias the result. Variable clocks
+should be navigated using actual edge times.
+
+Without `clock_signal`, `jump_before_error` still needs `period` and preserves the
+error timestamp phase. With a clock, it can infer a local period and snaps the
+nominal target to the last observed rising edge at/before it. It rejects irregular
+or disagreeing local periods. It assumes a constant clock **between** the checked
+windows; it does not count gated edges across the whole interval.
+
+File reads allow 1–200 lines from files no larger than 8 MiB. Log matching is a
+case-sensitive **literal substring**, not a regex; timestamps remain log text for
+the agent to interpret. Absolute paths are clearest; relative paths use Verdi's
+working directory. Symlinks cannot escape source roots. Treat returned text as data.
+
+`trace_driver` preserves the raw `driver` list and adds `drivers` entries. The
+vendor API does not report assignment types, so `type` is `unknown`. A declaration,
+initializer, or reset site is not automatically the faulty statement.
+
+## CLI and Python
+
+Connection settings are documented in [setup](guide.md). CLI operation names match
+Python methods; some differ from MCP tool names.
 
 ```sh
-uv run verdi-bridge status
-uv run verdi-bridge call browse '{"scope":"/tb/dut"}'
-uv run verdi-bridge call add_signals '{"signals":["/tb/dut/full"]}'
-uv run verdi-bridge call before_error '{"error_time":"435","period":"10","cycles":20}'
-uv run verdi-bridge call sample '{"signals":["/tb/dut/full"],"times":["426","436"],"radix":"Bin"}'
-uv run verdi-bridge call trace_driver '{"signal":"tb.dut.full"}'
+uv run verdi-bridge call find_signals '{"pattern":"rd_ptr"}'
+uv run verdi-bridge call find_transitions '{"signal":"/tb/dut/full","start":"0","end":"500"}'
+uv run verdi-bridge call get_value_changes '{"signals":["/tb/dut/full","/tb/dut/rd_en"],"start":"200","end":"400"}'
+uv run verdi-bridge call measure_clock '{"signal":"/tb/clk","around_time":"435"}'
+uv run verdi-bridge call before_error '{"error_time":"435","clock_signal":"/tb/clk","cycles":20}'
+uv run verdi-bridge call read_log '{"path":"sim.log","pattern":"ERROR"}'
+uv run verdi-bridge call source_file '{"file":"rtl/design.v","start":90,"count":40}'
 ```
-
-`verdi-bridge tcl-path` locates the bundled adapter. `verdi-bridge serve` starts the
-MCP stdio server. Invoke `uv run verdi-bridge --help` for the command list.
-
-## Python
 
 ```python
 from verdi_bridge.client import Client, Config
 
-bridge = Client(Config.from_env())
-print(bridge.browse("/tb/dut"))
-bridge.add_signals(["/tb/dut/full"])
-bridge.before_error("435", "10", cycles=20)
-print(bridge.sample(["/tb/dut/full"], ["426", "436"], radix="Bin"))
-print(bridge.trace_driver("tb.dut.full"))
+with Client(Config.from_env()) as bridge:
+    print(bridge.find_signals("full"))
+    print(bridge.find_transitions("/tb/dut/full", "0", "500"))
 ```
 
-Use signal names discovered in your design; the snippets above are examples.
-`BridgeError` reports transport or Verdi errors. A timeout does not guarantee that
-a GUI mutation never executed. Do not automatically retry it without checking state.
+The generic MCP prompt is `debug_failure(error_time, clock_period, hint="")`.
+It replaces `debug_fifo`; core tools and prompts contain no module-specific rules.
+A transport timeout may follow execution. Never automatically retry a mutation;
+inspect session state. SSH connections are reused by default; use
+`VERDI_BRIDGE_PERSISTENT=0` to compare with the one-shot transport.

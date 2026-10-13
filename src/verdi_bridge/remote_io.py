@@ -57,12 +57,26 @@ def exchange(config):
     raise TimeoutError("bridge timeout: " + state)
 
 
-def main():
+def respond(config):
     try:
-        print(json.dumps(exchange(json.load(sys.stdin))))
+        return exchange(config)
     except Exception as exc:
-        print(json.dumps({"transport_error": str(exc)}))
-        sys.exit(1)
+        return {"transport_error": str(exc)}
+
+
+def main():
+    if "--stream" in sys.argv[1:]:
+        for line in sys.stdin:
+            try:
+                result = respond(json.loads(line))
+            except Exception as exc:
+                result = {"transport_error": str(exc)}
+            print(json.dumps(result), flush=True)
+    else:
+        result = respond(json.load(sys.stdin))
+        print(json.dumps(result))
+        if "transport_error" in result:
+            sys.exit(1)
 
 
 if __name__ == "__main__":
