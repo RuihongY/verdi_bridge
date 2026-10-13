@@ -1,112 +1,95 @@
-# Verdi Bridge
+<p align="center">
+  <img src="assets/banner.svg" alt="Verdi Bridge — connect AI agents to your live Verdi session" width="100%" />
+</p>
 
-A small open-source MCP server for controlling a live, licensed Synopsys Verdi GUI.
-Version 0.1.1. Experimental; tested with Verdi T-2022.06-SP2-1 on Linux.
+<p align="center">
+  <a href="https://github.com/RuihongY/verdi_bridge/actions/workflows/test.yml"><img src="https://github.com/RuihongY/verdi_bridge/actions/workflows/test.yml/badge.svg" alt="Tests" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license" /></a>
+  <a href="pyproject.toml"><img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11 or newer" /></a>
+</p>
 
-Ask your MCP-enabled assistant: “Add the FIFO read/write pointers, go 20 cycles
-before this error, and investigate why full stayed asserted.” The assistant calls
-typed tools and reasons from returned waveform values and RTL. The bridge itself
-is not an autonomous root-cause engine.
+<p align="center">
+  <a href="docs/guide.md"><b>Getting started</b></a> ·
+  <a href="docs/tools.md">Tool reference</a> ·
+  <a href="docs/architecture.md">Architecture</a> ·
+  <a href="README.zh-CN.md">中文</a>
+</p>
 
-## Install
+Let an AI agent inspect waveforms, trace signal drivers, and navigate RTL in a
+**live Synopsys Verdi session**, locally or over SSH.
 
-Python 3.11+ locally; Tcl 8.6 in Verdi; remote Python 3.6+ if using SSH.
+> “Add the FIFO read/write pointers, go 20 cycles before the error, and investigate why full stayed high.”
+>
+> “Why did this AXI-Lite response disappear before BREADY?”
+
+The agent reasons about the design. Verdi Bridge provides ten typed MCP tools that
+return waveform values and source evidence while operating the GUI you can inspect.
+
+## Quick start
 
 ```sh
+git clone https://github.com/RuihongY/verdi_bridge.git
+cd verdi_bridge
 uv sync
-uv run verdi-bridge tcl-path
+uv run verdi-bridge tcl-path   # adapter to load in your Verdi session
 ```
 
-## Start or attach
+Next, [load the adapter and connect your MCP client](docs/guide.md).
+You need a licensed Verdi installation; no vendor software is bundled.
+Python 3.11+ runs on the client; an SSH host only needs Python 3.6+ and Verdi's Tcl 8.6.
+The package is installed from this repository, not a published PyPI release.
 
-On the Verdi host, create a fresh private directory for each GUI session:
+## What you can do
 
-```sh
-export VERDI_BRIDGE_DIR=$(mktemp -d /tmp/verdi-bridge.XXXXXXXX)
-export VERDI_BRIDGE_SOURCE_ROOTS=/absolute/path/to/design
-verdi -sv design.sv tb.sv -top tb -ssf simulation.fsdb -play /path/to/bridge.tcl
-```
-
-For an existing GUI, set `env(VERDI_BRIDGE_DIR)` and
-`env(VERDI_BRIDGE_SOURCE_ROOTS)` in its Tcl console, then
-`source /path/to/bridge.tcl`. Load RTL and waveform first. The adapter controls the
-current nWave window; select the intended window when multiple are open.
-
-The Tcl file is bundled in the wheel (`verdi-bridge tcl-path`). Copy it to the
-Verdi host when running the Python server on a different machine. Use your normal
-licensed EDA environment. No proprietary libraries or license are included.
-
-## Connect an MCP client
-
-Configure a generic stdio MCP server (replace all paths):
-
-```json
-{
-  "mcpServers": {
-    "verdi": {
-      "command": "/absolute/path/to/verdi-bridge/.venv/bin/verdi-bridge",
-      "args": ["serve"],
-      "env": {
-        "VERDI_BRIDGE_DIR": "/tmp/verdi-bridge.YOUR_SESSION",
-        "VERDI_BRIDGE_HOST": "user@eda-host",
-        "VERDI_BRIDGE_CONTROL_PATH": "/tmp/your-ssh-control.sock"
-      }
-    }
-  }
-}
-```
-
-Omit HOST and CONTROL_PATH for a local GUI/shared filesystem. SSH uses existing
-credentials, BatchMode and host-key verification; it never asks an LLM for passwords.
-Before MCP use, run `verdi-bridge status` with the same environment.
-
-## Tools
-
-| Tool | Purpose |
+| Workflow | Tools |
 |---|---|
-| session_status | Current window, cursor, viewport, time units, displayed signals |
-| browse_scope | Discover scopes and exact waveform signal paths |
-| add_signals | Add up to 128 signals |
-| set_cursor / set_time_window | Move/zoom with explicit physical time units |
-| jump_before_error | Offset by a known constant clock period |
-| sample_signals | Read values at specified times; keep X/Z values as strings |
-| trace_driver | Find the driving RTL process |
-| read_source / goto_source | Read numbered RTL lines / navigate source GUI |
+| Find and display signals | `browse_scope`, `add_signals` |
+| Navigate an error window | `set_cursor`, `set_time_window`, `jump_before_error` |
+| Inspect actual waveform values | `sample_signals`, `session_status` |
+| Follow drivers into RTL | `trace_driver`, `read_source`, `goto_source` |
 
-Waveform names use `/tb/dut/signal[3:0]`; source operations use `tb.dut.signal`.
-Time units are fs/ps/ns/us/ms/s. Clock offsets preserve the error's phase and clamp
-at zero; gated clocks and variable periods require explicit sample timestamps.
-Read-source access is restricted to colon-separated source roots (default: GUI cwd).
+Waveform queries preserve X/Z values. Time arguments carry explicit units.
+The same interface works with different RTL designs; no FIFO-specific logic is
+built into the bridge. See the [Python and CLI examples](docs/tools.md).
 
-## Validation and limitations
+## Tested on real RTL
 
-See the [UART / AXI-Lite / arbiter results](docs/multidesign-validation.md):
-27 VCS runs across three designs, baseline/mutant/repaired variants, and three seeds.
-All baseline and repaired runs passed; every mutant was detected. Seed-1 cases were
-inspected through real MCP and Verdi. These are known mutations, not blind evaluation.
+UART TX, an AXI-Lite write interface, and a round-robin arbiter were tested using
+VCS and Verdi. Across **27 simulation runs**, all nine baseline runs passed, all
+nine injected-bug runs failed their checkers, and all nine repaired runs passed.
+The seed-1 cases were inspected through real MCP calls and a live Verdi GUI.
 
-The [original validation record](docs/validation.md) and
-[FIFO benchmark](examples/axis_fifo/README.md) are retained.
-Run `uv run pytest` and `uv run ruff check .` without a vendor license. Protocol tests
-use a Tcl simulator double; they do not replace the documented real-Verdi runs.
+| Design | Observed fault |
+|---|---|
+| UART | A short frame counter entered the stop bit too early |
+| AXI-Lite | BVALID disappeared while BREADY was low |
+| Arbiter | The rotation mask was cleared instead of stored |
 
-The bridge has no generic eval/exec tool and does not compile, edit RTL, or close
-Verdi through MCP. Mutating tools affect the GUI only. Source text and waveform
-values can leave your machine through your chosen LLM client; configure that client
-for your design's data policy.
+[Evidence and screenshots](docs/multidesign-validation.md) ·
+[Reproduce these experiments](examples/multidesign/README.md) ·
+[Earlier FIFO cases](examples/axis_fifo/README.md)
 
-Requests use atomic files, unique IDs, session binding and a single GUI consumer.
-A timeout is not proof a GUI action did not execute: inspect status before retrying.
-The private directory is a same-user trust boundary, not an isolation sandbox.
-Do not share it with untrusted processes. There is no TCP listener.
+These are **known, locally injected mutations**, not upstream defects or a blinded
+accuracy benchmark. Driver tracing can return an initializer rather than the fault;
+source inspection and waveform reasoning remain necessary.
 
-To detach, execute `::vb::stop` in Verdi's Tcl console. A killed GUI may leave its
-lock behind: prefer a new session directory. Remove an old lock only after verifying
-that its GUI is no longer running. Late responses may remain in the old directory.
+<details>
+<summary>View a real Verdi debugging session</summary>
 
-Independent community project; not affiliated with or endorsed by Synopsys.
-Verdi is a Synopsys trademark. MIT license applies to this project's code, not Verdi.
+![UART waveform and source in Verdi](docs/evidence/multidesign/uart-multidesign.png)
 
-For VCD input, Verdi may convert it to FSDB. On subsequent launches, opening the
-existing `.vcd.fsdb` avoids an overwrite confirmation dialog that can block `-play`.
-See [troubleshooting](docs/validation.md#troubleshooting).
+</details>
+
+## Project status
+
+Experimental **v0.1.1**. Tested with Verdi T-2022.06-SP2-1 on Linux.
+New-session startup is verified; attachment to an arbitrary existing GUI is not yet
+separately validated. The bridge does not automatically compile, edit or repair RTL.
+
+[Contributing](CONTRIBUTING.md) · [Trust boundary](SECURITY.md) ·
+[Validation limits](docs/validation.md) · [Report an issue](https://github.com/RuihongY/verdi_bridge/issues)
+
+Inspired by the agent-to-EDA-tool workflow of
+[virtuoso-bridge-lite](https://github.com/Arcadia-1/virtuoso-bridge-lite).
+This is an independent implementation. MIT licensed; see [third-party notices](NOTICE).
+Not affiliated with Synopsys. Verdi is a Synopsys trademark.

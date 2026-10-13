@@ -53,8 +53,9 @@ The screenshots show the actual remote GUI, not a reconstructed waveform viewer.
 - VCD/FSDB open, compilation and simulation are performed outside the MCP tools.
   The bridge does not independently infer clock periods, read logs or generate fixes.
 - Tests using the fake GUI validate our protocol, not EDA semantics.
-- Linux GitHub Actions configuration is supplied; it has not been run on GitHub
-  because this initial project has not been published there.
+- Linux CI runs protocol/unit tests on Python 3.11 and 3.12. See the
+  [GitHub Actions runs](https://github.com/RuihongY/verdi_bridge/actions/workflows/test.yml)
+  for the current status; these checks do not use a vendor license.
 
 ## Troubleshooting
 

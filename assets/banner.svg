@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Verdi Bridge</title>
+  <desc id="desc">An open-source connection from AI agents through MCP to a live Verdi debug session.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1628"/><stop offset="1" stop-color="#152c40"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#7dd3fc" stroke-opacity=".06"/></pattern>
+  </defs>
+  <rect width="1200" height="360" rx="20" fill="url(#bg)"/>
+  <rect width="1200" height="360" rx="20" fill="url(#grid)"/>
+  <text x="60" y="65" fill="#6ee7b7" font-family="Arial, sans-serif" font-size="14" letter-spacing="3">OPEN-SOURCE RTL DEBUG TOOLS</text>
+  <text x="56" y="137" fill="#f1f5f9" font-family="Arial, sans-serif" font-size="62" font-weight="700">Verdi Bridge</text>
+  <text x="60" y="182" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="22">Connect AI agents to your live Verdi session.</text>
+  <text x="60" y="218" fill="#94a3b8" font-family="Arial, sans-serif" font-size="17">Signals. Waveforms. Drivers. Source.</text>
+  <g font-family="Arial, sans-serif" font-size="16" text-anchor="middle">
+    <rect x="60" y="267" width="150" height="44" rx="8" fill="#1e3a50" stroke="#36556b"/>
+    <text x="135" y="295" fill="#e2e8f0">AI agent</text>
+    <path d="M220 289H250m-7-6 7 6-7 6" fill="none" stroke="#6ee7b7" stroke-width="2"/>
+    <rect x="260" y="267" width="150" height="44" rx="8" fill="#1e3a50" stroke="#36556b"/>
+    <text x="335" y="295" fill="#e2e8f0">MCP tools</text>
+    <path d="M420 289H450m-7-6 7 6-7 6" fill="none" stroke="#6ee7b7" stroke-width="2"/>
+    <rect x="460" y="267" width="150" height="44" rx="8" fill="#1e3a50" stroke="#36556b"/>
+    <text x="535" y="295" fill="#e2e8f0">Verdi GUI</text>
+  </g>
+  <g transform="translate(725,82)">
+    <rect width="415" height="225" rx="12" fill="#091422" stroke="#36556b"/>
+    <text x="24" y="34" fill="#94a3b8" font-family="monospace" font-size="13">WAVEFORM + SOURCE</text>
+    <path d="M24 76h30V54h30v22h30V54h30v22h30V54h30v22h30V54h30v22h30V54h30v22h60" fill="none" stroke="#60a5fa" stroke-width="2"/>
+    <path d="M24 120h100V98h150v22h110" fill="none" stroke="#6ee7b7" stroke-width="2"/>
+    <path d="M24 151h240V129h120" fill="none" stroke="#fbbf24" stroke-width="2"/>
+    <path d="M264 46v124" stroke="#f1f5f9" stroke-dasharray="4 5" opacity=".65"/>
+    <text x="24" y="200" fill="#cbd5e1" font-family="monospace" font-size="13">inspect → trace → explain</text>
+  </g>
+</svg>
