@@ -1,0 +1,9 @@
+{
+  "case": "case-07",
+  "arm": "A",
+  "seconds": 8.33762916699925,
+  "returncode": 0,
+  "timed_out": false,
+  "input_sha256": "8050f39f549c5a577a15af2ed6343c7aa777f57d26e1a9bfe421fe0da74950cb",
+  "finished_at": "2026-10-13T20:45:30.261741+00:00"
+}

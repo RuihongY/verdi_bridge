@@ -1,0 +1,15 @@
+[
+  {
+    "candidate": {
+      "case": "case-01",
+      "design": "uart",
+      "file": "uart_tx.v",
+      "line": 95,
+      "original": "s_axis_tready_reg <= !s_axis_tready_reg;\n                prescale_reg <= (prescale << 3)-1;",
+      "mutated": "s_axis_tready_reg <= !s_axis_tready_reg;\n                prescale_reg <= (prescale << 2)-1;",
+      "cause": "start bit prescaler shortened",
+      "sha256": "bd4f43edd2ff2692adf848e3e585e3b36a2c8a22bfa94189cbe1d6887e8b7cd2"
+    },
+    "reason": "Checker did not detect the shorter start bit for any of seeds 1,7,42; excluded before diagnosis"
+  }
+]

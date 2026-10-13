@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.3.0 — 2026-10-13
+
+- Convert physical times exactly to integer native ticks; reject off-grid times and
+  ticks beyond 2^53−1. Preserve exact `(start, end]` comparisons and decimal output.
+- **Migration:** Dec is now unsigned (like UDec); request SDec for two’s complement.
+  `find_signals` is literal by default; pass `glob=True` for wildcard paths. Bus
+  brackets stay literal. Configure `VERDI_BRIDGE_LOG_ROOTS` separately for log reads.
+- Bound interval work with a cooperative 200 ms default budget and resumable
+  per-signal partial results. One blocking vendor call cannot be preempted.
+- Default both polling intervals to 10 ms; cache signal listings within a request.
+  Clock windows default to a physical 100 ns regardless of requested unit.
+- Remove constant driver type fields; document per-Client and GUI serialization.
+- 42 automated tests plus live Verdi checks. A 2×2 transport experiment measured
+  106 ms to 47 ms persistent median latency after lowering polling.
+- Run and publish an eight-mutation paired pilot: 8/8 exact localization in both
+  arms, zero diagnostic tool calls. No accuracy or agent call-count benefit shown.
+
+Upgrade Python and the loaded Tcl adapter together in a fresh session directory.
+The wire arguments changed; mixing adapter/package versions is unsupported.
+
 ## 0.2.1 — 2026-10-13
 
 - Detect an exited SSH process before writing another request, even if a surviving

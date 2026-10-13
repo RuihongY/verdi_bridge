@@ -1,0 +1,114 @@
+[
+  {
+    "case": "case-01",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-01",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-02",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-02",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-03",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-03",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-04",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-04",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-05",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-05",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-06",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-06",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-07",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-07",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-08",
+    "arm": "A",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  },
+  {
+    "case": "case-08",
+    "arm": "B",
+    "returncode": 1,
+    "model": "gpt-6-astra",
+    "reason": "CLI 0.147.0 rejected model before inference: requires newer version"
+  }
+]

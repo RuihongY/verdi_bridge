@@ -1,0 +1,727 @@
+{
+  "initial_status": {
+    "window": "1a7f5550",
+    "time_unit": "1ps",
+    "cursor": [
+      "1",
+      "0",
+      "x",
+      "1ps"
+    ],
+    "viewport": [
+      "1",
+      "0",
+      "191900"
+    ],
+    "signals": []
+  },
+  "fs": {
+    "unit": "fs",
+    "radix": "Bin",
+    "interval": [
+      "0",
+      "75000000"
+    ],
+    "boundary": "(start, end]; initial is the value at start",
+    "signals": [
+      {
+        "signal": "/tb/clk",
+        "initial": "0",
+        "changes": [
+          {
+            "time": "5000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "10000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "15000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "20000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "25000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "30000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "35000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "40000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "45000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "50000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "55000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "60000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "65000000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "70000000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "75000000",
+            "before": "0",
+            "after": "1"
+          }
+        ],
+        "truncated": false,
+        "reason": "",
+        "resume_from": "75000000"
+      }
+    ],
+    "truncated": false,
+    "reasons": [],
+    "budget_ms": 2000,
+    "glitches_skipped": true
+  },
+  "ps": {
+    "unit": "ps",
+    "radix": "Bin",
+    "interval": [
+      "0",
+      "75000"
+    ],
+    "boundary": "(start, end]; initial is the value at start",
+    "signals": [
+      {
+        "signal": "/tb/clk",
+        "initial": "0",
+        "changes": [
+          {
+            "time": "5000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "10000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "15000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "20000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "25000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "30000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "35000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "40000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "45000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "50000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "55000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "60000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "65000",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "70000",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "75000",
+            "before": "0",
+            "after": "1"
+          }
+        ],
+        "truncated": false,
+        "reason": "",
+        "resume_from": "75000"
+      }
+    ],
+    "truncated": false,
+    "reasons": [],
+    "budget_ms": 2000,
+    "glitches_skipped": true
+  },
+  "ns": {
+    "unit": "ns",
+    "radix": "Bin",
+    "interval": [
+      "0",
+      "75"
+    ],
+    "boundary": "(start, end]; initial is the value at start",
+    "signals": [
+      {
+        "signal": "/tb/clk",
+        "initial": "0",
+        "changes": [
+          {
+            "time": "5",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "10",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "15",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "20",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "25",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "30",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "35",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "40",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "45",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "50",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "55",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "60",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "65",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "70",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "75",
+            "before": "0",
+            "after": "1"
+          }
+        ],
+        "truncated": false,
+        "reason": "",
+        "resume_from": "75"
+      }
+    ],
+    "truncated": false,
+    "reasons": [],
+    "budget_ms": 2000,
+    "glitches_skipped": true
+  },
+  "us": {
+    "unit": "us",
+    "radix": "Bin",
+    "interval": [
+      "0",
+      "0.075"
+    ],
+    "boundary": "(start, end]; initial is the value at start",
+    "signals": [
+      {
+        "signal": "/tb/clk",
+        "initial": "0",
+        "changes": [
+          {
+            "time": "0.005",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.01",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.015",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.02",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.025",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.03",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.035",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.04",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.045",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.05",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.055",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.06",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.065",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.07",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.075",
+            "before": "0",
+            "after": "1"
+          }
+        ],
+        "truncated": false,
+        "reason": "",
+        "resume_from": "0.075"
+      }
+    ],
+    "truncated": false,
+    "reasons": [],
+    "budget_ms": 2000,
+    "glitches_skipped": true
+  },
+  "ms": {
+    "unit": "ms",
+    "radix": "Bin",
+    "interval": [
+      "0",
+      "0.000075"
+    ],
+    "boundary": "(start, end]; initial is the value at start",
+    "signals": [
+      {
+        "signal": "/tb/clk",
+        "initial": "0",
+        "changes": [
+          {
+            "time": "0.000005",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00001",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000015",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00002",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000025",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00003",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000035",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00004",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000045",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00005",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000055",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00006",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000065",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00007",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000075",
+            "before": "0",
+            "after": "1"
+          }
+        ],
+        "truncated": false,
+        "reason": "",
+        "resume_from": "0.000075"
+      }
+    ],
+    "truncated": false,
+    "reasons": [],
+    "budget_ms": 2000,
+    "glitches_skipped": true
+  },
+  "s": {
+    "unit": "s",
+    "radix": "Bin",
+    "interval": [
+      "0",
+      "7.5E-8"
+    ],
+    "boundary": "(start, end]; initial is the value at start",
+    "signals": [
+      {
+        "signal": "/tb/clk",
+        "initial": "0",
+        "changes": [
+          {
+            "time": "0.000000005",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000001",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000015",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000002",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000025",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000003",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000035",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000004",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000045",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000005",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000055",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000006",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000065",
+            "before": "0",
+            "after": "1"
+          },
+          {
+            "time": "0.00000007",
+            "before": "1",
+            "after": "0"
+          },
+          {
+            "time": "0.000000075",
+            "before": "0",
+            "after": "1"
+          }
+        ],
+        "truncated": false,
+        "reason": "",
+        "resume_from": "0.000000075"
+      }
+    ],
+    "truncated": false,
+    "reasons": [],
+    "budget_ms": 2000,
+    "glitches_skipped": true
+  },
+  "glob": {
+    "signals": [
+      "/tb/s_axil_wstrb[3:0]",
+      "/tb/dut/s_axil_wstrb[3:0]"
+    ],
+    "truncated": false,
+    "visited_scopes": 11,
+    "depth": 16,
+    "scope": "/",
+    "pattern": "*/s_axil_wstrb[3:0]"
+  },
+  "Dec": {
+    "radix": "Dec",
+    "samples": [
+      {
+        "signal": "/tb/clk",
+        "time": "5",
+        "unit": "ns",
+        "value": "1"
+      }
+    ]
+  },
+  "SDec": {
+    "radix": "SDec",
+    "samples": [
+      {
+        "signal": "/tb/clk",
+        "time": "5",
+        "unit": "ns",
+        "value": "-1"
+      }
+    ]
+  },
+  "clock_ps": {
+    "signal": "/tb/clk",
+    "unit": "ps",
+    "period": "10000",
+    "phase": "5000",
+    "rising_edges": [
+      "5000",
+      "15000",
+      "25000",
+      "35000",
+      "45000",
+      "55000",
+      "65000",
+      "75000",
+      "85000",
+      "95000",
+      "105000",
+      "115000",
+      "125000",
+      "135000",
+      "145000",
+      "155000",
+      "165000",
+      "175000",
+      "185000"
+    ],
+    "constant_in_window": true,
+    "window": [
+      "0",
+      "185000"
+    ],
+    "note": "Local observation only; skipped glitches and gated/missing edges can bias period"
+  },
+  "log_root_rejection": "file is outside VERDI_BRIDGE_LOG_ROOTS",
+  "budget_query": {
+    "elapsed_ms": 67.05145799787715,
+    "result": {
+      "unit": "ns",
+      "radix": "Bin",
+      "interval": [
+        "0",
+        "100000"
+      ],
+      "boundary": "(start, end]; initial is the value at start",
+      "signals": [
+        {
+          "signal": "/tb/clk",
+          "initial": "0",
+          "changes": [
+            {
+              "time": "5",
+              "before": "0",
+              "after": "1"
+            },
+            {
+              "time": "10",
+              "before": "1",
+              "after": "0"
+            }
+          ],
+          "truncated": true,
+          "reason": "time budget",
+          "resume_from": "10"
+        },
+        {
+          "signal": "/tb/rst",
+          "initial": null,
+          "changes": [],
+          "truncated": true,
+          "reason": "time budget",
+          "resume_from": "0"
+        }
+      ],
+      "truncated": true,
+      "reasons": [
+        "time budget"
+      ],
+      "budget_ms": 1,
+      "glitches_skipped": true
+    }
+  },
+  "restored": true
+}

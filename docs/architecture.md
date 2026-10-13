@@ -34,8 +34,9 @@ server closes its client on shutdown. The MCP SDK and Python 3.11+ runtime remai
 4. The result or error is atomically published with the same IDs.
 5. The client checks the IDs before returning structured data to the assistant.
 
-The GUI processes requests serially. Several clients can submit uniquely identified
-requests, but multi-call investigations are not transactions. A user can change the
+The GUI processes requests serially. Each persistent Python Client also serializes
+its own calls, so a status call on that Client waits behind an interval query.
+Separate Client instances can submit independently with unique request IDs, but multi-call investigations are not transactions. A user can change the
 current waveform window between calls. Inspect session state when context matters.
 
 Each directory belongs to one GUI; an exclusive lock prevents a second adapter from
@@ -52,7 +53,7 @@ It is not a hidden fault classifier or an autonomous repair service.
 
 The private directory is a same-user trust boundary. Processes running as that user
 are trusted; this is not a sandbox against them. Source reads are restricted to
-configured roots. No general Tcl evaluation or shell execution tool is exposed.
+separate source/log roots. No general Tcl evaluation or shell execution tool is exposed.
 See [SECURITY.md](../SECURITY.md).
 
 ## Source map
@@ -65,3 +66,8 @@ See [SECURITY.md](../SECURITY.md).
 | `src/verdi_bridge/bridge.tcl` | GUI event loop, operation allowlist and Verdi API calls |
 | `src/verdi_bridge/cli.py` | CLI entry points |
 | `examples/multidesign/` | Pinned external RTL fixtures, checks and evidence recorder |
+
+Both adapter and helper polling default to 10 ms. Set `VERDI_BRIDGE_POLL_MS`
+(1–1000) independently in the GUI and client environments to tune each side.
+The adapter handles one request per event-loop callback. Interval queries have a
+cooperative budget; see [tool semantics](tools.md#interval-semantics).

@@ -1,0 +1,82 @@
+[
+  {
+    "case": "case-01",
+    "design": "uart",
+    "file": "uart_tx.v",
+    "line": 95,
+    "original": "s_axis_tready_reg <= !s_axis_tready_reg;\n                prescale_reg <= (prescale << 3)-1;",
+    "mutated": "s_axis_tready_reg <= !s_axis_tready_reg;\n                prescale_reg <= (prescale << 4)-1;",
+    "cause": "start bit prescaler doubled",
+    "sha256": "282152c073a244692fa13e2c443a29925a274d6b46eac15548a746b166697316"
+  },
+  {
+    "case": "case-02",
+    "design": "uart",
+    "file": "uart_tx.v",
+    "line": 105,
+    "original": "{data_reg, txd_reg} <= {1'b0, data_reg};",
+    "mutated": "{data_reg, txd_reg} <= {1'b0, data_reg} >> 1;",
+    "cause": "serial shift skips one payload bit",
+    "sha256": "bddd2380988804be97623ce45a29434336c31290cf72c0d640a69d8e4ab81129"
+  },
+  {
+    "case": "case-03",
+    "design": "uart",
+    "file": "uart_tx.v",
+    "line": 109,
+    "original": "prescale_reg <= (prescale << 3);\n                txd_reg <= 1;",
+    "mutated": "prescale_reg <= (prescale << 3);\n                txd_reg <= 0;",
+    "cause": "stop bit polarity",
+    "sha256": "19c1548114fc1d60522324eb1e73d7fa7cda27217d70410c48c0406001db6504"
+  },
+  {
+    "case": "case-04",
+    "design": "axil",
+    "file": "axil_reg_if_wr.v",
+    "line": 115,
+    "original": "s_axil_awaddr_next = s_axil_awaddr;",
+    "mutated": "s_axil_awaddr_next = s_axil_awaddr ^ 4;",
+    "cause": "address capture corrupts bit two",
+    "sha256": "c06f095b7faf571d01825bca49bc18c832aba602d7592f4cf57635311c8bbfee"
+  },
+  {
+    "case": "case-05",
+    "design": "axil",
+    "file": "axil_reg_if_wr.v",
+    "line": 121,
+    "original": "s_axil_wdata_next = s_axil_wdata;",
+    "mutated": "s_axil_wdata_next = {s_axil_wdata[15:0], s_axil_wdata[31:16]};",
+    "cause": "data capture swaps halfwords",
+    "sha256": "49a91de37387cbf308304d3d2e8eaaae703cb64698f46bace947205bf30901cb"
+  },
+  {
+    "case": "case-06",
+    "design": "axil",
+    "file": "axil_reg_if_wr.v",
+    "line": 111,
+    "original": "s_axil_bvalid_next = 1'b1;",
+    "mutated": "s_axil_bvalid_next = s_axil_bready;",
+    "cause": "response creation improperly depends on ready",
+    "sha256": "cf8ca46ac7a32aebd27a92afc73b63f2d82944e8951564e1a7c8b3509f60d7c7"
+  },
+  {
+    "case": "case-07",
+    "design": "arbiter",
+    "file": "arbiter.v",
+    "line": 146,
+    "original": "grant_encoded_reg <= grant_encoded_next;",
+    "mutated": "grant_encoded_reg <= grant_encoded_next ^ 1;",
+    "cause": "encoded winner bit corrupted",
+    "sha256": "cae9e9075f111efd19c0a73bda81d5ae692c3075649de39d906ae84791e94c84"
+  },
+  {
+    "case": "case-08",
+    "design": "arbiter",
+    "file": "arbiter.v",
+    "line": 144,
+    "original": "grant_reg <= grant_next;",
+    "mutated": "grant_reg <= grant_next >> 1;",
+    "cause": "onehot grant shifted",
+    "sha256": "84acec118aafef7c46344fbb60b1482849580bb8b3ec742f7895c8d49d3db345"
+  }
+]

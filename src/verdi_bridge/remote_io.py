@@ -21,6 +21,9 @@ def private_root(path):
 
 
 def exchange(config):
+    poll_ms = config.get("poll_ms", 10)
+    if not isinstance(poll_ms, int) or not 1 <= poll_ms <= 1000:
+        raise ValueError("poll_ms must be 1..1000")
     root = private_root(config["directory"])
     session = (root / "session").read_text().strip()
     if not re.fullmatch(r"[A-Za-z0-9_-]{1,100}", session):
@@ -48,7 +51,7 @@ def exchange(config):
             if pending.exists():
                 pending.unlink()
             raise RuntimeError("Verdi session changed during request")
-        time.sleep(0.05)
+        time.sleep(poll_ms / 1000.0)
     try:
         pending.unlink()
         state = "cancelled before execution"

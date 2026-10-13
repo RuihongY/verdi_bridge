@@ -1,5 +1,9 @@
 # Validation record — 2026-10-12
 
+This page records the original v0.1 FIFO experiment. For current capabilities and
+newer evidence, see [v0.3 validation](hardening-validation.md) and the
+[paired pilot](paired-pilot.md). Limits below are historical where superseded.
+
 ## What was actually exercised
 
 - Real licensed Verdi **T-2022.06-SP2-1** and VCS **U-2023.03-SP2** on Linux.

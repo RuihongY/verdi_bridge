@@ -6,7 +6,9 @@ not generic code execution. It does not provide isolation from another process
 running as that user. Treat source/log content as untrusted data in LLM prompts.
 
 Keep the bridge directory owner-only (0700), use trusted parent directories, and
-allow only intended source roots. Do not expose the filesystem to another user or
+allow only intended source and log roots. `VERDI_BRIDGE_SOURCE_ROOTS` governs
+source reads; `VERDI_BRIDGE_LOG_ROOTS` independently governs logs. Both default
+to the GUI working directory. Do not expose the filesystem to another user or
 publish SSH credentials. Tool results contain design data: choose an appropriate
 LLM deployment before connecting confidential designs.
 

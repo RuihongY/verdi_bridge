@@ -22,6 +22,7 @@ Run these commands **on the Verdi host**. Substitute your source/waveform paths:
 ```sh
 export VERDI_BRIDGE_DIR=$(mktemp -d /tmp/verdi-bridge.XXXXXXXX)
 export VERDI_BRIDGE_SOURCE_ROOTS=/absolute/path/to/design
+export VERDI_BRIDGE_LOG_ROOTS=/absolute/path/to/simulation-run
 printf '%s\n' "$VERDI_BRIDGE_DIR"  # keep this exact directory for the client
 verdi -sv design.sv tb.sv -top tb -ssf simulation.fsdb \
   -play /absolute/path/to/bridge.tcl
@@ -51,6 +52,7 @@ then run in Verdi's Tcl console:
 ```tcl
 set env(VERDI_BRIDGE_DIR) /absolute/private/session-directory
 set env(VERDI_BRIDGE_SOURCE_ROOTS) /absolute/path/to/design
+set env(VERDI_BRIDGE_LOG_ROOTS) /absolute/path/to/simulation-run
 source /absolute/path/to/bridge.tcl
 ```
 
@@ -134,3 +136,8 @@ Update both the Python package and the Tcl adapter; restart in a fresh private
 GUI/session directory. Existing loaded Tcl does not acquire the new operations
 from a Python upgrade. Remote clients reuse one SSH/helper by default; set
 `VERDI_BRIDGE_PERSISTENT=0` for the previous one-shot transport.
+
+`VERDI_BRIDGE_LOG_ROOTS` is an independent colon-separated allowlist for `read_log`.
+Both root lists default to the GUI working directory; keep them narrow.
+`VERDI_BRIDGE_POLL_MS` defaults to 10 ms (range 1–1000) on each side. Set it
+in both environments if changing both the Tcl and helper polling intervals.

@@ -1,0 +1,233 @@
+[
+  {
+    "case": "baseline-arbiter",
+    "seed": "seed-1",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-arbiter",
+    "seed": "seed-42",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-arbiter",
+    "seed": "seed-7",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-axil",
+    "seed": "seed-1",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-axil",
+    "seed": "seed-42",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-axil",
+    "seed": "seed-7",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-uart",
+    "seed": "seed-1",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-uart",
+    "seed": "seed-42",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "baseline-uart",
+    "seed": "seed-7",
+    "errors": 0,
+    "incomplete": false,
+    "first_error": null
+  },
+  {
+    "case": "case-01",
+    "seed": "seed-1",
+    "errors": 44,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0"
+  },
+  {
+    "case": "case-01",
+    "seed": "seed-42",
+    "errors": 60,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0"
+  },
+  {
+    "case": "case-01",
+    "seed": "seed-7",
+    "errors": 52,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0"
+  },
+  {
+    "case": "case-02",
+    "seed": "seed-1",
+    "errors": 51,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0"
+  },
+  {
+    "case": "case-02",
+    "seed": "seed-42",
+    "errors": 32,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0"
+  },
+  {
+    "case": "case-02",
+    "seed": "seed-7",
+    "errors": 41,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0"
+  },
+  {
+    "case": "case-03",
+    "seed": "seed-1",
+    "errors": 29,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=1575 kind=stop_bit frame=0"
+  },
+  {
+    "case": "case-03",
+    "seed": "seed-42",
+    "errors": 36,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=1575 kind=stop_bit frame=0"
+  },
+  {
+    "case": "case-03",
+    "seed": "seed-7",
+    "errors": 30,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=1575 kind=stop_bit frame=0"
+  },
+  {
+    "case": "case-04",
+    "seed": "seed-1",
+    "errors": 12,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=85 kind=register_payload"
+  },
+  {
+    "case": "case-04",
+    "seed": "seed-42",
+    "errors": 12,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=95 kind=register_payload"
+  },
+  {
+    "case": "case-04",
+    "seed": "seed-7",
+    "errors": 12,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=95 kind=register_payload"
+  },
+  {
+    "case": "case-05",
+    "seed": "seed-1",
+    "errors": 12,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=85 kind=register_payload"
+  },
+  {
+    "case": "case-05",
+    "seed": "seed-42",
+    "errors": 12,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=95 kind=register_payload"
+  },
+  {
+    "case": "case-05",
+    "seed": "seed-7",
+    "errors": 12,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=95 kind=register_payload"
+  },
+  {
+    "case": "case-06",
+    "seed": "seed-1",
+    "errors": 13,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=570 kind=response_timeout"
+  },
+  {
+    "case": "case-06",
+    "seed": "seed-42",
+    "errors": 13,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=570 kind=response_timeout"
+  },
+  {
+    "case": "case-06",
+    "seed": "seed-7",
+    "errors": 13,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=580 kind=response_timeout"
+  },
+  {
+    "case": "case-07",
+    "seed": "seed-1",
+    "errors": 95,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=46 kind=encoded_grant request=1111 expected=0001 actual=0001"
+  },
+  {
+    "case": "case-07",
+    "seed": "seed-42",
+    "errors": 98,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=46 kind=encoded_grant request=1111 expected=0001 actual=0001"
+  },
+  {
+    "case": "case-07",
+    "seed": "seed-7",
+    "errors": 94,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=46 kind=encoded_grant request=1111 expected=0001 actual=0001"
+  },
+  {
+    "case": "case-08",
+    "seed": "seed-1",
+    "errors": 95,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=46 kind=round_robin_order request=1111 expected=0001 actual=0000"
+  },
+  {
+    "case": "case-08",
+    "seed": "seed-42",
+    "errors": 98,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=46 kind=round_robin_order request=1111 expected=0001 actual=0000"
+  },
+  {
+    "case": "case-08",
+    "seed": "seed-7",
+    "errors": 94,
+    "incomplete": false,
+    "first_error": "FIRST_ERROR time_ns=46 kind=round_robin_order request=1111 expected=0001 actual=0000"
+  }
+]

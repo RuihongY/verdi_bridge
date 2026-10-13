@@ -2,7 +2,9 @@
 
 [Home](../README.md) · [Existing blind trial](blind-validation.md)
 
-**Status: planned, not a reported accuracy result.** The three existing blind
+**Status: the larger evaluation below is planned.** An [eight-case pilot](paired-pilot.md)
+has now run: A and B both localized 8/8, and neither used tools. Keep these
+disclosed pilot cases out of the held-out set. The three existing blind
 cases are already disclosed. Reusing them tests integration, not fresh blindness.
 A count of 20–30 alone does not establish statistical significance; diversity,
 independence, effect size and uncertainty matter.

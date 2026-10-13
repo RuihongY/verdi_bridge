@@ -16,7 +16,12 @@ proc wvGetScope {args} {
     return {}
 }
 proc wvGetSignalsByScope {args} {
-    set names {ptr[3:0] full pulse clk signed flat stuck_search}
+    if {[lindex $args 2] eq "/cache"} {
+        if {[info exists ::cache_used]} {error "duplicate scope lookup"}
+        set ::cache_used 1
+        after 0 {unset ::cache_used}
+    }
+    set names {ptr[3:0] ptr3 ptr0 ptr: full slow_clk pulse clk signed flat stuck_search}
     for {set i 0} {$i < 16} {incr i} {lappend names s$i}
     if {[info exists ::env(TEST_LITERAL_SIGNAL)]} {lappend names $::env(TEST_LITERAL_SIGNAL)}
     return $names
@@ -27,7 +32,7 @@ proc wvGetSigValueByTime {args} {
         if {$t >= 5000 && $t < 5001} {return 1}
         return 0
     }
-    if {[string match */clk $signal]} {return [expr {int($t/5000)%2}]}
+    if {[string match *clk $signal]} {return [expr {int($t/5000)%2}]}
     if {[string match */flat $signal]} {return x}
     if {[string match */signed $signal]} {
         if {[lindex $args 4] eq "Bin"} {return 11111111}
@@ -38,7 +43,8 @@ proc wvGetSigValueByTime {args} {
 proc wvSearchNextBySignal {args} {
     set signal [lindex $args 4]; set t [lindex $args 6]
     if {[string match */stuck_search $signal]} {set ::cursor 123; return [list 1 $t]}
-    if {[string match */clk $signal]} {
+    if {[string match */slow_clk $signal]} {after 20}
+    if {[string match *clk $signal]} {
         set next [expr {(int($t/5000)+1)*5000}]
         if {$next > 1000000} {return 0}
         set ::cursor $next

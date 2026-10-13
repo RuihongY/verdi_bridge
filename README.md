@@ -100,13 +100,15 @@ filesystem, a small trial with no RTL-only comparison.
 Interval tools query Verdi transition times rather than guessed sample points.
 They report truncation and preserve the cursor/viewport; this vendor API skips
 glitches, so delta-cycle completeness is not claimed. SSH requests reuse one helper.
-See [v0.2 validation](docs/interval-validation.md) and the
-[paired evaluation protocol](docs/paired-evaluation.md). No agent call-count or
-accuracy improvement has yet been measured.
+See [v0.3 semantics and latency validation](docs/hardening-validation.md).
+An [eight-mutation paired pilot](docs/paired-pilot.md) found **8/8 exact localizations
+with and without Verdi tools**; neither arm called tools. This pilot shows no
+accuracy benefit and does not establish an agent call-count reduction. The
+[larger evaluation protocol](docs/paired-evaluation.md) remains planned.
 
 ## Project status
 
-Experimental **v0.2.1**. Tested with Verdi T-2022.06-SP2-1 on Linux.
+Experimental **v0.3.0**. Tested with Verdi T-2022.06-SP2-1 on Linux.
 New-session startup is verified; attachment to an arbitrary existing GUI is not yet
 separately validated. The bridge does not automatically compile, edit or repair RTL.
 

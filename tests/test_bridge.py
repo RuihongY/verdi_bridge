@@ -24,10 +24,12 @@ def running(tmp_path):
         pytest.fail("Tcl 8.6+ is required for transport tests")
     root = tmp_path / "bridge"
     root.mkdir(mode=0o700)
+    (tmp_path / "logs").mkdir()
     source = tmp_path / "source.sv"
     source.write_text('module fifo;\n// quote " slash \\ unicode 中文\nendmodule\n')
     env = {**os.environ, "VERDI_BRIDGE_DIR": str(root),
-           "VERDI_BRIDGE_SOURCE_ROOTS": str(tmp_path), "TEST_SOURCE": str(source),
+           "VERDI_BRIDGE_SOURCE_ROOTS": str(tmp_path),
+           "VERDI_BRIDGE_LOG_ROOTS": str(tmp_path / "logs"), "TEST_SOURCE": str(source),
            "TEST_LITERAL_SIGNAL": '/tb/a[3:0]; [exec touch INJECTED] $env(HOME) {} "'}
     tcl = Path(client_module.__file__).with_name("bridge.tcl")
     proc = subprocess.Popen(["tclsh", str(Path(__file__).with_name("fake_verdi.tcl")), str(tcl)],
@@ -162,7 +164,7 @@ def test_interval_narrow_pulse_boundaries_and_restoration(running):
     batch = client.get_value_changes(["/tb/flat", "/tb/pulse"], "0", "6", max=8)
     assert batch["signals"][0]["initial"] == "x"
     assert batch["signals"][0]["changes"] == []
-    assert client.sample(["/tb/signed"], ["0"], radix="Dec")["samples"][0]["value"] == "-1"
+    assert client.sample(["/tb/signed"], ["0"], radix="SDec")["samples"][0]["value"] == "-1"
 
 
 def test_clock_measurement_and_edge_snap(running):
@@ -187,14 +189,14 @@ def test_recursive_search_limits_and_literal_bus(running):
     assert not result["truncated"]
     assert client.find_signals("ptr", depth=0)["truncated"]
     assert client.find_signals("ptr", max=1)["truncated"]
-    assert client.find_signals("*/pulse", scope="/tb/dut", depth=1)["signals"] == [
+    assert client.find_signals("*/pulse", scope="/tb/dut", depth=1, glob=True)["signals"] == [
         "/tb/dut/pulse", "/tb/dut/nested/pulse"]
 
 
 def test_file_reads_log_limits_and_symlinks(running, tmp_path):
     client, env = running
     assert client.source_file(env["TEST_SOURCE"], 2, 1)["lines"][0]["line"] == 2
-    log = tmp_path / "sim.log"
+    log = tmp_path / "logs/sim.log"
     log.write_text("start\nERROR at 10\nerror at 11\nERROR at 12\n")
     result = client.read_log(str(log), max_lines=1)
     assert result["lines"] == [{"line": 2, "text": "ERROR at 10"}]
@@ -293,3 +295,76 @@ def test_persistent_timeout_is_not_replayed(tmp_path, monkeypatch):
             remote.set_cursor('10')
         assert remote._process is None
     assert counter.read_text().splitlines() == ['start']
+
+
+@pytest.mark.parametrize("unit,end", [("fs","5001000"),("ps","5001"),("ns","5.001"),
+                                      ("us","0.005001"),("ms","0.000005001"),("s","5.001e-9")])
+def test_exact_tick_boundaries_all_units(running, unit, end):
+    c,_ = running
+    r = c.find_transitions("/tb/pulse", "0", end, unit=unit)
+    assert len(r["signals"][0]["changes"]) == 2
+    assert Decimal(r["signals"][0]["changes"][-1]["time"]) == Decimal(end)
+    assert c.find_transitions("/tb/pulse", end, str(Decimal(end)*2), unit=unit)["signals"][0]["changes"] == []
+    with pytest.raises(BridgeError, match="not aligned"):
+        c.set_cursor("1.1", unit="ps")
+    with pytest.raises(BridgeError, match="exact vendor tick range"):
+        c.set_cursor("9007199254740992", unit="ps")
+
+
+def test_radix_and_glob_are_explicit(running):
+    c,_ = running
+    assert c.sample(["/tb/clk"],["5"],radix="Dec")["samples"][0]["value"] == "1"
+    assert c.sample(["/tb/signed"],["0"],radix="Dec")["samples"][0]["value"] == "255"
+    r = c.find_signals("*/ptr[3:0]",glob=True)
+    assert r["signals"] and all(p.endswith("ptr[3:0]") for p in r["signals"])
+    assert c.find_signals("*/ptr[3:0]")["signals"] == []
+
+
+def test_independent_log_roots(running):
+    c,env = running
+    with pytest.raises(BridgeError, match="LOG_ROOTS"):
+        c.read_log(env["TEST_SOURCE"],pattern="")
+
+
+def test_clock_default_is_physical_100ns(running):
+    c,_ = running
+    assert Decimal(c.measure_clock("/tb/clk","50000",unit="ps")["period"]) == 10000
+
+
+def test_time_budget_partial_and_resume(running):
+    c,_ = running
+    before = c.status()
+    r = c.get_value_changes(["/tb/slow_clk","/tb/pulse"],"0","100",budget_ms=10)
+    assert r["truncated"] and "time budget" in r["reasons"]
+    assert r["signals"][0]["resume_from"] == "5"
+    assert r["signals"][1]["initial"] is None
+    assert c.status() == before
+    assert c.find_transitions("/tb/pulse",r["signals"][1]["resume_from"],"100")["signals"][0]["changes"]
+
+
+def test_scope_cache_is_request_local(running):
+    c,_ = running
+    # Fixture deliberately fails a second scope lookup in one event-loop callback.
+    assert len(c.sample(["/cache/s0","/cache/s1"],["0"])["samples"]) == 2
+    assert len(c.sample(["/cache/s0","/cache/s1"],["1"])["samples"]) == 2
+
+
+@pytest.mark.parametrize("native,unit,value,tick", [
+    ("1fs", "ns", "0.000001", "1"),
+    ("10ps", "ns", "156", "15600"),
+    ("2ps", "ms", "0.000156", "78000"),
+    ("0.1ns", "us", "0.001", "10"),
+    ("1ps", "ps", "9007199254740991", "9007199254740991"),
+])
+def test_exact_conversion_native_factors(native, unit, value, tick):
+    # Varied vendor resolutions, including the largest accepted integer tick.
+    adapter = Path(client_module.__file__).with_name("bridge.tcl").read_text()
+    adapter = adapter.rsplit("::vb::start", 1)[0]
+    script = adapter + f"\nproc wvGetWindowTimeUnit {{args}} {{return {{{native}}}}}\n"
+    script += f"puts [::vb::timevalue w {value} {unit}]\n"
+    script += f"puts [::vb::physical_time w {tick} {unit}]\n"
+    result = subprocess.run(["tclsh"], input=script, text=True, capture_output=True, check=True)
+    assert not result.stderr
+    ticks, physical = result.stdout.splitlines()
+    assert ticks == tick
+    assert Decimal(physical) == Decimal(value)

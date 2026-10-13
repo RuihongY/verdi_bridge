@@ -27,6 +27,7 @@ class Config:
     control_path: str | None = None
     timeout: float = 15
     persistent: bool = True
+    poll_ms: int = 10
 
     @classmethod
     def from_env(cls):
@@ -35,7 +36,8 @@ class Config:
             raise BridgeError("Set VERDI_BRIDGE_DIR to the private bridge directory")
         return cls(directory, os.getenv("VERDI_BRIDGE_HOST"),
                    os.getenv("VERDI_BRIDGE_CONTROL_PATH"),
-                   persistent=os.getenv("VERDI_BRIDGE_PERSISTENT", "1") != "0")
+                   persistent=os.getenv("VERDI_BRIDGE_PERSISTENT", "1") != "0",
+                   poll_ms=int(os.getenv("VERDI_BRIDGE_POLL_MS", "10")))
 
 
 def number(value):
@@ -141,7 +143,7 @@ class Client:
     def _call(self, operation, *args):
         cfg = self.config
         payload = json.dumps({"directory": cfg.directory, "operation": operation,
-                              "args": list(args), "timeout": cfg.timeout})
+                              "args": list(args), "timeout": cfg.timeout, "poll_ms": cfg.poll_ms})
         if len(payload.encode()) > 262144:
             raise ValueError("request too large")
         if cfg.host and cfg.persistent:
@@ -185,7 +187,7 @@ class Client:
 
     def before_error(self, error_time: str, period: str | None = None, cycles: int = 20,
                      unit: str = "ns", clock_signal: str | None = None,
-                     window: str = "100"):
+                     window: str | None = None):
         if not 0 <= cycles <= 1000000:
             raise ValueError("cycles must be 0..1000000")
         if period is None:
@@ -222,8 +224,8 @@ class Client:
             raise ValueError("supply 1..128 signals and times")
         if len(signals) * len(times) > 1024:
             raise ValueError("at most 1024 samples per request")
-        if radix not in ("Bin", "Hex", "UDec", "Dec"):
-            raise ValueError("radix must be Bin, Hex, UDec or Dec")
+        if radix not in ("Bin", "Hex", "UDec", "Dec", "SDec"):
+            raise ValueError("radix must be Bin, Hex, UDec, Dec or SDec")
         return self._call("sample", unit, radix, str(len(signals)), *signals,
                           *(number(t) for t in times))
 
@@ -241,26 +243,28 @@ class Client:
         return self._call("goto_source", scope, str(line))
 
     def find_transitions(self, signal: str, start: str, end: str, max: int = 64,
-                         unit: str = "ns", radix: str = "Bin"):
-        return self.get_value_changes([signal], start, end, max, unit, radix)
+                         unit: str = "ns", radix: str = "Bin", budget_ms: int = 200):
+        return self.get_value_changes([signal], start, end, max, unit, radix, budget_ms)
 
     def get_value_changes(self, signals: list[str], start: str, end: str,
-                          max: int = 64, unit: str = "ns", radix: str = "Bin"):
+                          max: int = 64, unit: str = "ns", radix: str = "Bin", budget_ms: int = 200):
+        if not 1 <= budget_ms <= 2000:
+            raise ValueError("budget_ms must be 1..2000")
         if not 1 <= len(signals) <= 128 or not 1 <= max <= 4096:
             raise ValueError("supply 1..128 signals; max must be 1..4096 (per signal)")
         if len(signals) * max > 4096:
             raise ValueError("at most 4096 changes across signals")
         if Decimal(number(end)) <= Decimal(number(start)):
             raise ValueError("end must be greater than start")
-        if radix not in ("Bin", "Hex", "UDec", "Dec"):
-            raise ValueError("radix must be Bin, Hex, UDec or Dec")
-        return self._call("changes", number(start), number(end), unit, radix, str(max), *signals)
+        if radix not in ("Bin", "Hex", "UDec", "Dec", "SDec"):
+            raise ValueError("radix must be Bin, Hex, UDec, Dec or SDec")
+        return self._call("changes", number(start), number(end), unit, radix, str(max), str(budget_ms), *signals)
 
     def find_signals(self, pattern: str, scope: str = "/", max: int = 100,
-                     depth: int = 16):
+                     depth: int = 16, glob: bool = False):
         if not pattern or len(pattern) > 4096 or not 1 <= max <= 1000 or not 0 <= depth <= 64:
             raise ValueError("pattern required; max 1..1000; depth 0..64")
-        return self._call("find_signals", pattern, scope, str(max), str(depth))
+        return self._call("find_signals", pattern, scope, str(max), str(depth), "1" if glob else "0")
 
     def source_file(self, file: str, start: int = 1, count: int = 80):
         if start < 1 or not 1 <= count <= 200:
@@ -273,7 +277,13 @@ class Client:
         return self._call("read_log", path, pattern, str(max_lines))
 
     def measure_clock(self, signal: str, around_time: str, unit: str = "ns",
-                      window: str = "100", max: int = 256):
+                      window: str | None = None, max: int = 256):
+        if window is None:
+            defaults = {"fs": "100000000", "ps": "100000", "ns": "100",
+                        "us": "0.1", "ms": "0.0001", "s": "0.0000001"}
+            if unit not in defaults:
+                raise ValueError("unit must be fs/ps/ns/us/ms/s")
+            window = defaults[unit]
         center, width = Decimal(number(around_time)), Decimal(number(window))
         if width <= 0:
             raise ValueError("window must be positive")

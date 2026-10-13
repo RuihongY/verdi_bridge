@@ -1,0 +1,51 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2_Full64; Runtime version U-2023.03-SP2_Full64;  Oct 13 15:41 2026
+BIT_MISMATCH time_ns=295 frame=0 bit=0 expected=1 actual=0
+FIRST_ERROR time_ns=295 kind=serial_data_bit frame=0
+BIT_MISMATCH time_ns=455 frame=0 bit=1 expected=0 actual=1
+BIT_MISMATCH time_ns=615 frame=0 bit=2 expected=1 actual=0
+BIT_MISMATCH time_ns=775 frame=0 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=935 frame=0 bit=4 expected=1 actual=0
+BIT_MISMATCH time_ns=1255 frame=0 bit=6 expected=0 actual=1
+BIT_MISMATCH time_ns=4335 frame=2 bit=3 expected=1 actual=0
+BIT_MISMATCH time_ns=4815 frame=2 bit=6 expected=0 actual=1
+BIT_MISMATCH time_ns=5795 frame=3 bit=1 expected=1 actual=0
+BIT_MISMATCH time_ns=6115 frame=3 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=6755 frame=3 bit=7 expected=1 actual=0
+BIT_MISMATCH time_ns=7735 frame=4 bit=2 expected=1 actual=0
+BIT_MISMATCH time_ns=8215 frame=4 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=8375 frame=4 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=8535 frame=4 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=9355 frame=5 bit=1 expected=1 actual=0
+BIT_MISMATCH time_ns=9835 frame=5 bit=4 expected=0 actual=1
+BIT_MISMATCH time_ns=10155 frame=5 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=10975 frame=6 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=11455 frame=6 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=11935 frame=6 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=12915 frame=7 bit=1 expected=1 actual=0
+BIT_MISMATCH time_ns=13235 frame=7 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=13715 frame=7 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=14535 frame=8 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=14855 frame=8 bit=2 expected=0 actual=1
+BIT_MISMATCH time_ns=15175 frame=8 bit=4 expected=1 actual=0
+BIT_MISMATCH time_ns=16315 frame=9 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=16635 frame=9 bit=2 expected=0 actual=1
+BIT_MISMATCH time_ns=17275 frame=9 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=18095 frame=10 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=18895 frame=10 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=19055 frame=10 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=19215 frame=10 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=19875 frame=11 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=20355 frame=11 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=20835 frame=11 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=20995 frame=11 bit=7 expected=0 actual=1
+RESULT seed=1 errors=44 sent=12 received=12 first_error_ns=295
+$finish called from file "./tb.sv", line 64.
+$finish at simulation time             21690000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 21690000 ps
+CPU Time:      0.250 seconds;       Data structure size:   0.0Mb
+Tue Oct 13 15:41:15 2026

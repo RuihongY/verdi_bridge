@@ -1,0 +1,36 @@
+Info: [VCS_SAVE_RESTORE_INFO] ASLR (Address Space Layout Randomization) is detected on the machine. To enable $save functionality, ASLR will be switched off and simv re-executed.
+Please use '-no_save' simv switch to avoid re-execution or '-suppress=ASLR_DETECTED_INFO' to suppress this message.
+Chronologic VCS simulator copyright 1991-2023
+Contains Synopsys proprietary information.
+Compiler version U-2023.03-SP2_Full64; Runtime version U-2023.03-SP2_Full64;  Oct 13 15:40 2026
+FIRST_ERROR time_ns=1575 kind=stop_bit frame=0
+BIT_MISMATCH time_ns=5295 frame=1 bit=4 expected=0 actual=1
+BIT_MISMATCH time_ns=5455 frame=1 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=7715 frame=2 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=9995 frame=3 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=10155 frame=3 bit=6 expected=0 actual=1
+BIT_MISMATCH time_ns=12095 frame=4 bit=4 expected=1 actual=0
+BIT_MISMATCH time_ns=12415 frame=4 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=12575 frame=4 bit=7 expected=0 actual=1
+BIT_MISMATCH time_ns=13555 frame=5 bit=3 expected=1 actual=0
+BIT_MISMATCH time_ns=13875 frame=5 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=14695 frame=6 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=15655 frame=6 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=16795 frame=7 bit=3 expected=0 actual=1
+BIT_MISMATCH time_ns=16955 frame=7 bit=4 expected=0 actual=1
+BIT_MISMATCH time_ns=17115 frame=7 bit=5 expected=0 actual=1
+BIT_MISMATCH time_ns=17275 frame=7 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=18755 frame=8 bit=0 expected=1 actual=0
+BIT_MISMATCH time_ns=18915 frame=8 bit=1 expected=1 actual=0
+BIT_MISMATCH time_ns=19075 frame=8 bit=2 expected=0 actual=1
+BIT_MISMATCH time_ns=19395 frame=8 bit=4 expected=1 actual=0
+BIT_MISMATCH time_ns=19555 frame=8 bit=5 expected=1 actual=0
+BIT_MISMATCH time_ns=19715 frame=8 bit=6 expected=1 actual=0
+BIT_MISMATCH time_ns=19875 frame=8 bit=7 expected=1 actual=0
+RESULT seed=1 errors=29 sent=12 received=8 first_error_ns=1575
+$finish called from file "./tb.sv", line 64.
+$finish at simulation time             19930000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 19930000 ps
+CPU Time:      0.250 seconds;       Data structure size:   0.0Mb
+Tue Oct 13 15:40:05 2026

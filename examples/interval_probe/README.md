@@ -13,10 +13,10 @@ In your licensed environment, load `/tmp/interval-probe/tb.sv` and
 Set the source root to that directory. Query:
 
 ```sh
-verdi-bridge call get_value_changes '{"signals":["/tb/pulse","/tb/signed_value[7:0]"],"start":"0","end":"10","radix":"Dec"}'
+verdi-bridge call get_value_changes '{"signals":["/tb/pulse","/tb/signed_value[7:0]"],"start":"0","end":"10","radix":"SDec"}'
 ```
 
 Expected pulse events: 5, 5.001, 6, 7, 8 ns. The interval is (0,10]. Signed values
 start at 1, become -1 at 5.001 ns and 2 at 10 ns. A one-bit high is -1 in signed
-Dec; use Bin for conventional 0/1 logic. X and Z remain strings. A 1 ps pulse has
+SDec; use unsigned Dec or Bin for conventional 0/1 logic. X and Z remain strings. A 1 ps pulse has
 distinct timestamps; this does **not** test same-timestamp glitches.

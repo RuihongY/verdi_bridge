@@ -1,0 +1,759 @@
+{
+  "method": "30 randomized interleaved warm status calls per condition; shared SSH ControlMaster; two live GUIs; concurrent evaluation load; nearest-rank p95",
+  "summary": [
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "n": 30,
+      "median_ms": 218.74708350514993,
+      "p95_ms": 490.36420800257474
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "n": 30,
+      "median_ms": 47.16108350112336,
+      "p95_ms": 67.47691700002179
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "n": 30,
+      "median_ms": 273.27327099919785,
+      "p95_ms": 535.9371249942342
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "n": 30,
+      "median_ms": 106.04041699843947,
+      "p95_ms": 156.39374998863786
+    }
+  ],
+  "samples": [
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 264.28904199565295
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 36.455583991482854
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 57.78354201174807
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 486.56591698818374
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.26408299140166
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 506.1283329996513
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 482.9864589992212
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 36.67208300612401
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 65.92062499839813
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.73370899166912
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 270.24383400566876
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 469.3134580011247
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 46.2556249985937
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 220.10595799656585
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 451.4700419967994
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.12495899840724
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 67.47691700002179
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 219.69291698769666
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 107.31779200432356
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 221.91816700797062
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 46.08745899167843
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 55.65337500593159
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 495.4780420084717
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 186.11195801349822
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 540.5942080105888
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 47.05137500423007
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 188.70329100172967
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 105.41574998933356
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 65.98270799440797
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 54.618959009530954
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 490.36420800257474
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 272.0892920042388
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 215.9774999890942
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 266.59037500212435
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 14.978166000219062
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 56.29716700059362
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 531.0935000015888
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.55900000710972
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 219.5624590094667
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 58.43958399782423
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 535.9371249942342
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 56.88283301424235
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 55.08499999996275
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 490.72425000485964
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 108.04554099740926
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 487.9337500024121
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 57.263417009380646
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 190.14591700397432
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 105.89995799819008
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 66.78995800029952
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 305.79816599492915
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 265.5414590117289
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 474.8084159946302
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.30508299800567
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 46.530499996151775
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 191.94112499826588
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 481.4325000043027
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 47.172916994895786
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 55.405459002940916
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 274.4572499941569
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 105.5900419887621
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 176.70691599778365
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 317.2819589963183
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 25.46950000396464
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 66.77416599995922
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.5119590057293
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 268.03929200104903
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 176.16487499617506
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 46.74283298663795
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 156.44987499399576
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 216.14616601436865
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 264.3824999977369
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.23150000174064
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 216.35937500104774
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 59.23283300944604
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 434.69037501199637
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 477.01262499322183
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 46.8725000100676
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 218.6983749998035
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 105.9558749984717
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 470.53387499181554
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 271.94991600117646
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 107.87366599834058
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 34.725042001809925
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 478.34612500446383
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 56.022125005256385
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 283.8029580016155
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 15.847250004298985
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 55.980042001465335
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 156.39374998863786
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 483.2763340091333
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 212.5150830106577
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 236.4294580038404
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.36033299670089
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 204.40099999541417
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 47.584375002770685
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 271.5662499977043
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 217.93170800083317
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 47.48824999842327
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 56.20466700929683
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 68.60858299478423
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 56.46929101203568
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 195.21133399393875
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 325.7939159957459
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 106.38712500804104
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 344.5407499966677
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 47.1389580052346
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 313.9288749953266
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 47.14925000735093
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 55.557083993335254
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 189.313333001337
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 336.83399998699315
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 107.98270799568854
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 25.875167004414834
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 190.50491700181738
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 274.8832080105785
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": false,
+      "ms": 204.50937500572763
+    },
+    {
+      "tcl_poll_ms": 10,
+      "helper_poll_ms": 10,
+      "persistent": true,
+      "ms": 55.91512500541285
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": false,
+      "ms": 215.17154200410005
+    },
+    {
+      "tcl_poll_ms": 100,
+      "helper_poll_ms": 50,
+      "persistent": true,
+      "ms": 105.09912499401253
+    }
+  ]
+}

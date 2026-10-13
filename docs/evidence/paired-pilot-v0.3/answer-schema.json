@@ -1,0 +1,1 @@
+{"type": "object", "properties": {"file": {"type": "string"}, "line": {"type": "integer"}, "explanation": {"type": "string"}, "evidence": {"type": "array", "items": {"type": "string"}}, "confidence": {"type": "string", "enum": ["high", "medium", "low"]}}, "required": ["file", "line", "explanation", "evidence", "confidence"], "additionalProperties": false}
