@@ -4,13 +4,14 @@ The package is named `verdi-bridge`; the official MCP Registry name is
 `io.github.RuihongY/verdi-bridge`. `server.json` describes the stdio launch command
 and required session configuration. Installing the package does not install Verdi.
 
-Version **0.3.2** is published on [PyPI](https://pypi.org/project/verdi-bridge/0.3.2/)
+Version **0.3.3** is published on [PyPI](https://pypi.org/project/verdi-bridge/0.3.3/)
 and registered as `io.github.RuihongY/verdi-bridge` in the official MCP Registry.
-The [0.3.2 publishing run](https://github.com/RuihongY/verdi_bridge/actions/runs/38520925312),
-triggered by the GitHub Release, completed all build, PyPI and registry jobs. A
-cache-free uvx installation verified the packaged CLI and Tcl adapter. The
-[first publishing run](https://github.com/RuihongY/verdi_bridge/actions/runs/38503861850)
-released 0.3.1.
+The [0.3.3 publishing run](https://github.com/RuihongY/verdi_bridge/actions/runs/38637625267),
+triggered by the GitHub Release, completed all build, PyPI and registry jobs on the
+Node 24 action versions. A cache-free uvx installation verified the packaged CLI,
+Tcl adapter and NPI engine. Earlier runs released
+[0.3.2](https://github.com/RuihongY/verdi_bridge/actions/runs/38520925312) and
+[0.3.1](https://github.com/RuihongY/verdi_bridge/actions/runs/38503861850).
 
 ## Release workflow
 
