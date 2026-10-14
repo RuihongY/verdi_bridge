@@ -12,7 +12,7 @@ flowchart LR
     E --> G[nTrace source APIs]
 ```
 
-The Python server exposes sixteen typed operations using the MCP SDK. Tool arguments
+The Python server exposes eighteen typed operations using the MCP SDK. Tool arguments
 become data fields in a request; they are not interpolated into executable Tcl.
 The adapter dispatches only supported operations in Verdi's own Tcl event loop.
 No separate waveform parser or viewer is used to answer signal queries.
@@ -44,6 +44,14 @@ consuming its requests. A request that times out before being claimed is cancell
 A request already claimed may still complete, so mutations are not automatically
 retried. A restarted GUI on the same host takes over a lock whose process is gone
 and discards the previous session's requests and results.
+
+## Headless engine
+
+Large-window queries can bypass the GUI. The client asks the adapter for the active
+FSDB path and Verdi's environment (`engine_info`), then starts `npi_engine.py` on the
+Verdi host, over the same SSH bootstrap, with the host's Python and Verdi's `pynpi`
+reader. The engine answers one request and exits. The GUI is never modified, so an
+engine timeout leaves no unresolved GUI action.
 
 ## Boundaries
 

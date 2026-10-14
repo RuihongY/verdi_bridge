@@ -8,16 +8,16 @@ namespace eval ::vb {
     variable scope_cache
     variable poll_ms 10
 }
+# JSON string escaping in one C-level pass; per-character Tcl loops cost ~0.1 s/MiB
+# on the GUI thread.
+namespace eval ::vb {
+    variable json_map [list "\\" "\\\\" "\"" "\\\""]
+    for {set n 0} {$n < 32} {incr n} {lappend json_map [format %c $n] [format {\u%04x} $n]}
+    unset n
+}
 proc ::vb::q {s} {
-    set out {"}
-    foreach c [split $s ""] {
-        scan $c %c n
-        if {$c eq "\""} {append out {\"}} elseif {$c eq "\\"} {
-            append out {\\}
-        } elseif {$n < 32} {append out [format {\u%04x} $n]} else {append out $c}
-    }
-    append out {"}
-    return $out
+    variable json_map
+    return "\"[string map $json_map $s]\""
 }
 proc ::vb::arr {values} {
     set out {}
@@ -28,6 +28,10 @@ proc ::vb::obj {args} {
     set out {}
     foreach {k v} $args {lappend out "[q $k]:$v"}
     return "\{[join $out ,]\}"
+}
+# JSON true/false from a Tcl condition evaluated in the caller's scope.
+proc ::vb::bool {condition} {
+    return [expr {[uplevel 1 [list expr $condition]] ? "true" : "false"}]
 }
 proc ::vb::name {s} {
     if {$s eq "" || [string index $s 0] eq "-" || [string length $s] > 4096 ||
@@ -215,21 +219,32 @@ proc ::vb::dispatch {op argv} {
     switch -- $op {
         status {
             arity $argv 0
+            set displayed [wvGetDisplaySignals -win $w -all]
             return [obj window [q $w] time_unit [q [wvGetWindowTimeUnit -win $w]] \
                 cursor [arr [wvGetCursor -win $w]] viewport [arr [wvGetViewTimeRange -win $w]] \
-                signals [arr [wvGetDisplaySignals -win $w -all]]]
+                signals [arr [lrange $displayed 0 199]] signals_total [llength $displayed] \
+                signals_truncated [bool {[llength $displayed] > 200}]]
         }
         browse {
-            arity $argv 1
-            set scope [name [lindex $argv 0]]
-            if {$scope eq "/"} {
-                set scopes [wvGetScope -win $w]
-                set signals [wvGetSignalsByScope -win $w]
-            } else {
-                set scopes [wvGetScope -win $w $scope]
-                set signals [wvGetSignalsByScope -win $w $scope]
+            arity $argv 3
+            lassign $argv scope offset limit
+            name $scope
+            if {![string is integer -strict $offset] || $offset < 0 ||
+                ![string is integer -strict $limit] || $limit < 1 || $limit > 2000} {
+                error "invalid browse page"
             }
-            return [obj scope [q $scope] scopes [arr $scopes] signals [arr $signals] names_relative true]
+            if {$scope eq "/"} {set args {}} else {set args [list $scope]}
+            set scopes [wvGetScope -win $w {*}$args]
+            set signals [wvGetSignalsByScope -win $w {*}$args]
+            # One page over scopes followed by signals; huge flat scopes stay bounded.
+            set ns [llength $scopes]; set end [expr {$offset+$limit}]
+            set page_scopes [lrange $scopes $offset [expr {$end-1}]]
+            set page_signals [lrange $signals [expr {max(0, $offset-$ns)}] [expr {$end-$ns-1}]]
+            set total [expr {$ns+[llength $signals]}]
+            set next [expr {$end < $total ? $end : "null"}]
+            return [obj scope [q $scope] scopes [arr $page_scopes] signals [arr $page_signals] \
+                total_scopes $ns total_signals [llength $signals] next_offset $next \
+                names_relative true]
         }
         add_signals {
             if {[llength $argv] < 1 || [llength $argv] > 128} {error "supply 1..128 signals"}
@@ -252,27 +267,137 @@ proc ::vb::dispatch {op argv} {
             return [obj viewport [arr [wvGetViewTimeRange -win $w]] time_unit [q [wvGetWindowTimeUnit -win $w]]]
         }
         sample {
-            lassign $argv unit radix n
-            if {$radix ni {Bin Hex UDec Dec SDec} || ![string is integer -strict $n] || $n < 1 || $n > 128} {
+            lassign $argv unit radix budget_ms n
+            if {$radix ni {Bin Hex UDec Dec SDec} || ![string is integer -strict $n] || $n < 1 ||
+                $n > 128 || ![string is integer -strict $budget_ms] || $budget_ms < 1 ||
+                $budget_ms > 10000} {
                 error "invalid sample configuration"
             }
-            set signals [lrange $argv 3 [expr {$n+2}]]
-            set times [lrange $argv [expr {$n+3}] end]
+            set signals [lrange $argv 4 [expr {$n+3}]]
+            set times [lrange $argv [expr {$n+4}] end]
             if {[llength $signals] != $n || [llength $times] < 1 || $n*[llength $times] > 1024} {
                 error "invalid sample count"
             }
             foreach s $signals {signal_exists $w $s}
-            set rows {}
-            foreach t $times {
-                set native [timevalue $w $t $unit]
-                foreach s $signals {
-                    name $s
-                    set v [value $w $s $radix $native]
-                    if {$v eq ""} {error "no waveform value for $s"}
-                    lappend rows [obj signal [q $s] time [q $t] unit [q $unit] value [q $v]]
+            set native {}
+            foreach t $times {lappend native [timevalue $w $t $unit]}
+            # Signal-major order: Verdi loads a signal on first access, which can take
+            # ~0.15 s each in large flat scopes. Stop between signals once the budget
+            # is spent, always completing at least one signal.
+            set deadline [expr {[clock clicks -milliseconds]+$budget_ms}]
+            set rows {}; set pending {}
+            foreach s $signals {
+                if {[llength $rows] && [clock clicks -milliseconds] >= $deadline} {
+                    lappend pending $s; continue
+                }
+                foreach t $times nt $native {
+                    lappend rows [obj signal [q $s] time [q $t] unit [q $unit] \
+                        value [q [value $w $s $radix $nt]]]
                 }
             }
-            return [obj radix [q $radix] samples "\[[join $rows ,]\]"]
+            return [obj radix [q $radix] samples "\[[join $rows ,]\]" \
+                truncated [bool {[llength $pending] > 0}] pending_signals [arr $pending] \
+                budget_ms $budget_ms]
+        }
+        count_changes {
+            lassign $argv start end unit budget_ms
+            set signals [lrange $argv 4 end]
+            if {![string is integer -strict $budget_ms] || $budget_ms < 1 || $budget_ms > 10000 ||
+                [llength $signals] < 1 || [llength $signals] > 128} {
+                error "invalid count limits"
+            }
+            set a [timevalue $w $start $unit]; set b [timevalue $w $end $unit]
+            if {$b <= $a} {error "end must exceed start"}
+            foreach s $signals {signal_exists $w $s}
+            set deadline [expr {[clock clicks -milliseconds]+$budget_ms}]
+            set cursor [wvGetCursor -win $w]; set view [wvGetViewTimeRange -win $w]
+            set rows {}; set any_truncated false
+            try {
+                foreach s $signals {
+                    if {[llength $rows] && [clock clicks -milliseconds] >= $deadline} {
+                        set any_truncated true
+                        lappend rows [obj signal [q $s] count null complete false \
+                            resume_from [q $start]]
+                        continue
+                    }
+                    # Transitions only: no per-change value lookups.
+                    set t $a; set count 0; set first ""; set complete true
+                    while {1} {
+                        if {[clock clicks -milliseconds] >= $deadline} {
+                            set complete false; set any_truncated true; break
+                        }
+                        set next [wvSearchNextBySignal -win $w -delim / $s -time $t]
+                        if {[lindex $next 0] ne "1"} {break}
+                        set nt [returned_tick [lindex $next 1]]
+                        if {$nt <= $t} {error "Verdi transition search did not advance"}
+                        if {$nt > $b} {break}
+                        if {$first eq ""} {set first $nt}
+                        incr count; set t $nt
+                    }
+                    set fields [list signal [q $s] count $count complete $complete \
+                        initial [q [value $w $s Hex $a]] \
+                        first_change [expr {$first eq "" ? "null" : [q [physical_time $w $first $unit]]}] \
+                        last_change [expr {$count ? [q [physical_time $w $t $unit]] : "null"}]]
+                    if {$complete} {
+                        lappend fields final [q [value $w $s Hex [expr {$count ? $t : $a}]]]
+                    } else {
+                        lappend fields resume_from [q [physical_time $w $t $unit]]
+                    }
+                    lappend rows [obj {*}$fields]
+                }
+            } finally {
+                wvSetCursor -win $w [lindex $cursor 1]
+                wvZoom -win $w {*}[lrange $view 1 2]
+            }
+            return [obj unit [q $unit] interval [arr [list $start $end]] \
+                boundary [q "(start, end]; initial is the Hex value at start"] \
+                signals "\[[join $rows ,]\]" truncated $any_truncated budget_ms $budget_ms \
+                glitches_skipped true]
+        }
+        sample_on_clock {
+            lassign $argv clock start end unit radix edge when max budget_ms
+            set signals [lrange $argv 9 end]
+            if {$radix ni {Bin Hex UDec Dec SDec} || $edge ni {rising falling both} ||
+                $when ni {pre post} || ![string is integer -strict $max] || $max < 1 ||
+                ![string is integer -strict $budget_ms] || $budget_ms < 1 || $budget_ms > 10000 ||
+                [llength $signals] < 1 || [llength $signals] > 128 ||
+                $max*[llength $signals] > 4096} {error "invalid clock sampling limits"}
+            set a [timevalue $w $start $unit]; set b [timevalue $w $end $unit]
+            if {$b <= $a} {error "end must exceed start"}
+            signal_exists $w $clock
+            foreach s $signals {signal_exists $w $s}
+            set deadline [expr {[clock clicks -milliseconds]+$budget_ms}]
+            set cursor [wvGetCursor -win $w]; set view [wvGetViewTimeRange -win $w]
+            set rows {}; set t $a; set reason ""
+            try {
+                while {1} {
+                    if {[clock clicks -milliseconds] >= $deadline} {set reason "time budget"; break}
+                    set next [wvSearchNextBySignal -win $w -delim / $clock -time $t]
+                    if {[lindex $next 0] ne "1"} {break}
+                    set nt [returned_tick [lindex $next 1]]
+                    if {$nt <= $t} {error "Verdi transition search did not advance"}
+                    if {$nt > $b} {break}
+                    set level [value $w $clock Bin $nt]
+                    if {($level eq "1" && $edge ne "falling") || ($level eq "0" && $edge ne "rising")} {
+                        if {[llength $rows] == $max} {set reason "max cycles"; break}
+                        # "pre" reads one native tick before the edge: the values flops sample.
+                        set st [expr {$when eq "pre" && $nt > 0 ? $nt-1 : $nt}]
+                        set values {}
+                        foreach s $signals {lappend values [value $w $s $radix $st]}
+                        lappend rows [obj time [q [physical_time $w $nt $unit]] \
+                            edge [q [expr {$level eq "1" ? "rising" : "falling"}]] \
+                            values [arr $values]]
+                    }
+                    set t $nt
+                }
+            } finally {
+                wvSetCursor -win $w [lindex $cursor 1]
+                wvZoom -win $w {*}[lrange $view 1 2]
+            }
+            return [obj clock [q $clock] unit [q $unit] radix [q $radix] edge [q $edge] \
+                sample [q $when] signals [arr $signals] cycles "\[[join $rows ,]\]" \
+                truncated [bool {$reason ne ""}] reason [q $reason] \
+                resume_from [q [physical_time $w $t $unit]] budget_ms $budget_ms]
         }
         trace_driver {
             arity $argv 1
@@ -426,6 +551,17 @@ proc ::vb::dispatch {op argv} {
                 boundary [q "(start, end]; initial is the value at start"] \
                 signals "\[[join $results ,]\]" truncated $any_truncated \
                 reasons [arr [lsort -unique $reasons]] budget_ms $budget_ms glitches_skipped true]
+        }
+        engine_info {
+            # What a headless NPI reader needs to open the same waveform.
+            arity $argv 0
+            set fsdb [wvGetActiveFileName -win $w]
+            if {$fsdb ne ""} {set fsdb [file normalize $fsdb]}
+            set env {}
+            foreach var {VERDI_HOME SNPSLMD_LICENSE_FILE LM_LICENSE_FILE} {
+                if {[info exists ::env($var)]} {lappend env $var [q $::env($var)]}
+            }
+            return [obj fsdb [q $fsdb] env [obj {*}$env]]
         }
         goto_source {
             arity $argv 2

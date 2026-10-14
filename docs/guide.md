@@ -93,7 +93,7 @@ paths and hostnames below. Different clients may wrap this configuration differe
   "mcpServers": {
     "verdi": {
       "command": "uvx",
-      "args": ["verdi-bridge==0.3.2", "serve"],
+      "args": ["verdi-bridge==0.3.3", "serve"],
       "env": {
         "VERDI_BRIDGE_HOST": "user@eda-host",
         "VERDI_BRIDGE_CONTROL_PATH": "/tmp/your-ssh-control.sock"
@@ -146,7 +146,10 @@ from a Python upgrade. Remote clients reuse one SSH/helper by default; set
 `VERDI_BRIDGE_LOG_ROOTS` is an independent colon-separated allowlist for `read_log`.
 Both root lists default to the GUI working directory (never `/` or a directory
 containing your home); keep them narrow.
-`VERDI_BRIDGE_POLL_MS` defaults to 10 ms (range 1–1000) on each side. Set it
+`VERDI_BRIDGE_TIMEOUT` sets the client's per-request limit in seconds (default 15,
+range 1–600); raise it for very large waveforms. `VERDI_BRIDGE_ENGINE` (`auto`,
+`gui` or `npi`), `VERDI_BRIDGE_NPI_PYTHON` and `VERDI_BRIDGE_NPI_MAX_MB` control the
+headless NPI engine for large FSDB queries; see the [tool reference](tools.md#headless-npi-engine). `VERDI_BRIDGE_POLL_MS` defaults to 10 ms (range 1–1000) on each side. Set it
 in both environments if changing both the Tcl and helper polling intervals.
 
 

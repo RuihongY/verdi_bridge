@@ -14,7 +14,7 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 from verdi_bridge import client as client_module
-from verdi_bridge.client import BridgeError, Client, Config
+from verdi_bridge.client import BridgeError, Client, Config, EngineUnavailable
 from verdi_bridge.remote_io import exchange
 
 ADAPTER = Path(client_module.__file__).with_name("bridge.tcl")
@@ -140,7 +140,7 @@ def test_mcp_stdio_end_to_end(running):
             async with ClientSession(read, write) as session:
                 await session.initialize()
                 names = {t.name for t in (await session.list_tools()).tools}
-                assert len(names) == 16
+                assert len(names) == 18
                 assert {p.name for p in (await session.list_prompts()).prompts} == {"debug_failure"}
                 assert "sample_signals" in names
                 result = await session.call_tool("jump_before_error", {"error_time": "356", "period": "10"})
@@ -249,8 +249,9 @@ def test_ssh_shell_quoting_and_helper_reuse(running, tmp_path, monkeypatch, pers
     helper.write_text(Path(client_module.remote_io.__file__).read_text() +
                       "\n# quotes ' \" `touch INJECTED` $(touch INJECTED) \\ \n")
     monkeypatch.setattr(client_module.remote_io, "__file__", str(helper))
+    # Transport only: the GUI engine keeps the helper launch count deterministic.
     with Client(Config(local.config.directory, host="test-host", timeout=2,
-                       persistent=persistent)) as remote:
+                       persistent=persistent, engine="gui")) as remote:
         assert remote.status()["time_unit"] == "1ps"
         with ThreadPoolExecutor(max_workers=4) as pool:
             results = list(pool.map(lambda n: remote.sample([f"/tb/s{n}"], [str(n)]), range(4)))
@@ -517,3 +518,219 @@ def test_default_directory_survives_restart(tmp_path, monkeypatch):
             assert client.status()["time_unit"] == "1ps"
     finally:
         stop_adapter(restarted)
+
+
+def test_browse_pages_scopes_then_signals(running):
+    c, _ = running
+    first = c.browse("/tb/dut", limit=5)
+    assert first["scopes"] == ["nested"] and len(first["signals"]) == 4
+    assert first["total_scopes"] == 1 and first["next_offset"] == 5
+    names, offset = list(first["signals"]), first["next_offset"]
+    while offset is not None:
+        page = c.browse("/tb/dut", offset=offset, limit=5)
+        assert page["scopes"] == []
+        names += page["signals"]
+        offset = page["next_offset"]
+    assert len(names) == first["total_signals"] == len(set(names))
+    assert c.browse("/tb/dut", offset=10**6)["signals"] == []
+    with pytest.raises(ValueError):
+        c.browse("/", limit=0)
+
+
+def test_status_and_timeout_bounds(running, monkeypatch):
+    c, _ = running
+    c.add_signals([f"/tb/s{n}" for n in range(16)])
+    status = c.status()
+    assert status["signals_total"] == 16 and status["signals_truncated"] is False
+    monkeypatch.setenv("VERDI_BRIDGE_TIMEOUT", "45")
+    assert Config.from_env().timeout == 45
+    with pytest.raises(ValueError, match="timeout"):
+        Client(Config(timeout=0))
+
+
+def test_sample_budget_returns_pending_signals(running):
+    c, _ = running
+    # /tb/sleepy takes 1.5 s per value, like a slow first load in a huge flat scope.
+    r = c.sample(["/tb/sleepy", "/tb/clk", "/tb/pulse"], ["5"], budget_ms=100)
+    assert [s["signal"] for s in r["samples"]] == ["/tb/sleepy"]
+    assert r["truncated"] is True and r["pending_signals"] == ["/tb/clk", "/tb/pulse"]
+    rest = c.sample(r["pending_signals"], ["5"], budget_ms=100)
+    assert rest["truncated"] is False and [s["value"] for s in rest["samples"]] == ["1", "1"]
+
+
+def test_count_changes_summarizes_without_values(running):
+    c, _ = running
+    before = c.status()
+    r = c.count_changes(["/tb/clk", "/tb/pulse"], "0", "100")
+    clk, pulse = r["signals"]
+    assert clk["count"] == 20 and clk["first_change"] == "5" and clk["last_change"] == "100"
+    assert clk["complete"] and clk["initial"] == "0" and clk["final"] == "0"
+    assert pulse["count"] == 2 and pulse["last_change"] == "5.001" and pulse["final"] == "0"
+    assert c.status() == before
+    slow = c.count_changes(["/tb/slow_clk"], "0", "100", budget_ms=10)
+    assert slow["truncated"] is True and slow["signals"][0]["complete"] is False
+    assert "final" not in slow["signals"][0] and slow["signals"][0]["resume_from"]
+
+
+def test_sample_on_clock_pre_and_post_edge(running):
+    c, _ = running
+    before = c.status()
+    pre = c.sample_on_clock("/tb/clk", ["/tb/pulse", "/tb/clk"], "0", "30")
+    assert [row["time"] for row in pre["cycles"]] == ["5", "15", "25"]
+    assert pre["cycles"][0]["values"] == ["0", "0"] and pre["truncated"] is False
+    post = c.sample_on_clock("/tb/clk", ["/tb/pulse"], "0", "30", sample="post")
+    assert post["cycles"][0]["values"] == ["1"]
+    both = c.sample_on_clock("/tb/clk", ["/tb/pulse"], "0", "30", edge="both")
+    assert [row["edge"] for row in both["cycles"]][:2] == ["rising", "falling"]
+    page = c.sample_on_clock("/tb/clk", ["/tb/pulse"], "0", "30", max_cycles=2)
+    assert page["truncated"] is True and page["reason"] == "max cycles"
+    rest = c.sample_on_clock("/tb/clk", ["/tb/pulse"], page["resume_from"], "30")
+    assert [row["time"] for row in page["cycles"] + rest["cycles"]] == ["5", "15", "25"]
+    assert c.status() == before
+    with pytest.raises(ValueError, match="4096"):
+        c.sample_on_clock("/tb/clk", ["/tb/pulse"] * 2, "0", "30", max_cycles=4096)
+
+
+FAKE_VERDI_HOME = Path(__file__).with_name("fake_npi")
+
+
+@pytest.fixture
+def npi_running(tmp_path):
+    root = tmp_path / "bridge"
+    root.mkdir(mode=0o700)
+    fsdb = tmp_path / "wave.fsdb"
+    fsdb.write_text("fake")
+    env = {**os.environ, "VERDI_BRIDGE_DIR": str(root), "VERDI_BRIDGE_SOURCE_ROOTS": str(tmp_path),
+           "VERDI_BRIDGE_LOG_ROOTS": str(tmp_path), "TEST_FSDB": str(fsdb),
+           "VERDI_HOME": str(FAKE_VERDI_HOME), "TEST_SOURCE": str(fsdb)}
+    proc = launch_adapter(env, root / "session")
+    assert proc.poll() is None, proc.stderr.read().decode()
+
+    def make(engine):
+        return Client(Config(str(root), timeout=5, engine=engine, npi_python=sys.executable))
+    yield make, fsdb
+    stop_adapter(proc)
+
+
+def strip_engine(result):
+    if isinstance(result, dict):
+        return {k: strip_engine(v) for k, v in result.items()
+                if k not in ("engine", "engine_note", "budget_ms", "npi_load", "npi_peak_mb")}
+    if isinstance(result, list):
+        return [strip_engine(v) for v in result]
+    return result
+
+
+def test_npi_engine_matches_gui_results(npi_running):
+    make, _ = npi_running
+    gui, npi = make("gui"), make("npi")
+    queries = [
+        ("get_value_changes", dict(signals=["/tb/clk", "/tb/pulse", "/tb/flat"], start="0",
+                                   end="30", radix="Bin")),
+        ("get_value_changes", dict(signals=["/tb/clk"], start="0", end="100", max=3)),
+        ("sample", dict(signals=["/tb/clk", "/tb/pulse", "/tb/flat"],
+                        times=["0", "4.999", "5", "5.001", "15"])),
+        ("sample", dict(signals=["/tb/signed"], times=["0"], radix="SDec")),
+        ("count_changes", dict(signals=["/tb/clk", "/tb/pulse", "/tb/flat"], start="0",
+                               end="100")),
+        ("sample_on_clock", dict(clock="/tb/clk", signals=["/tb/pulse", "/tb/clk"], start="0",
+                                 end="30")),
+        ("sample_on_clock", dict(clock="/tb/clk", signals=["/tb/pulse"], start="0", end="30",
+                                 sample="post", edge="both", max_cycles=3)),
+        ("measure_clock", dict(signal="/tb/clk", around_time="50", window="40")),
+    ]
+    for method, kwargs in queries:
+        a, b = getattr(gui, method)(**kwargs), getattr(npi, method)(**kwargs)
+        assert strip_engine(a) == strip_engine(b), method
+    assert npi.count_changes(["/tb/clk"], "0", "100")["engine"] == "npi"
+
+
+def test_auto_engine_routing_and_escalation(npi_running):
+    make, _ = npi_running
+    auto = make("auto")
+    # Whole-window summaries go straight to NPI; small queries stay in the GUI.
+    assert auto.count_changes(["/tb/clk"], "0", "100")["engine"] == "npi"
+    assert auto.sample(["/tb/clk"], ["5"])["engine"] == "gui"
+    # A GUI time-budget miss is redone in full through NPI.
+    r = auto.sample(["/tb/sleepy", "/tb/clk"], ["5"], budget_ms=100)
+    assert r["engine"] == "npi" and "redone with NPI" in r["engine_note"]
+    assert r["truncated"] is False and len(r["samples"]) == 2
+    # A signal NPI cannot resolve keeps the GUI result and does not disable NPI.
+    r = auto.count_changes(["/tb/s3"], "0", "100")
+    assert r["engine"] == "gui" and "signal not found" in r["engine_note"]
+    assert auto.count_changes(["/tb/clk"], "0", "100")["engine"] == "npi"
+
+
+def test_npi_unavailable_falls_back_or_raises(npi_running, monkeypatch):
+    make, fsdb = npi_running
+    monkeypatch.setenv("FAKE_NPI_NO_LICENSE", "1")
+    auto = make("auto")
+    r = auto.count_changes(["/tb/clk"], "0", "100")
+    assert r["engine"] == "gui" and "could not open" in r["engine_note"]
+    assert r["signals"][0]["count"] == 20
+    with pytest.raises(EngineUnavailable, match="could not open"):
+        make("npi").count_changes(["/tb/clk"], "0", "100")
+    monkeypatch.delenv("FAKE_NPI_NO_LICENSE")
+    fsdb.unlink()
+    with pytest.raises(EngineUnavailable, match="not a readable file"):
+        make("npi").sample(["/tb/clk"], ["5"])
+    with pytest.raises(ValueError, match="npi_python"):
+        Client(Config(engine="auto", npi_python="python3; rm -rf /"))
+
+
+def test_npi_budget_starts_after_load_and_makes_progress(npi_running, monkeypatch):
+    make, _ = npi_running
+    monkeypatch.setenv("FAKE_NPI_LOAD_SECONDS", "0.3")
+    npi = make("npi")
+    r = npi.get_value_changes(["/tb/clk", "/tb/pulse"], "0", "1000", max=512, budget_ms=1)
+    assert r["signals"][0]["changes"], "a slow load must not consume the whole budget"
+    r = npi.count_changes(["/tb/clk"], "0", "1000", budget_ms=1)
+    assert r["signals"][0]["count"] >= 1
+    r = npi.sample_on_clock("/tb/clk", ["/tb/pulse"], "0", "1000", budget_ms=1)
+    assert r["cycles"]
+
+
+def test_npi_loads_window_then_switches_slow_signals_to_full_load(npi_running, monkeypatch,
+                                                                  tmp_path):
+    make, _ = npi_running
+    log = tmp_path / "loads"
+    monkeypatch.setenv("FAKE_NPI_LOG", str(log))
+    npi = make("npi")
+    # Dense signals: only the requested window is loaded.
+    npi.sample(["/tb/clk", "/tb/pulse"], ["500", "600"])
+    assert log.read_text().split("\n")[:1] == ["load 500000 600000"]
+    log.unlink()
+    # Aliased signals: after two slow first reads, everything not known to be fast is
+    # reloaded from time 0 (after unloading), and no further read is slow.
+    signals = ["/tb/clk", "/tb/alias0", "/tb/alias1", "/tb/alias2", "/tb/alias3"]
+    r = npi.sample(signals, ["6", "8"])
+    assert log.read_text().splitlines() == [
+        "load 6000 8000", "slow tb.alias0", "slow tb.alias1", "load 0 8000", "load 6000 8000"]
+    assert [s["value"] for s in r["samples"] if s["signal"] == "/tb/alias3"] == ["0", "1"]
+    assert r["npi_load"] == {"window_loaded": 1, "loaded_from_zero": 4}
+
+
+@pytest.mark.skipif(not sys.platform.startswith("linux"),
+                    reason="RLIMIT_AS is not enforced on this platform")
+def test_npi_memory_limit_failure_falls_back(npi_running):
+    make, _ = npi_running
+    # A tiny address-space limit makes the engine fail; "auto" must use the GUI instead.
+    cfg = make("auto").config
+    cfg.npi_max_mb = 1
+    auto = Client(cfg)
+    r = auto.count_changes(["/tb/clk"], "0", "100")
+    assert r["engine"] == "gui" and r["signals"][0]["count"] == 20
+
+
+def test_npi_removes_work_dirs_of_dead_engines(npi_running, monkeypatch, tmp_path):
+    make, _ = npi_running
+    monkeypatch.setenv("TMPDIR", str(tmp_path))
+    parent = tmp_path / f"verdi-bridge-npi-{os.getuid()}"
+    parent.mkdir(mode=0o700)
+    dead = subprocess.Popen(["true"])
+    dead.wait()
+    stale = parent / str(dead.pid)
+    (stale / "npiLog").mkdir(parents=True)
+    make("npi").count_changes(["/tb/clk"], "0", "100")
+    assert not stale.exists()
+    assert list(parent.iterdir()) == []

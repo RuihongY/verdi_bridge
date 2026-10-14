@@ -5,6 +5,10 @@ set signals {}
 proc wvGetCurrentWindow {} {return test-window}
 proc wvGetWindowTimeUnit {args} {return 1ps}
 proc wvGetCursor {args} {return [list 1 $::cursor x 1ps]}
+proc wvGetActiveFileName {args} {
+    if {[info exists ::env(TEST_FSDB)]} {return $::env(TEST_FSDB)}
+    return ""
+}
 proc wvGetViewTimeRange {args} {return $::viewport}
 proc wvGetDisplaySignals {args} {return $::signals}
 proc wvSetCursor {args} {set ::cursor [lindex $args 2]; return 1}

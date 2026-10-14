@@ -30,7 +30,7 @@ same GUI you use to debug.
 
 Verdi Bridge turns those requests into observations from your simulation and
 visible actions in nWave and nTrace. The agent reasons; the bridge observes.
-Sixteen typed MCP tools work locally or over SSH with your existing Verdi setup.
+Eighteen typed MCP tools work locally or over SSH with your existing Verdi setup.
 
 ## Video walkthrough
 
@@ -66,10 +66,12 @@ Python 3.6+ and Verdi's Tcl 8.6. No vendor software is bundled.
 | Find and display signals | `find_signals`, `browse_scope`, `add_signals` |
 | Navigate an error window | `set_cursor`, `set_time_window`, `jump_before_error` |
 | Inspect actual waveform values | `find_transitions`, `get_value_changes`, `sample_signals` |
+| Summarize long windows | `count_changes`, `sample_on_clock` |
 | Discover error times and clocks | `read_log`, `measure_clock` |
 | Follow drivers into RTL | `trace_driver`, `read_source`, `read_source_file`, `goto_source` |
 
-Waveform queries preserve X/Z values. Time arguments carry explicit units.
+Waveform queries preserve X/Z values. Long windows on large FSDBs can run through
+Verdi's NPI reader outside the GUI, so the GUI stays responsive. Time arguments carry explicit units.
 The same interface works with different RTL designs; no FIFO-specific logic is
 built into the bridge. See the [Python and CLI examples](https://github.com/RuihongY/verdi_bridge/blob/main/docs/tools.md).
 
@@ -87,8 +89,8 @@ to source while you follow along.
 
 ## Project status
 
-Experimental **v0.3.2**. Live checks used Verdi T-2022.06-SP2-1 on Linux; the v0.3.2
-deployment fixes are covered by automated tests but not yet by a live Verdi run.
+Experimental **v0.3.3**. Live checks used Verdi T-2022.06-SP2-1 on Linux, including the
+SSH, session and large-FSDB changes of v0.3.2–v0.3.3 (up to a 2.7 GB FSDB).
 New-session startup is verified; attachment to an arbitrary existing GUI is not yet
 separately validated. The bridge does not automatically compile, edit or repair RTL.
 

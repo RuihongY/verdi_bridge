@@ -15,7 +15,8 @@ def main():
     call.add_argument("operation", choices=["browse", "add_signals", "set_cursor", "set_window",
                                            "before_error", "sample", "trace_driver", "source",
                                            "goto_source", "find_transitions", "get_value_changes",
-                                           "find_signals", "measure_clock", "source_file", "read_log"])
+                                           "find_signals", "measure_clock", "source_file", "read_log",
+                                           "count_changes", "sample_on_clock"])
     call.add_argument("arguments", nargs="?", default="{}")
     args = parser.parse_args()
     if args.command == "tcl-path":

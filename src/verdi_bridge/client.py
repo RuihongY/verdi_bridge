@@ -3,28 +3,46 @@ import base64
 import json
 import os
 import queue
+import re
 import subprocess
 import sys
 import tempfile
 import threading
+import time
 from builtins import max as builtin_max
 from contextlib import suppress
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-from . import remote_io
+from . import npi_engine, remote_io
 
 
 class BridgeError(RuntimeError):
     pass
 
 
+class EngineUnavailable(BridgeError):
+    """The NPI engine cannot serve a request; the GUI path may."""
+
+    def __init__(self, message, transient=False):
+        super().__init__(message)
+        self.transient = transient
+
+
 # Same default as bridge.tcl; "~" expands on the Verdi host, not the client.
 DEFAULT_DIR = "~/.verdi-bridge/session"
 # The remote login shell may be sh, bash or csh/tcsh. Keep the command to one
 # short line without newlines or "!"; the helper source arrives on stdin.
-REMOTE_BOOTSTRAP = "python3 -u -c 'import base64,sys;exec(base64.b64decode(sys.stdin.readline()))'"
+def bootstrap(python):
+    return python + " -u -c 'import base64,sys;exec(base64.b64decode(sys.stdin.readline()))'"
+
+
+REMOTE_BOOTSTRAP = bootstrap("python3")
+ENGINES = ("auto", "gui", "npi")
+# How long an environment-level NPI failure (no bindings, license, non-FSDB) is
+# remembered before "auto" tries the engine again.
+NPI_RETRY_SECONDS = 300
 
 
 @dataclass
@@ -35,14 +53,21 @@ class Config:
     timeout: float = 15
     persistent: bool = True
     poll_ms: int = 10
+    engine: str = "auto"
+    npi_python: str = "python3"
+    npi_max_mb: int = 0  # NPI engine memory limit; 0 means half of the host's RAM
 
     @classmethod
     def from_env(cls):
         directory = os.environ.get("VERDI_BRIDGE_DIR") or DEFAULT_DIR
         return cls(directory, os.getenv("VERDI_BRIDGE_HOST"),
                    os.getenv("VERDI_BRIDGE_CONTROL_PATH"),
+                   timeout=float(os.getenv("VERDI_BRIDGE_TIMEOUT", "15")),
                    persistent=os.getenv("VERDI_BRIDGE_PERSISTENT", "1") != "0",
-                   poll_ms=int(os.getenv("VERDI_BRIDGE_POLL_MS", "10")))
+                   poll_ms=int(os.getenv("VERDI_BRIDGE_POLL_MS", "10")),
+                   engine=os.getenv("VERDI_BRIDGE_ENGINE", "auto"),
+                   npi_python=os.getenv("VERDI_BRIDGE_NPI_PYTHON", "python3"),
+                   npi_max_mb=int(os.getenv("VERDI_BRIDGE_NPI_MAX_MB", "0")))
 
 
 def number(value):
@@ -55,9 +80,29 @@ def number(value):
     return str(result)
 
 
+def check_radix(radix):
+    if radix not in ("Bin", "Hex", "UDec", "Dec", "SDec"):
+        raise ValueError("radix must be Bin, Hex, UDec, Dec or SDec")
+
+
+def check_budget(budget_ms, limit):
+    if not 1 <= budget_ms <= limit:
+        raise ValueError(f"budget_ms must be 1..{limit}")
+
+
 class Client:
     def __init__(self, config: Config):
+        if not 1 <= config.timeout <= 600:
+            raise ValueError("timeout must be 1..600 seconds")
+        if config.engine not in ENGINES:
+            raise ValueError("engine must be auto, gui or npi")
+        if config.npi_max_mb < 0:
+            raise ValueError("npi_max_mb must be 0 (automatic) or a positive size in MB")
+        # Interpolated into the remote shell command: allow a plain path only.
+        if not re.fullmatch(r"[A-Za-z0-9_./+-]+", config.npi_python):
+            raise ValueError("npi_python must be an interpreter name or path")
         self.config = config
+        self._npi_down = None
         self._lock = threading.Lock()
         self._process = None
         self._stderr = None
@@ -86,23 +131,25 @@ class Client:
     def __exit__(self, *exc):
         self.close()
 
-    def _command(self, stream=False):
+    def _ssh(self, remote):
         cfg = self.config
-        if cfg.host:
-            if cfg.host.startswith("-") or any(c.isspace() for c in cfg.host):
-                raise ValueError("host must be an SSH hostname or user@hostname")
-            command = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10"]
-            if cfg.control_path:
-                command += ["-S", cfg.control_path]
-            remote = REMOTE_BOOTSTRAP + (" --stream" if stream else "")
-            return command + [cfg.host, remote]
+        if cfg.host.startswith("-") or any(c.isspace() for c in cfg.host):
+            raise ValueError("host must be an SSH hostname or user@hostname")
+        command = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10"]
+        if cfg.control_path:
+            command += ["-S", cfg.control_path]
+        return command + [cfg.host, remote]
+
+    def _command(self, stream=False):
+        if self.config.host:
+            return self._ssh(REMOTE_BOOTSTRAP + (" --stream" if stream else ""))
         return [sys.executable, str(Path(remote_io.__file__))]
 
-    def _preamble(self):
-        # First stdin line for REMOTE_BOOTSTRAP: the helper source in base64.
+    def _preamble(self, module=remote_io):
+        # First stdin line for a bootstrap: the helper source in base64.
         if not self.config.host:
             return ""
-        return base64.b64encode(Path(remote_io.__file__).read_bytes()).decode() + "\n"
+        return base64.b64encode(Path(module.__file__).read_bytes()).decode() + "\n"
 
     def _stream_exchange(self, payload):
         # One in-flight request per helper. A broken/slow helper is discarded;
@@ -177,11 +224,90 @@ class Client:
             raise BridgeError(response["error"])
         return response["result"]
 
+    def _npi(self, operation, args):
+        try:
+            info = self._call("engine_info")
+        except BridgeError as exc:
+            # e.g. an adapter loaded from an older release without engine_info
+            raise EngineUnavailable("adapter cannot describe the waveform: %s" % exc) from exc
+        verdi_home = info["env"].get("VERDI_HOME")
+        if not info["fsdb"]:
+            raise EngineUnavailable("the active nWave window has no FSDB file")
+        if not verdi_home:
+            raise EngineUnavailable("VERDI_HOME is not set in the Verdi process")
+        cfg = self.config
+        request = json.dumps({"fsdb": info["fsdb"], "verdi_home": verdi_home,
+                              "env": info["env"], "operation": operation, "args": args,
+                              "max_memory_mb": cfg.npi_max_mb})
+        if cfg.host:
+            command = self._ssh(bootstrap(cfg.npi_python))
+        else:
+            command = [cfg.npi_python, str(Path(npi_engine.__file__))]
+        try:
+            proc = subprocess.run(command, input=self._preamble(npi_engine) + request + "\n",
+                                  text=True, capture_output=True, timeout=cfg.timeout + 15)
+        except subprocess.TimeoutExpired as exc:
+            # The engine only reads the FSDB; nothing in the GUI changed.
+            raise BridgeError("NPI engine timeout; no GUI state was changed") from exc
+        except OSError as exc:
+            raise EngineUnavailable("cannot start NPI engine: %s" % exc) from exc
+        lines = [line for line in proc.stdout.splitlines() if line.strip()]
+        try:
+            response = json.loads(lines[-1])
+        except (IndexError, ValueError) as exc:
+            raise EngineUnavailable("NPI engine failed: " + proc.stderr[-500:]) from exc
+        if not response["ok"]:
+            if response.get("unavailable"):
+                raise EngineUnavailable(response["error"],
+                                        transient=response["error"].startswith("signal "))
+            raise BridgeError(response["error"])
+        return {**response["result"], "engine": "npi"}
+
+    def _try_npi(self, operation, args):
+        """NPI result, or (None, reason) when "auto" should use the GUI instead."""
+        if self._npi_down and time.monotonic() - self._npi_down[0] < NPI_RETRY_SECONDS:
+            return None, self._npi_down[1]
+        try:
+            return self._npi(operation, args), None
+        except EngineUnavailable as exc:
+            if self.config.engine == "npi":
+                raise
+            if not exc.transient:
+                self._npi_down = (time.monotonic(), str(exc))
+            return None, str(exc)
+
+    def _route(self, operation, args, gui, npi_first=False):
+        """Pick the GUI adapter or the headless NPI engine.
+
+        NPI costs ~0.6 s per call but scans ~80x faster and batch-loads signals, so
+        "auto" uses it first only for whole-window summaries; other queries start in
+        the GUI and are redone through NPI only when the GUI ran out of time budget.
+        """
+        cfg = self.config
+        if cfg.engine == "gui":
+            return {**gui(), "engine": "gui"}
+        if cfg.engine == "npi" or npi_first:
+            result, note = self._try_npi(operation, args)
+            if result is not None:
+                return result
+            return {**gui(), "engine": "gui", "engine_note": note}
+        result = gui()
+        budget_hit = (result.get("pending_signals") or result.get("reason") == "time budget" or
+                      "time budget" in result.get("reasons", ()))
+        if not budget_hit:
+            return {**result, "engine": "gui"}
+        escalated, note = self._try_npi(operation, args)
+        if escalated is not None:
+            return {**escalated, "engine_note": "GUI time budget exhausted; redone with NPI"}
+        return {**result, "engine": "gui", "engine_note": note}
+
     def status(self):
         return self._call("status")
 
-    def browse(self, scope: str = "/"):
-        return self._call("browse", scope)
+    def browse(self, scope: str = "/", offset: int = 0, limit: int = 500):
+        if offset < 0 or not 1 <= limit <= 2000:
+            raise ValueError("offset >= 0 and limit 1..2000 required")
+        return self._call("browse", scope, str(offset), str(limit))
 
     def add_signals(self, signals: list[str]):
         if not 1 <= len(signals) <= 128:
@@ -230,15 +356,55 @@ class Client:
                          if snapped is not None else
                          "Preserves timestamp phase; does not snap to clock edges")}
 
-    def sample(self, signals: list[str], times: list[str], unit: str = "ns", radix: str = "Bin"):
+    def sample(self, signals: list[str], times: list[str], unit: str = "ns", radix: str = "Bin",
+               budget_ms: int = 2000):
         if not 1 <= len(signals) <= 128 or not 1 <= len(times) <= 128:
             raise ValueError("supply 1..128 signals and times")
         if len(signals) * len(times) > 1024:
             raise ValueError("at most 1024 samples per request")
-        if radix not in ("Bin", "Hex", "UDec", "Dec", "SDec"):
-            raise ValueError("radix must be Bin, Hex, UDec, Dec or SDec")
-        return self._call("sample", unit, radix, str(len(signals)), *signals,
-                          *(number(t) for t in times))
+        check_radix(radix)
+        check_budget(budget_ms, 10000)
+        times = [number(t) for t in times]
+        return self._route(
+            "sample", {"signals": signals, "times": times, "unit": unit, "radix": radix,
+                       "budget_ms": budget_ms},
+            lambda: self._call("sample", unit, radix, str(budget_ms), str(len(signals)),
+                               *signals, *times))
+
+    def count_changes(self, signals: list[str], start: str, end: str, unit: str = "ns",
+                      budget_ms: int = 2000):
+        if not 1 <= len(signals) <= 128:
+            raise ValueError("supply 1..128 signals")
+        if Decimal(number(end)) <= Decimal(number(start)):
+            raise ValueError("end must be greater than start")
+        check_budget(budget_ms, 10000)
+        start, end = number(start), number(end)
+        return self._route(
+            "count", {"signals": signals, "start": start, "end": end, "unit": unit,
+                      "budget_ms": budget_ms},
+            lambda: self._call("count_changes", start, end, unit, str(budget_ms), *signals),
+            npi_first=True)
+
+    def sample_on_clock(self, clock: str, signals: list[str], start: str, end: str,
+                        unit: str = "ns", radix: str = "Hex", edge: str = "rising",
+                        sample: str = "pre", max_cycles: int = 64, budget_ms: int = 2000):
+        if not 1 <= len(signals) <= 128 or not 1 <= max_cycles <= 4096:
+            raise ValueError("supply 1..128 signals; max_cycles 1..4096")
+        if len(signals) * max_cycles > 4096:
+            raise ValueError("at most 4096 values (signals x max_cycles) per request")
+        if edge not in ("rising", "falling", "both") or sample not in ("pre", "post"):
+            raise ValueError("edge must be rising/falling/both; sample must be pre/post")
+        if Decimal(number(end)) <= Decimal(number(start)):
+            raise ValueError("end must be greater than start")
+        check_radix(radix)
+        check_budget(budget_ms, 10000)
+        start, end = number(start), number(end)
+        return self._route(
+            "clock_table", {"clock": clock, "signals": signals, "start": start, "end": end,
+                            "unit": unit, "radix": radix, "edge": edge, "sample": sample,
+                            "max": max_cycles, "budget_ms": budget_ms},
+            lambda: self._call("sample_on_clock", clock, start, end, unit, radix, edge, sample,
+                               str(max_cycles), str(budget_ms), *signals))
 
     def trace_driver(self, signal: str):
         return self._call("trace_driver", signal)
@@ -267,9 +433,13 @@ class Client:
             raise ValueError("at most 4096 changes across signals")
         if Decimal(number(end)) <= Decimal(number(start)):
             raise ValueError("end must be greater than start")
-        if radix not in ("Bin", "Hex", "UDec", "Dec", "SDec"):
-            raise ValueError("radix must be Bin, Hex, UDec, Dec or SDec")
-        return self._call("changes", number(start), number(end), unit, radix, str(max), str(budget_ms), *signals)
+        check_radix(radix)
+        start, end = number(start), number(end)
+        return self._route(
+            "changes", {"signals": signals, "start": start, "end": end, "unit": unit,
+                        "radix": radix, "max": max, "budget_ms": budget_ms},
+            lambda: self._call("changes", start, end, unit, radix, str(max), str(budget_ms),
+                               *signals))
 
     def find_signals(self, pattern: str, scope: str = "/", max: int = 100,
                      depth: int = 16, glob: bool = False, budget_ms: int = 1000):

@@ -26,13 +26,15 @@ def create_server(client: Client | None = None):
 
     @mcp.tool()
     async def session_status() -> dict[str, Any]:
-        """Inspect the current nWave window, native time unit, cursor and displayed signals."""
+        """Inspect the current nWave window, native time unit, cursor and displayed signals
+        (first 200; see signals_total)."""
         return await call(bridge.status)
 
     @mcp.tool()
-    async def browse_scope(scope: str = "/") -> dict[str, Any]:
-        """List waveform child scopes/signals. Discover exact paths before querying."""
-        return await call(bridge.browse, scope)
+    async def browse_scope(scope: str = "/", offset: int = 0, limit: int = 500) -> dict[str, Any]:
+        """List waveform child scopes, then signals, one page at a time. Discover exact
+        paths before querying. Continue from next_offset while it is not null."""
+        return await call(bridge.browse, scope, offset, limit)
 
     @mcp.tool()
     async def add_signals(signals: list[str]) -> dict[str, Any]:
@@ -61,10 +63,30 @@ def create_server(client: Client | None = None):
 
     @mcp.tool()
     async def sample_signals(signals: list[str], times: list[str], unit: str = "ns",
-                       radix: str = "Bin") -> dict[str, Any]:
+                             radix: str = "Bin", budget_ms: int = 2000) -> dict[str, Any]:
         """Read up to 1024 values. Dec/UDec are unsigned; SDec is signed two's complement.
-        Preserve X/Z strings; never treat them as zero."""
-        return await call(bridge.sample, signals, times, unit, radix)
+        Preserve X/Z strings; never treat them as zero. Verdi loads each signal on first
+        access (slow in large flat scopes): if truncated, request pending_signals again."""
+        return await call(bridge.sample, signals, times, unit, radix, budget_ms)
+
+    @mcp.tool()
+    async def count_changes(signals: list[str], start: str, end: str, unit: str = "ns",
+                            budget_ms: int = 2000) -> dict[str, Any]:
+        """Summarize activity in (start, end] without listing changes: per signal the
+        change count, first/last change time, and Hex values at start and end. Use it on
+        long windows before fetching details. Incomplete signals give resume_from."""
+        return await call(bridge.count_changes, signals, start, end, unit, budget_ms)
+
+    @mcp.tool()
+    async def sample_on_clock(clock: str, signals: list[str], start: str, end: str,
+                              unit: str = "ns", radix: str = "Hex", edge: str = "rising",
+                              sample: str = "pre", max_cycles: int = 64,
+                              budget_ms: int = 2000) -> dict[str, Any]:
+        """Cycle table: one row per clock edge in (start, end] with all signal values.
+        sample="pre" reads one native tick before the edge, i.e. what flops capture;
+        "post" reads the settled value at the edge. Continue from resume_from if truncated."""
+        return await call(bridge.sample_on_clock, clock, signals, start, end, unit, radix,
+                          edge, sample, max_cycles, budget_ms)
 
     @mcp.tool()
     async def trace_driver(signal: str) -> dict[str, Any]:

@@ -14,6 +14,13 @@ are never used as roots, so a GUI started from the home directory cannot expose
 publish SSH credentials. Tool results contain design data: choose an appropriate
 LLM deployment before connecting confidential designs.
 
+The optional NPI engine runs as the same user on the Verdi host, reads only the FSDB
+open in the active nWave window, and receives `VERDI_HOME` and the license variables
+of the Verdi process. It may check out a Verdi license while it runs; it exits after
+each request. It runs under an address-space limit and keeps vendor side files in
+an owner-only directory under the system temporary directory, removing those of
+engine processes that no longer exist. Set `VERDI_BRIDGE_ENGINE=gui` to disable it.
+
 A timeout may leave an already running GUI action unresolved. Inspect the GUI and
 status before retrying. Late results remain available for inspection until the
 next GUI start, which removes them; UUID/session checks prevent their reuse as new results.
