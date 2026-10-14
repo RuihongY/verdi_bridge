@@ -70,6 +70,8 @@ class FileHandle:
             with io.open(os.environ["FAKE_NPI_LOG"], "a") as log:
                 log.write("load %d %d\n" % (start, end))
         time.sleep(float(os.environ.get("FAKE_NPI_LOAD_SECONDS", "0")))
+        # Real loads allocate per value change; let tests ask for a large allocation.
+        self.buffer = bytearray(int(os.environ.get("FAKE_NPI_ALLOC_MB", "0")) << 20)
         return True
 
     def unload_vc(self):

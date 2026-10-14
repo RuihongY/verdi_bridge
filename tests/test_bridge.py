@@ -712,11 +712,15 @@ def test_npi_loads_window_then_switches_slow_signals_to_full_load(npi_running, m
 
 @pytest.mark.skipif(not sys.platform.startswith("linux"),
                     reason="RLIMIT_AS is not enforced on this platform")
-def test_npi_memory_limit_failure_falls_back(npi_running):
+def test_npi_memory_limit_failure_falls_back(npi_running, monkeypatch):
     make, _ = npi_running
-    # A tiny address-space limit makes the engine fail; "auto" must use the GUI instead.
+    # A load larger than the address-space limit fails in the engine, not the host;
+    # "auto" then answers through the GUI.
+    monkeypatch.setenv("FAKE_NPI_ALLOC_MB", "1024")
     cfg = make("auto").config
-    cfg.npi_max_mb = 1
+    cfg.npi_max_mb = 512
+    with pytest.raises(EngineUnavailable, match="memory limit"):
+        Client(Config(**{**cfg.__dict__, "engine": "npi"})).count_changes(["/tb/clk"], "0", "100")
     auto = Client(cfg)
     r = auto.count_changes(["/tb/clk"], "0", "100")
     assert r["engine"] == "gui" and r["signals"][0]["count"] == 20
