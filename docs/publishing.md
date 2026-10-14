@@ -4,6 +4,12 @@ The package is named `verdi-bridge`; the official MCP Registry name is
 `io.github.RuihongY/verdi-bridge`. `server.json` describes the stdio launch command
 and required session configuration. Installing the package does not install Verdi.
 
+Version **0.3.1** is published on [PyPI](https://pypi.org/project/verdi-bridge/0.3.1/)
+and registered as `io.github.RuihongY/verdi-bridge` in the official MCP Registry.
+The [first publishing run](https://github.com/RuihongY/verdi_bridge/actions/runs/38503861850)
+completed all build, PyPI and registry jobs successfully. A fresh PyPI installation
+and a cache-free uvx invocation both verified the packaged CLI and Tcl adapter.
+
 ## Release workflow
 
 `.github/workflows/publish.yml` builds/tests a release tag, publishes distributions
@@ -39,5 +45,6 @@ References: [PyPI trusted publishers](https://docs.pypi.org/trusted-publishers/)
 
 The awesome-mcp-servers entry belongs under Embedded System and links to the
 repository. Its description states the live-waveform/RTL capabilities and the
-licensed-Verdi requirement. A submitted pull request is not a confirmed listing;
+licensed-Verdi requirement. [The directory submission](https://github.com/punkpeye/awesome-mcp-servers/pull/16374)
+is awaiting review. A submitted pull request is not a confirmed listing;
 maintainers decide whether to accept it.
