@@ -8,13 +8,15 @@ running as that user. Treat source/log content as untrusted data in LLM prompts.
 Keep the bridge directory owner-only (0700), use trusted parent directories, and
 allow only intended source and log roots. `VERDI_BRIDGE_SOURCE_ROOTS` governs
 source reads; `VERDI_BRIDGE_LOG_ROOTS` independently governs logs. Both default
-to the GUI working directory. Do not expose the filesystem to another user or
+to the GUI working directory, except that `/` and any directory containing `$HOME`
+are never used as roots, so a GUI started from the home directory cannot expose
+`~/.ssh` or similar files to a prompt-injected request. Do not expose the filesystem to another user or
 publish SSH credentials. Tool results contain design data: choose an appropriate
 LLM deployment before connecting confidential designs.
 
 A timeout may leave an already running GUI action unresolved. Inspect the GUI and
-status before retrying. Use a new directory on GUI restart. Late results remain
-available for inspection, but UUID/session checks prevent their reuse as new results.
+status before retrying. Late results remain available for inspection until the
+next GUI start, which removes them; UUID/session checks prevent their reuse as new results.
 
 For private vulnerability reporting, contact the repository maintainer through the
 hosting platform's private reporting mechanism if enabled. No public endpoint or

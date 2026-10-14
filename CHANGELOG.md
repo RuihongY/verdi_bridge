@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased
+
+- SSH works when the remote login shell is csh/tcsh. The remote command is now a
+  one-line bootstrap; the helper source travels over stdin. Previously tcsh failed
+  and could run fragments of the helper source as shell commands.
+- Responses are written and read as UTF-8 regardless of locale, so non-ASCII
+  source/log text no longer breaks Python 3.6 helpers under `LANG=C`. Source and
+  log lines decode as UTF-8 when valid, otherwise in the GUI's system encoding.
+- File roots never include `/` or a directory containing `$HOME`. A GUI started
+  from the home directory has file reads disabled until roots are set; explicit
+  roots of that kind are rejected at startup.
+- MCP tools run in worker threads, so a busy GUI no longer stalls pings,
+  cancellation or other requests in the stdio server.
+- `find_signals` takes a cooperative `budget_ms` (default 1000, max 2000) and
+  reports `reasons` for truncation. Its breadth-first queue is now linear-time.
+- `VERDI_BRIDGE_DIR` is optional: both sides default to `~/.verdi-bridge/session`,
+  created with mode 0700. A lock left by a dead GUI on the same host is taken
+  over, and stale requests/results are removed at startup.
+- A foreign `*.req` file no longer blocks request handling, and polling survives
+  filesystem errors.
+
+**Migration:** `find_signals` gained a wire argument. Upgrade the Python package
+and the loaded Tcl adapter together.
+
 ## 0.3.1 — 2026-10-13
 
 - Prepare PyPI distribution metadata, MCP Registry manifest, and an OIDC publishing workflow.

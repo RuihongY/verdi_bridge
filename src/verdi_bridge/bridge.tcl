@@ -113,10 +113,39 @@ proc ::vb::physical_time {w ticks unit} {
 proc ::vb::arity {argsv n} {
     if {[llength $argsv] != $n} {error "wrong argument count"}
 }
+# A root equal to / or to an ancestor of $HOME would expose ~/.ssh and similar.
+proc ::vb::covers_home {path} {
+    if {$path eq "/"} {return 1}
+    if {![info exists ::env(HOME)] || $::env(HOME) eq ""} {return 0}
+    set home [file normalize $::env(HOME)]
+    return [expr {$home eq $path || [string first "${path}/" $home] == 0}]
+}
+proc ::vb::file_roots {label} {
+    if {[info exists ::env($label)]} {
+        set roots {}
+        foreach p [split $::env($label) :] {
+            if {$p eq ""} {continue}
+            set p [file normalize $p]
+            if {[covers_home $p]} {
+                error "$label must not contain / or your home directory; list project directories"
+            }
+            lappend roots $p
+        }
+        return $roots
+    }
+    # Default: Verdi's working directory, unless that would expose the home directory.
+    set cwd [file normalize [pwd]]
+    if {[covers_home $cwd]} {return {}}
+    return [list $cwd]
+}
 proc ::vb::allowed_file {path {kind source}} {
     variable source_roots; variable log_roots
     if {$kind eq "log"} {set roots $log_roots; set label VERDI_BRIDGE_LOG_ROOTS} else {
         set roots $source_roots; set label VERDI_BRIDGE_SOURCE_ROOTS
+    }
+    if {![llength $roots]} {
+        error "no readable roots: set $label (Verdi's working directory is not used when it\
+            is / or contains your home directory)"
     }
     if {![file isfile $path]} {error "file unavailable"}
     set path [file normalize $path]
@@ -129,15 +158,30 @@ proc ::vb::allowed_file {path {kind source}} {
     }
     error "file is outside $label"
 }
+# Read files as bytes and decode per line: UTF-8 when valid, otherwise the GUI's
+# system encoding (e.g. GBK). Independent of the locale Verdi was started with.
+proc ::vb::open_bytes {path} {
+    set f [open $path r]
+    fconfigure $f -encoding iso8859-1
+    return $f
+}
+proc ::vb::text {raw} {
+    if {![regexp {[\x80-\xff]} $raw]} {return $raw}
+    # Tcl 8.6 decodes invalid UTF-8 leniently (caught by the round trip); Tcl 9 raises.
+    if {![catch {encoding convertfrom utf-8 $raw} decoded] &&
+        [encoding convertto utf-8 $decoded] eq $raw} {return $decoded}
+    if {[catch {encoding convertfrom [encoding system] $raw} decoded]} {return $raw}
+    return $decoded
+}
 proc ::vb::read_lines {path start count} {
     if {![string is integer -strict $start] || ![string is integer -strict $count] ||
         $start < 1 || $count < 1 || $count > 200} {error "invalid line range"}
     if {[file size $path] > 8388608} {error "file exceeds 8 MiB read limit"}
-    set f [open $path r]; set lines {}; set i 0
+    set f [open_bytes $path]; set lines {}; set i 0
     try {
         while {[gets $f line] >= 0} {
             incr i
-            if {$i >= $start} {lappend lines [obj line $i text [q $line]]}
+            if {$i >= $start} {lappend lines [obj line $i text [q [text $line]]]}
             if {[llength $lines] >= $count} {break}
         }
     } finally {close $f}
@@ -264,10 +308,11 @@ proc ::vb::dispatch {op argv} {
                 [string length $pattern] > 4096} {error "invalid log limits"}
             set path [allowed_file $path log]
             if {[file size $path] > 8388608} {error "log exceeds 8 MiB read limit"}
-            set f [open $path r]; set rows {}; set i 0; set truncated false
+            set f [open_bytes $path]; set rows {}; set i 0; set truncated false
             try {
                 while {[gets $f line] >= 0} {
                     incr i
+                    set line [text $line]
                     if {[string first $pattern $line] < 0} {continue}
                     if {[llength $rows] == $max} {set truncated true; break}
                     lappend rows [obj line $i text [q $line]]
@@ -277,42 +322,52 @@ proc ::vb::dispatch {op argv} {
                 truncated $truncated matching [q "literal substring, case sensitive"]]
         }
         find_signals {
-            arity $argv 5
-            lassign $argv pattern scope max depth glob
+            arity $argv 6
+            lassign $argv pattern scope max depth glob budget_ms
             if {$glob ni {0 1}} {error "glob must be boolean"}
             set glob_pattern [string map {\[ \\[ \] \\]} $pattern]
             name $scope
             if {[string index $scope 0] ne "/" || $pattern eq "" ||
                 [string length $pattern] > 4096 || ![string is integer -strict $max] ||
                 $max < 1 || $max > 1000 || ![string is integer -strict $depth] ||
-                $depth < 0 || $depth > 64} {error "invalid search limits"}
-            set queue [list [list $scope 0]]; set seen {}; set found {}; set truncated false
-            set visited 0
-            while {[llength $queue]} {
-                lassign [lindex $queue 0] current level
-                set queue [lrange $queue 1 end]
+                $depth < 0 || $depth > 64 || ![string is integer -strict $budget_ms] ||
+                $budget_ms < 1 || $budget_ms > 2000} {error "invalid search limits"}
+            set deadline [expr {[clock clicks -milliseconds]+$budget_ms}]
+            set queue [list [list $scope 0]]; set head 0; set seen {}; set found {}
+            set truncated false; set reasons {}; set visited 0
+            while {$head < [llength $queue]} {
+                lassign [lindex $queue $head] current level
+                incr head
                 if {[dict exists $seen $current]} {continue}
+                if {[clock clicks -milliseconds] >= $deadline} {
+                    set truncated true; lappend reasons "time budget"; break
+                }
                 dict set seen $current 1
                 incr visited
-                if {$visited > 2048} {set truncated true; break}
+                if {$visited > 2048} {set truncated true; lappend reasons "scope limit"; break}
                 if {$current eq "/"} {set args {}} else {set args [list $current]}
                 foreach leaf [wvGetSignalsByScope -win $w {*}$args] {
                     set path [child_path $current $leaf]
                     if {(!$glob && [string first $pattern $path] >= 0) ||
                         ($glob && [string match $glob_pattern $path])} {
-                        if {[llength $found] == $max} {set truncated true; break}
+                        if {[llength $found] == $max} {
+                            set truncated true; lappend reasons "max results"; break
+                        }
                         lappend found $path
                     }
                 }
-                if {[llength $found] == $max && $truncated} {break}
+                if {"max results" in $reasons} {break}
                 set children [wvGetScope -win $w {*}$args]
-                if {$level == $depth && [llength $children]} {set truncated true; continue}
+                if {$level == $depth && [llength $children]} {
+                    set truncated true; lappend reasons "depth"; continue
+                }
                 foreach child $children {
                     lappend queue [list [child_path $current $child] [expr {$level+1}]]
                 }
             }
-            return [obj signals [arr $found] truncated $truncated visited_scopes $visited \
-                depth $depth scope [q $scope] pattern [q $pattern]]
+            return [obj signals [arr $found] truncated $truncated \
+                reasons [arr [lsort -unique $reasons]] visited_scopes $visited \
+                depth $depth scope [q $scope] pattern [q $pattern] budget_ms $budget_ms]
         }
         changes {
             lassign $argv start end unit radix max budget_ms
@@ -385,8 +440,15 @@ proc ::vb::dispatch {op argv} {
     }
 }
 proc ::vb::poll {} {
-    variable root; variable session; variable timer; variable poll_ms
-    foreach req [lrange [lsort [glob -nocomplain -directory $root *.req]] 0 0] {
+    variable timer; variable poll_ms
+    # Never let a filesystem error (e.g. a stale NFS handle) end the polling loop.
+    if {[catch {poll_once} message]} {catch {puts stderr "verdi-bridge: $message"}}
+    set timer [after $poll_ms ::vb::poll]
+}
+proc ::vb::poll_once {} {
+    variable root; variable session
+    # Serve one request per tick. Skip foreign *.req names instead of stalling on them.
+    foreach req [lsort [glob -nocomplain -directory $root *.req]] {
         set id [file rootname [file tail $req]]
         if {![regexp {^[a-f0-9]{32}$} $id]} {continue}
         set claimed "${req}.running"
@@ -407,46 +469,66 @@ proc ::vb::poll {} {
         if {$code} {set body [obj id [q $id] session [q $session] ok false error [q $result]]} else {
             set body [obj id [q $id] session [q $session] ok true result $result]
         }
-        # Output failures must not kill the GUI event loop.
+        # Output failures must not kill the GUI event loop. Responses are always
+        # UTF-8 so the helper's locale (often C/ASCII over SSH) does not matter.
         catch {
-            set f [open "$root/$id.res.tmp" w]; puts $f $body; close $f
+            set f [open "$root/$id.res.tmp" w]
+            fconfigure $f -encoding utf-8
+            puts $f $body; close $f
             file rename -force "$root/$id.res.tmp" "$root/$id.res"
         }
+        break
     }
-    set timer [after $poll_ms ::vb::poll]
+}
+# A lock is stale only if it names this host and a process that no longer exists.
+proc ::vb::stale_lock {path} {
+    variable timer
+    if {[catch {set f [open $path r]; set text [read $f]; close $f}]} {return 0}
+    lassign $text pid host
+    if {![string is integer -strict $pid] || $host ne [info hostname]} {return 0}
+    if {$pid == [pid]} {return [expr {![info exists timer]}]}
+    if {[file isdirectory /proc/self]} {return [expr {![file exists /proc/$pid]}]}
+    return [catch {exec kill -0 $pid}]
 }
 proc ::vb::start {} {
     variable root; variable session; variable source_roots; variable log_roots; variable timer; variable poll_ms
     if {[info exists timer]} {error "bridge already running in this GUI"}
-    if {![info exists ::env(VERDI_BRIDGE_DIR)]} {error "set VERDI_BRIDGE_DIR before launch"}
-    set root [file normalize $::env(VERDI_BRIDGE_DIR)]
-    if {![file isdirectory $root] || ![file owned $root] ||
-        ([file attributes $root -permissions] & 0o77) != 0} {error "bridge directory must be private (0700)"}
+    if {[info exists ::env(VERDI_BRIDGE_DIR)] && $::env(VERDI_BRIDGE_DIR) ne ""} {
+        set root [file normalize $::env(VERDI_BRIDGE_DIR)]
+    } else {
+        # Stable default, so the MCP client configuration survives GUI restarts.
+        if {![info exists ::env(HOME)]} {error "set VERDI_BRIDGE_DIR before launch"}
+        set root [file normalize [file join $::env(HOME) .verdi-bridge session]]
+        foreach d [list [file dirname $root] $root] {
+            if {![file exists $d]} {file mkdir $d; file attributes $d -permissions 0o700}
+        }
+    }
+    if {[catch {file type $root} type] || $type ne "directory" || ![file owned $root] ||
+        ([file attributes $root -permissions] & 0o77) != 0} {
+        error "bridge directory must be private (0700) and not a symlink: $root"
+    }
     if {[info exists ::env(VERDI_BRIDGE_POLL_MS)]} {
         set poll_ms $::env(VERDI_BRIDGE_POLL_MS)
         if {![string is integer -strict $poll_ms] || $poll_ms < 1 || $poll_ms > 1000} {
             error "VERDI_BRIDGE_POLL_MS must be 1..1000"
         }
     }
-    # Exclusive lock prevents two GUIs consuming each other's requests.
-    set lock [open "$root/gui.lock" {WRONLY CREAT EXCL} 0o600]
-    puts $lock [pid]; close $lock
-    set session "[pid]-[clock clicks]"
-    set source_roots [list [file normalize [pwd]]]
-    if {[info exists ::env(VERDI_BRIDGE_SOURCE_ROOTS)]} {
-        set source_roots {}
-        foreach p [split $::env(VERDI_BRIDGE_SOURCE_ROOTS) :] {
-            if {$p ne ""} {lappend source_roots [file normalize $p]}
-        }
-    }
+    set source_roots [file_roots VERDI_BRIDGE_SOURCE_ROOTS]
     # Log access is independent: default only the simulation working directory.
-    set log_roots [list [file normalize [pwd]]]
-    if {[info exists ::env(VERDI_BRIDGE_LOG_ROOTS)]} {
-        set log_roots {}
-        foreach p [split $::env(VERDI_BRIDGE_LOG_ROOTS) :] {
-            if {$p ne ""} {lappend log_roots [file normalize $p]}
-        }
+    set log_roots [file_roots VERDI_BRIDGE_LOG_ROOTS]
+    # Exclusive lock prevents two GUIs consuming each other's requests.
+    set lockfile "$root/gui.lock"
+    if {[file exists $lockfile] && [stale_lock $lockfile]} {file delete $lockfile}
+    if {[catch {open $lockfile {WRONLY CREAT EXCL} 0o600} lock]} {
+        error "another Verdi GUI uses $root (gui.lock); run ::vb::stop there,\
+            or set VERDI_BRIDGE_DIR to a separate private directory"
     }
+    puts $lock "[pid] [info hostname]"; close $lock
+    # Requests and results of an earlier session can never match the new one.
+    foreach old [glob -nocomplain -directory $root *.req *.req.running *.res *.res.tmp *.tmp] {
+        if {[regexp {^[a-f0-9]{32}\.} [file tail $old]]} {catch {file delete $old}}
+    }
+    set session "[pid]-[clock clicks]"
     set f [open "$root/session.tmp" w]; puts $f $session; close $f
     file rename -force "$root/session.tmp" "$root/session"
     set timer [after $poll_ms ::vb::poll]

@@ -27,8 +27,8 @@ recording or a fresh blind test. No GUI state or waveform was synthesized.
 | 01:30 | 10  Navigate to the faulty statement |
 
 Follow the [setup guide](guide.md) for copyable installation commands, host setup,
-SSH options and the complete MCP configuration. Replace the example paths and
-use the exact session directory created on your Verdi host. For local use, omit
+SSH options and the complete MCP configuration. Replace the example paths; the
+default session directory needs no configuration. For local use, omit
 `VERDI_BRIDGE_HOST`; an SSH host needs Python 3.6+ and working authentication.
 
 Once connected, ask your MCP-enabled assistant:

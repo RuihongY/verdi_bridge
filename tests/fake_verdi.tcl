@@ -13,15 +13,22 @@ proc wvAddSignal {args} {set ::signals [lrange $args 2 end]; return 1}
 proc wvGetScope {args} {
     if {[llength $args] == 2} {return {/tb/dut}}
     if {[lindex $args 2] eq "/tb/dut"} {return {nested}}
+    # A wide hierarchy whose listings are slow, like a flattened gate-level netlist.
+    if {[lindex $args 2] eq "/slow"} {
+        set children {}
+        for {set i 0} {$i < 64} {incr i} {lappend children c$i}
+        return $children
+    }
     return {}
 }
 proc wvGetSignalsByScope {args} {
+    if {[string match /slow* [lindex $args 2]]} {after 30}
     if {[lindex $args 2] eq "/cache"} {
         if {[info exists ::cache_used]} {error "duplicate scope lookup"}
         set ::cache_used 1
         after 0 {unset ::cache_used}
     }
-    set names {ptr[3:0] ptr3 ptr0 ptr: full slow_clk pulse clk signed flat stuck_search}
+    set names {ptr[3:0] ptr3 ptr0 ptr: full slow_clk pulse clk signed flat stuck_search sleepy}
     for {set i 0} {$i < 16} {incr i} {lappend names s$i}
     if {[info exists ::env(TEST_LITERAL_SIGNAL)]} {lappend names $::env(TEST_LITERAL_SIGNAL)}
     return $names
@@ -34,6 +41,7 @@ proc wvGetSigValueByTime {args} {
     }
     if {[string match *clk $signal]} {return [expr {int($t/5000)%2}]}
     if {[string match */flat $signal]} {return x}
+    if {[string match */sleepy $signal]} {after 1500; return 1}
     if {[string match */signed $signal]} {
         if {[lindex $args 4] eq "Bin"} {return 11111111}
         return 255

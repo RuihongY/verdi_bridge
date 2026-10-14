@@ -1,8 +1,8 @@
 """Typed client; arguments never become executable Tcl or shell fragments."""
+import base64
 import json
 import os
 import queue
-import shlex
 import subprocess
 import sys
 import tempfile
@@ -20,9 +20,16 @@ class BridgeError(RuntimeError):
     pass
 
 
+# Same default as bridge.tcl; "~" expands on the Verdi host, not the client.
+DEFAULT_DIR = "~/.verdi-bridge/session"
+# The remote login shell may be sh, bash or csh/tcsh. Keep the command to one
+# short line without newlines or "!"; the helper source arrives on stdin.
+REMOTE_BOOTSTRAP = "python3 -u -c 'import base64,sys;exec(base64.b64decode(sys.stdin.readline()))'"
+
+
 @dataclass
 class Config:
-    directory: str
+    directory: str = DEFAULT_DIR
     host: str | None = None
     control_path: str | None = None
     timeout: float = 15
@@ -31,9 +38,7 @@ class Config:
 
     @classmethod
     def from_env(cls):
-        directory = os.environ.get("VERDI_BRIDGE_DIR")
-        if not directory:
-            raise BridgeError("Set VERDI_BRIDGE_DIR to the private bridge directory")
+        directory = os.environ.get("VERDI_BRIDGE_DIR") or DEFAULT_DIR
         return cls(directory, os.getenv("VERDI_BRIDGE_HOST"),
                    os.getenv("VERDI_BRIDGE_CONTROL_PATH"),
                    persistent=os.getenv("VERDI_BRIDGE_PERSISTENT", "1") != "0",
@@ -89,11 +94,15 @@ class Client:
             command = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10"]
             if cfg.control_path:
                 command += ["-S", cfg.control_path]
-            remote = "python3 -u -c " + shlex.quote(Path(remote_io.__file__).read_text())
-            if stream:
-                remote += " --stream"
+            remote = REMOTE_BOOTSTRAP + (" --stream" if stream else "")
             return command + [cfg.host, remote]
         return [sys.executable, str(Path(remote_io.__file__))]
+
+    def _preamble(self):
+        # First stdin line for REMOTE_BOOTSTRAP: the helper source in base64.
+        if not self.config.host:
+            return ""
+        return base64.b64encode(Path(remote_io.__file__).read_bytes()).decode() + "\n"
 
     def _stream_exchange(self, payload):
         # One in-flight request per helper. A broken/slow helper is discarded;
@@ -108,6 +117,8 @@ class Client:
                     self._process = subprocess.Popen(
                         self._command(stream=True), stdin=subprocess.PIPE,
                         stdout=subprocess.PIPE, stderr=self._stderr, text=True, bufsize=1)
+                    self._process.stdin.write(self._preamble())
+                    self._process.stdin.flush()
                 except Exception:
                     self._stop()
                     raise
@@ -150,7 +161,7 @@ class Client:
             response = self._stream_exchange(payload)
         else:
             try:
-                proc = subprocess.run(self._command(), input=payload, text=True,
+                proc = subprocess.run(self._command(), input=self._preamble() + payload, text=True,
                                       capture_output=True, timeout=cfg.timeout + 15)
             except subprocess.TimeoutExpired as exc:
                 raise BridgeError("Transport timeout; execution status unknown") from exc
@@ -261,10 +272,13 @@ class Client:
         return self._call("changes", number(start), number(end), unit, radix, str(max), str(budget_ms), *signals)
 
     def find_signals(self, pattern: str, scope: str = "/", max: int = 100,
-                     depth: int = 16, glob: bool = False):
+                     depth: int = 16, glob: bool = False, budget_ms: int = 1000):
         if not pattern or len(pattern) > 4096 or not 1 <= max <= 1000 or not 0 <= depth <= 64:
             raise ValueError("pattern required; max 1..1000; depth 0..64")
-        return self._call("find_signals", pattern, scope, str(max), str(depth), "1" if glob else "0")
+        if not 1 <= budget_ms <= 2000:
+            raise ValueError("budget_ms must be 1..2000")
+        return self._call("find_signals", pattern, scope, str(max), str(depth),
+                          "1" if glob else "0", str(budget_ms))
 
     def source_file(self, file: str, start: int = 1, count: int = 80):
         if start < 1 or not 1 <= count <= 200:

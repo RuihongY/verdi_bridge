@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: sudo apt-get update && sudo apt-get install -y tcl8.6
+      - run: sudo apt-get update && sudo apt-get install -y tcl8.6 tcsh
       - run: python -m pip install . pytest ruff
       - run: ruff check .
       - run: pytest -q

@@ -17,6 +17,25 @@ from verdi_bridge import client as client_module
 from verdi_bridge.client import BridgeError, Client, Config
 from verdi_bridge.remote_io import exchange
 
+ADAPTER = Path(client_module.__file__).with_name("bridge.tcl")
+FAKE_VERDI = Path(__file__).with_name("fake_verdi.tcl")
+
+
+def launch_adapter(env, session):
+    """Start the fake GUI; return once `session` exists or the adapter exited."""
+    proc = subprocess.Popen(["tclsh", str(FAKE_VERDI), str(ADAPTER)],
+                            env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    for _ in range(150):
+        if session.exists() or proc.poll() is not None:
+            break
+        time.sleep(0.02)
+    return proc
+
+
+def stop_adapter(proc):
+    proc.terminate()
+    return proc.communicate(timeout=3)
+
 
 @pytest.fixture
 def running(tmp_path):
@@ -31,21 +50,14 @@ def running(tmp_path):
            "VERDI_BRIDGE_SOURCE_ROOTS": str(tmp_path),
            "VERDI_BRIDGE_LOG_ROOTS": str(tmp_path / "logs"), "TEST_SOURCE": str(source),
            "TEST_LITERAL_SIGNAL": '/tb/a[3:0]; [exec touch INJECTED] $env(HOME) {} "'}
-    tcl = Path(client_module.__file__).with_name("bridge.tcl")
-    proc = subprocess.Popen(["tclsh", str(Path(__file__).with_name("fake_verdi.tcl")), str(tcl)],
-                            env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    for _ in range(100):
-        if (root / "session").exists():
-            break
-        if proc.poll() is not None:
-            pytest.fail(proc.stderr.read().decode())
-        time.sleep(0.02)
-    else:
+    proc = launch_adapter(env, root / "session")
+    if proc.poll() is not None:
+        pytest.fail(proc.stderr.read().decode())
+    if not (root / "session").exists():
         proc.kill()
         pytest.fail("Tcl fixture did not start")
     yield Client(Config(str(root), timeout=2)), env
-    proc.terminate()
-    proc.communicate(timeout=3)
+    stop_adapter(proc)
 
 
 def test_units_navigation_and_xz(running):
@@ -209,18 +221,26 @@ def test_file_reads_log_limits_and_symlinks(running, tmp_path):
         client.source_file(str(log))
 
 
+# How sshd hands the remote command to the user's login shell.
+LOGIN_SHELLS = {"sh-exec": ("/bin/sh", "'exec ' + sys.argv[-1]"),
+                "sh-wrapper": ("/bin/sh", "sys.argv[-1] + '; :'"),
+                "tcsh": (shutil.which("tcsh"), "sys.argv[-1]")}
+
+
 @pytest.mark.parametrize("persistent", [False, True])
-@pytest.mark.parametrize("shell_wrapper", [False, True])
-def test_ssh_shell_quoting_and_helper_reuse(running, tmp_path, monkeypatch, persistent, shell_wrapper):
+@pytest.mark.parametrize("login_shell", list(LOGIN_SHELLS))
+def test_ssh_shell_quoting_and_helper_reuse(running, tmp_path, monkeypatch, persistent, login_shell):
+    shell, shell_command = LOGIN_SHELLS[login_shell]
+    if not shell:
+        pytest.skip("tcsh is not installed")
     local, _ = running
     bindir = tmp_path / "bin"
     bindir.mkdir()
     calls = tmp_path / "ssh-calls"
     shim = bindir / "ssh"
-    shell_command = "sys.argv[-1] + '; :'" if shell_wrapper else "'exec ' + sys.argv[-1]"
     shim.write_text("#!/usr/bin/env python3\nimport os,sys\n"
                     "with open(os.environ['SSH_CALLS'], 'a') as f: f.write('start\\n')\n"
-                    f"os.execl('/bin/sh', 'sh', '-c', {shell_command})\n")
+                    f"os.execl({shell!r}, {shell!r}, '-c', {shell_command})\n")
     shim.chmod(0o755)
     monkeypatch.setenv("PATH", str(bindir) + os.pathsep + os.environ["PATH"])
     monkeypatch.setenv("SSH_CALLS", str(calls))
@@ -368,3 +388,132 @@ def test_exact_conversion_native_factors(native, unit, value, tick):
     ticks, physical = result.stdout.splitlines()
     assert ticks == tick
     assert Decimal(physical) == Decimal(value)
+
+
+def test_response_decoding_ignores_helper_locale(running, monkeypatch):
+    # An SSH session often runs the helper under LANG=C; Python 3.6 then has an
+    # ASCII default encoding. Responses must still decode as UTF-8.
+    client, _ = running
+    for name, value in {"LC_ALL": "C", "LANG": "C", "PYTHONUTF8": "0",
+                        "PYTHONCOERCECLOCALE": "0"}.items():
+        monkeypatch.setenv(name, value)
+    monkeypatch.delenv("PYTHONIOENCODING", raising=False)
+    assert "中文" in client.source("tb.dut", 2, 1)["lines"][0]["text"]
+
+
+def test_non_utf8_source_lines_are_readable(running):
+    client, env = running
+    Path(env["TEST_SOURCE"]).write_bytes(b"module fifo;\n// latin-1 \xe9\xff\nendmodule\n")
+    assert client.source("tb.dut", 2, 1)["lines"][0]["text"].startswith("// latin-1 ")
+
+
+def test_file_roots_never_cover_home(tmp_path):
+    home = (tmp_path / "home").resolve()
+    (home / "proj").mkdir(parents=True)
+    adapter = ADAPTER.read_text().rsplit("::vb::start", 1)[0]
+    script = adapter + f"""
+set ::env(HOME) {{{home}}}
+foreach dir [list {{{tmp_path.resolve()}}} {{{home}}} {{{home / 'proj'}}}] {{
+    cd $dir
+    puts [llength [::vb::file_roots VERDI_BRIDGE_SOURCE_ROOTS]]
+}}
+foreach bad [list / {{{home}}} {{{tmp_path.resolve()}}} "{home / 'proj'}:{home}"] {{
+    set ::env(VERDI_BRIDGE_SOURCE_ROOTS) $bad
+    puts [catch {{::vb::file_roots VERDI_BRIDGE_SOURCE_ROOTS}}]
+}}
+set ::env(VERDI_BRIDGE_SOURCE_ROOTS) {{{home / 'proj'}}}
+puts [::vb::file_roots VERDI_BRIDGE_SOURCE_ROOTS]
+set ::vb::source_roots {{}}
+puts [catch {{::vb::allowed_file {{{home / 'proj'}}}}} message]
+puts $message
+"""
+    result = subprocess.run(["tclsh"], input=script, text=True, capture_output=True, check=True)
+    lines = result.stdout.splitlines()
+    # Default cwd roots: an ancestor of HOME and HOME itself are dropped.
+    assert lines[:3] == ["0", "0", "1"]
+    assert lines[3:7] == ["1", "1", "1", "1"]
+    assert lines[7] == str(home / "proj")
+    assert lines[8] == "1" and "VERDI_BRIDGE_SOURCE_ROOTS" in lines[9]
+
+
+def test_find_signals_time_budget(running):
+    c, _ = running
+    start = time.monotonic()
+    r = c.find_signals("nomatch", scope="/slow", budget_ms=100)
+    assert r["truncated"] and r["reasons"] == ["time budget"]
+    assert 1 <= r["visited_scopes"] < 65
+    assert time.monotonic() - start < 1.5
+    assert c.find_signals("ptr", depth=0)["reasons"] == ["depth"]
+    assert c.find_signals("ptr", max=1)["reasons"] == ["max results"]
+    with pytest.raises(ValueError, match="budget_ms"):
+        c.find_signals("ptr", budget_ms=0)
+
+
+def test_foreign_request_file_does_not_stall(running):
+    client, env = running
+    # Sorts before every request ID; it previously blocked all later requests.
+    (Path(env["VERDI_BRIDGE_DIR"]) / "0.req").write_text("not a request")
+    assert client.status()["time_unit"] == "1ps"
+
+
+def test_mcp_tools_do_not_block_the_event_loop(running):
+    _, env = running
+
+    async def run():
+        params = StdioServerParameters(command=sys.executable,
+                                      args=["-c", "from verdi_bridge.cli import main; main()", "serve"],
+                                      env=env)
+        async with stdio_client(params) as (read, write):
+            async with ClientSession(read, write) as session:
+                await session.initialize()
+                slow = asyncio.create_task(session.call_tool(
+                    "sample_signals", {"signals": ["/tb/sleepy"], "times": ["0"]}))
+                await asyncio.sleep(0.3)
+                start = time.monotonic()
+                await session.send_ping()
+                assert time.monotonic() - start < 0.5
+                assert not slow.done()
+                assert not (await slow).isError
+    asyncio.run(run())
+
+
+def test_default_directory_survives_restart(tmp_path, monkeypatch):
+    home = tmp_path / "home"
+    home.mkdir()
+    root = home / ".verdi-bridge" / "session"
+    env = {k: v for k, v in os.environ.items() if not k.startswith("VERDI_BRIDGE_")}
+    env.update(HOME=str(home), VERDI_BRIDGE_SOURCE_ROOTS=str(tmp_path / "src"))
+    monkeypatch.setenv("HOME", str(home))
+    monkeypatch.delenv("VERDI_BRIDGE_DIR", raising=False)
+
+    first = launch_adapter(env, root / "session")
+    assert first.poll() is None, first.stderr.read().decode()
+    assert (root.stat().st_mode & 0o777) == 0o700
+    assert (root.parent.stat().st_mode & 0o777) == 0o700
+    with Client(Config.from_env()) as client:
+        assert client.config.directory == "~/.verdi-bridge/session"
+        assert client.status()["time_unit"] == "1ps"
+
+    # A second GUI must not share the directory while the first is alive.
+    second = launch_adapter(env, root / "never")
+    second.wait(timeout=5)
+    assert second.returncode != 0
+    assert "another Verdi GUI" in second.stderr.read().decode()
+
+    # A killed GUI leaves gui.lock and old files behind; a restart recovers.
+    stop_adapter(first)
+    old_session = (root / "session").read_text()
+    leftover = root / ("ab" * 16 + ".res")
+    leftover.write_text("{}")
+    restarted = launch_adapter(env, root / "never")
+    try:
+        for _ in range(150):
+            if (root / "session").read_text() != old_session or restarted.poll() is not None:
+                break
+            time.sleep(0.02)
+        assert restarted.poll() is None, restarted.stderr.read().decode()
+        assert not leftover.exists()
+        with Client(Config.from_env()) as client:
+            assert client.status()["time_unit"] == "1ps"
+    finally:
+        stop_adapter(restarted)

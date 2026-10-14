@@ -26,8 +26,8 @@
       "environmentVariables": [
         {
           "name": "VERDI_BRIDGE_DIR",
-          "description": "Private bridge session directory on the Verdi host, after loading bridge.tcl.",
-          "isRequired": true,
+          "description": "Private bridge directory on the Verdi host; omit to use the default ~/.verdi-bridge/session.",
+          "isRequired": false,
           "format": "string"
         },
         {

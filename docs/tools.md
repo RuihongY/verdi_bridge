@@ -10,7 +10,7 @@ restricted to separate `VERDI_BRIDGE_SOURCE_ROOTS` / `VERDI_BRIDGE_LOG_ROOTS` an
 |---|---|---|
 | `session_status` | None | Window, native units, cursor, viewport, displayed signals |
 | `browse_scope` | `scope="/"` | Immediate child scopes/signals |
-| `find_signals` | `pattern`, `scope="/"`, `max=100`, `depth=16`, `glob=False` | Absolute matching paths; truncation flag |
+| `find_signals` | `pattern`, `scope="/"`, `max=100`, `depth=16`, `glob=False`, `budget_ms=1000` | Absolute matching paths; truncation flag and reasons (max results, depth, scope limit, time budget) |
 | `add_signals` | `signals` | Add 1–128 exact paths to nWave |
 | `set_cursor` | `time`, `unit="ns"` | Actual cursor |
 | `set_time_window` | `start`, `end`, `unit="ns"` | Actual viewport |

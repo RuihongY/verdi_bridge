@@ -42,7 +42,8 @@ current waveform window between calls. Inspect session state when context matter
 Each directory belongs to one GUI; an exclusive lock prevents a second adapter from
 consuming its requests. A request that times out before being claimed is cancelled.
 A request already claimed may still complete, so mutations are not automatically
-retried. Restarted GUIs should use fresh directories.
+retried. A restarted GUI on the same host takes over a lock whose process is gone
+and discards the previous session's requests and results.
 
 ## Boundaries
 
