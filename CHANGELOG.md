@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1 — 2026-10-13
+
+- Prepare PyPI distribution metadata, MCP Registry manifest, and an OIDC publishing workflow.
+- Lead English/Chinese documentation with live waveform observation and GUI navigation.
+- Add pip/uvx installation instructions and a central validation index; all paired-pilot
+  outcomes and limitations remain public. No runtime tool behavior changes.
+
 ## 0.3.0 — 2026-10-13
 
 - Convert physical times exactly to integer native ticks; reject off-grid times and

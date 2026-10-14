@@ -4,11 +4,13 @@
 
 ## 1. Install on the client
 
+PyPI publication is pending. Until then, install directly with
+`pip install git+https://github.com/RuihongY/verdi_bridge.git`, or follow
+[development setup](#develop-from-source). The PyPI commands below apply after publication.
+
 ```sh
-git clone https://github.com/RuihongY/verdi_bridge.git
-cd verdi_bridge
-uv sync
-uv run verdi-bridge tcl-path
+pip install verdi-bridge
+verdi-bridge tcl-path
 ```
 
 Keep the printed absolute path to `bridge.tcl`. The Python client requires 3.11+.
@@ -31,7 +33,7 @@ verdi -sv design.sv tb.sv -top tb -ssf simulation.fsdb \
 For SSH use, first copy `bridge.tcl` to an existing directory you own on that host:
 
 ```sh
-scp "$(uv run verdi-bridge tcl-path)" user@eda-host:/absolute/remote/path/bridge.tcl
+scp "$(uvx verdi-bridge tcl-path)" user@eda-host:/absolute/remote/path/bridge.tcl
 ```
 
 The Verdi host needs Python 3.6+ for the SSH transport helper; it does not need the
@@ -70,7 +72,7 @@ export VERDI_BRIDGE_HOST=user@eda-host
 # Optional, when reusing an existing SSH ControlMaster:
 export VERDI_BRIDGE_CONTROL_PATH=/tmp/your-ssh-control.sock
 
-uv run verdi-bridge status
+uvx verdi-bridge status
 ```
 
 For a local GUI, omit HOST and CONTROL_PATH. SSH uses BatchMode and normal host-key
@@ -80,15 +82,15 @@ and displayed signals. A directory existing on disk is not proof the GUI is aliv
 
 ## 4. Configure your MCP client
 
-Add a stdio MCP server using the executable installed in this checkout. Replace all
+Add a stdio MCP server using uvx (or the installed `verdi-bridge` executable). Replace all
 paths and hostnames below. Different clients may wrap this configuration differently.
 
 ```json
 {
   "mcpServers": {
     "verdi": {
-      "command": "/absolute/path/to/verdi_bridge/.venv/bin/verdi-bridge",
-      "args": ["serve"],
+      "command": "uvx",
+      "args": ["verdi-bridge==0.3.1", "serve"],
       "env": {
         "VERDI_BRIDGE_DIR": "/tmp/verdi-bridge.YOUR_SESSION",
         "VERDI_BRIDGE_HOST": "user@eda-host",
@@ -130,7 +132,7 @@ may remain on disk for inspection.
 
 See [the trust boundary](../SECURITY.md) and [tested limitations](validation.md).
 
-## Upgrading to 0.2
+## Upgrading
 
 Update both the Python package and the Tcl adapter; restart in a fresh private
 GUI/session directory. Existing loaded Tcl does not acquire the new operations
@@ -141,3 +143,16 @@ from a Python upgrade. Remote clients reuse one SSH/helper by default; set
 Both root lists default to the GUI working directory; keep them narrow.
 `VERDI_BRIDGE_POLL_MS` defaults to 10 ms (range 1–1000) on each side. Set it
 in both environments if changing both the Tcl and helper polling intervals.
+
+
+## Develop from source
+
+```sh
+git clone https://github.com/RuihongY/verdi_bridge.git
+cd verdi_bridge
+uv sync
+uv run verdi-bridge tcl-path
+```
+
+When using uvx, pin the same version for `tcl-path` and `serve`; copy the adapter
+again when upgrading. See the [changelog](../CHANGELOG.md) for migration notes.

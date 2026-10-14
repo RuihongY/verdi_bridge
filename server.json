@@ -1,0 +1,46 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.RuihongY/verdi-bridge",
+  "title": "Verdi Bridge",
+  "description": "Inspect waveforms and navigate RTL in live Synopsys Verdi. Requires a licensed Verdi installation.",
+  "version": "0.3.1",
+  "repository": {
+    "url": "https://github.com/RuihongY/verdi_bridge",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "verdi-bridge",
+      "version": "0.3.1",
+      "runtimeHint": "uvx",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "serve"
+        }
+      ],
+      "environmentVariables": [
+        {
+          "name": "VERDI_BRIDGE_DIR",
+          "description": "Private bridge session directory on the Verdi host, after loading bridge.tcl.",
+          "isRequired": true,
+          "format": "string"
+        },
+        {
+          "name": "VERDI_BRIDGE_HOST",
+          "description": "SSH user@host; omit for a local Verdi GUI.",
+          "format": "string"
+        },
+        {
+          "name": "VERDI_BRIDGE_CONTROL_PATH",
+          "description": "Optional existing SSH ControlMaster socket path.",
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}
