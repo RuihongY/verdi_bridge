@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.2 — 2026-10-14
 
 - SSH works when the remote login shell is csh/tcsh. The remote command is now a
   one-line bootstrap; the helper source travels over stdin. Previously tcsh failed

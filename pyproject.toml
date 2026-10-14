@@ -1,6 +1,6 @@
 [project]
 name = "verdi-bridge"
-version = "0.3.1"
+version = "0.3.2"
 description = "Let AI agents inspect waveforms and navigate RTL in a live Synopsys Verdi session"
 authors = [{name = "Ruihong Yin"}]
 keywords = ["mcp", "verdi", "rtl", "waveform", "eda", "asic", "verification"]

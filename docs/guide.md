@@ -93,7 +93,7 @@ paths and hostnames below. Different clients may wrap this configuration differe
   "mcpServers": {
     "verdi": {
       "command": "uvx",
-      "args": ["verdi-bridge==0.3.1", "serve"],
+      "args": ["verdi-bridge==0.3.2", "serve"],
       "env": {
         "VERDI_BRIDGE_HOST": "user@eda-host",
         "VERDI_BRIDGE_CONTROL_PATH": "/tmp/your-ssh-control.sock"

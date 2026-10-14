@@ -87,7 +87,8 @@ to source while you follow along.
 
 ## Project status
 
-Experimental **v0.3.1**. Tested with Verdi T-2022.06-SP2-1 on Linux.
+Experimental **v0.3.2**. Live checks used Verdi T-2022.06-SP2-1 on Linux; the v0.3.2
+deployment fixes are covered by automated tests but not yet by a live Verdi run.
 New-session startup is verified; attachment to an arbitrary existing GUI is not yet
 separately validated. The bridge does not automatically compile, edit or repair RTL.
 
