@@ -33,14 +33,6 @@ https://github.com/user-attachments/assets/3294e374-5c43-4b67-8e20-b8a6f319d8f7
 
 ## 开始使用
 
-PyPI 发布尚待完成。目前已经可以不 clone 仓库，一行运行：
-
-```sh
-uvx --from git+https://github.com/RuihongY/verdi_bridge.git verdi-bridge tcl-path
-```
-
-发布完成后可使用下面的 PyPI 命令：
-
 ```sh
 pip install verdi-bridge
 ```

@@ -5,6 +5,7 @@
 </p>
 
 <p align="center">
+  <a href="https://pypi.org/project/verdi-bridge/"><img src="https://img.shields.io/pypi/v/verdi-bridge" alt="PyPI" /></a>
   <a href="https://github.com/RuihongY/verdi_bridge/actions/workflows/test.yml"><img src="https://github.com/RuihongY/verdi_bridge/actions/workflows/test.yml/badge.svg" alt="Tests" /></a>
   <a href="https://github.com/RuihongY/verdi_bridge/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT license" /></a>
   <a href="https://github.com/RuihongY/verdi_bridge/blob/main/pyproject.toml"><img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11 or newer" /></a>
@@ -42,14 +43,6 @@ https://github.com/user-attachments/assets/b041c1bd-4be5-4040-b281-2f15001b1e35
 [How this was recorded](https://github.com/RuihongY/verdi_bridge/blob/main/docs/agent-demo.md) · [Installation tutorial](https://github.com/RuihongY/verdi_bridge/blob/main/docs/video-walkthrough.md)
 
 ## Quick start
-
-PyPI publication is pending. You can already run without cloning the repository:
-
-```sh
-uvx --from git+https://github.com/RuihongY/verdi_bridge.git verdi-bridge tcl-path
-```
-
-The PyPI commands below will be available after publication:
 
 ```sh
 pip install verdi-bridge

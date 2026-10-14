@@ -4,10 +4,6 @@
 
 ## 1. Install on the client
 
-PyPI publication is pending. Until then, install directly with
-`pip install git+https://github.com/RuihongY/verdi_bridge.git`, or follow
-[development setup](#develop-from-source). The PyPI commands below apply after publication.
-
 ```sh
 pip install verdi-bridge
 verdi-bridge tcl-path
