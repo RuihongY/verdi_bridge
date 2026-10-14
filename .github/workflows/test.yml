@@ -4,13 +4,14 @@ permissions:
   contents: read
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # Verdi embeds Tcl 8.6; pin a runner image that still ships tcl8.6.
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
         python: ['3.11', '3.12']
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
       - run: sudo apt-get update && sudo apt-get install -y tcl8.6 tcsh
